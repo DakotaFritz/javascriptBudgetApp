@@ -15,6 +15,11 @@ let budgetCatAmt = document.querySelector("#budgetedAmt");
 let categoriesListOfItems = document.querySelector("#categoriesListOfItems");
 let addCategoryToList = document.querySelector("#addCategoryToList");
 let transactionCategory = document.querySelector("#transactionCategory");
+let merchantName = document.querySelector("#merchantName");
+let transDate = document.querySelector("#transDate");
+let transAmt = document.querySelector("#transAmt");
+let addTransactionToList = document.querySelector("#addTransactionToList");
+let transTable = document.querySelector("#transTable")
 
 // Regex to ensure that the number amount only contains "$", digits, and "."
 let regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;
@@ -22,6 +27,7 @@ let regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;
 // The Array that will contain the budget category objects later on
 let budgetCategoryList = [];
 let categoryOptions = [];
+let transactionList = [];
 
 
 // The arrays for each family of categories to live in
@@ -77,7 +83,7 @@ function updatePage(){
 }
 
 // Function to take information from the input category object and display it as a list item in the HTML
-function showEntry(list, type, title, amount, id){
+function showCatEntry(list, type, title, amount, id){
 
   const entry = `<li id = "${id}" class="${type}">
                       <div class="entry">${title}: $${amount}</div>
@@ -86,6 +92,22 @@ function showEntry(list, type, title, amount, id){
                   </li>`;
 
   const position = "afterbegin";
+  // The entry variable content will be placed "afterbegin" (at the top of the list) of the HTML location passed into the function
+  list.insertAdjacentHTML(position, entry);
+}
+
+// Function to take information from the input category object and display it as a list item in the HTML
+function showTransEntry(list, category, merchant, date, amount, id){
+
+  const entry = 
+    `<tr id="${id}">
+      <td>${category}</td>
+      <td>${merchant}</td>
+      <td>${date}</td>
+      <td>${amount}</td>
+    </tr>`;
+
+  const position = "afterend";
   // The entry variable content will be placed "afterbegin" (at the top of the list) of the HTML location passed into the function
   list.insertAdjacentHTML(position, entry);
 }
@@ -117,7 +139,7 @@ addCategoryToList.addEventListener("click", function() {
       let budgetCategoriesAll = {
         family: budgetCatFamily.value,
         category: inputToTitleCase(budgetCategory.value),
-        amount: parseFloat(budgetCatAmt.value)
+        amount: Math.round(parseFloat(budgetCatAmt.value))
       };
       // Push the object containing the input category into the Array that was created above
       budgetCategoryList.push(budgetCategoriesAll);
@@ -125,7 +147,7 @@ addCategoryToList.addEventListener("click", function() {
       clearInput([budgetCatFamily, budgetCategory, budgetCatAmt]);
       // For each object, show the input on the page through the showEntry function
       budgetCategoryList.forEach( (entry, index) => {
-        showEntry(categoriesListOfItems, entry.family, entry.category, entry.amount, index);
+        showCatEntry(categoriesListOfItems, entry.family, entry.category, entry.amount, index);
       });
 
       for (let i = 0; i < budgetCategoryList.length; i++) {
@@ -139,3 +161,36 @@ addCategoryToList.addEventListener("click", function() {
 
 // Transactions
 
+addTransactionToList.addEventListener("click", function() {
+
+  // If any of the three input fields are empty
+  if( !transactionCategory || !merchantName || !transDate || !transAmt ) return;
+  // If Amount input does not pass Regex test, show alert and stop running code below
+  if(regex.test(transAmt.value) === false) {
+    alert("Please enter a numeric value such as the following, in the Amount box: $100.50, $100, 100, etc.");
+    return; } 
+    // Otherwise, append Family, Category, and Amount to variable as an Object
+    else {
+      let inputTransactionsAll = {
+        transCategory: transactionCategory.value,
+        merchantName: merchantName.value,
+        transDate: transDate.value,
+        transAmount: Math.round(parseFloat(transAmt.value))
+      };
+      // Push the object containing the input category into the Array that was created above
+      transactionList.push(inputTransactionsAll);
+      // Clear the input in each field
+      clearInput([transactionCategory, merchantName, transDate, transAmt]);
+      // For each object, show the input on the page through the showEntry function
+      transactionList.forEach( (entry, index) => {
+        showTransEntry(transTable, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
+      });
+
+      // for (let i = 0; i < budgetCategoryList.length; i++) {
+      //   categoryOptions.push(budgetCategoryList[i].category)
+      //   transactionCategory.insertAdjacentHTML( "afterbegin",
+      //     `<option value="${categoryOptions[i]}">${categoryOptions[i]}</option>`
+      //   )
+      // };
+    }
+});
