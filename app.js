@@ -19,7 +19,8 @@ let merchantName = document.querySelector("#merchantName");
 let transDate = document.querySelector("#transDate");
 let transAmt = document.querySelector("#transAmt");
 let addTransactionToList = document.querySelector("#addTransactionToList");
-let transTable = document.querySelector("#transTable")
+let csvFileUpload = document.querySelector("#csvFileUpload");
+let transTable = document.querySelector("#transTable");
 
 // Regex to ensure that the number amount only contains "$", digits, and "."
 let regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;
@@ -129,6 +130,11 @@ function calculateTotal(family, list){
   return sum;
 }
 
+function readCSVUpload(file) {
+  let reader = new FileReader();
+  reader.readAsText(file);
+}
+
 // On the click event, trigger actions with the input
 addCategoryToList.addEventListener("click", function() {
 
@@ -191,4 +197,8 @@ addTransactionToList.addEventListener("click", function() {
         showTransEntry(transTable, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
       });
     }
+});
+
+csvFileUpload.addEventListener("click", function() {
+  
 });
