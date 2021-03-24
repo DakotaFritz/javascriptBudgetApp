@@ -28,7 +28,7 @@ let regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;
 
 // The Array that will contain the budget category objects later on
 let budgetCategoryList = [];
-let categoryOptions = [];
+let categoryOptions = "";
 let transactionList = [];
 let transArrFromCSV = [];
 
@@ -119,6 +119,12 @@ function clearElement(element){
       element.innerHTML = "";
 }
 
+function clearObject (object) {
+  for (let key in object) {
+    key = ""
+  }
+}
+
 // Function to calculate total for a budget category
 function calculateTotal(family, list){
   let sum = 0;
@@ -163,12 +169,12 @@ addCategoryToList.addEventListener("click", function() {
         showCatEntry(categoriesListOfItems, entry.family, entry.category, entry.amount, index);
       });
 
-      for (let i = 0; i < budgetCategoryList.length; i++) {
-        categoryOptions.push(budgetCategoryList[i].category)
-        transactionCategory.insertAdjacentHTML( "afterbegin",
-          `<option value="${categoryOptions[i]}">${categoryOptions[i]}</option>`
-        )
-      };
+      categoryOptions = budgetCategoriesAll.category
+      transactionCategory.insertAdjacentHTML( "afterbegin",
+        `<option value="${categoryOptions}">${categoryOptions}</option>`
+      )
+      clearObject(budgetCategoriesAll);
+
     }
 });
 
@@ -210,10 +216,6 @@ csvFileUpload.addEventListener("change", function(e) {
     })
     let headersFromCSV = lines[0];
     let rowContentFromCSV = lines.slice(1);
-    console.log(lines)
-    console.log(headersFromCSV)
-    console.log(rowContentFromCSV)
-    // let transListFromCSV = new Object();
     for (i =0; i < rowContentFromCSV.length; i++) {
       let transListFromCSV = {}; 
       transListFromCSV.transCategory = rowContentFromCSV[i][0];
@@ -222,7 +224,6 @@ csvFileUpload.addEventListener("change", function(e) {
       transListFromCSV.transAmount = Math.round(parseFloat(rowContentFromCSV[i][3]));
       transArrFromCSV.push(transListFromCSV)
     }
-    console.log(transArrFromCSV)
     transArrFromCSV.forEach( (entry, index) => {
       showTransEntry(transTableFromCSV, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
     });
@@ -230,9 +231,3 @@ csvFileUpload.addEventListener("change", function(e) {
   reader.readAsText(csvFileUpload.files[0])
 }, false);
 
-
-function clearObject (object) {
-  for (let key in object) {
-    key = ""
-  }
-}
