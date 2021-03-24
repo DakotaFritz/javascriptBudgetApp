@@ -14,6 +14,7 @@ let budgetCategory = document.querySelector("#category");
 let budgetCatAmt = document.querySelector("#budgetedAmt");
 let categoriesListOfItems = document.querySelector("#categoriesListOfItems");
 let addCategoryToList = document.querySelector("#addCategoryToList");
+let transactionCategory = document.querySelector("#transactionCategory");
 
 // Regex to ensure that the number amount only contains "$", digits, and "."
 let regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;
@@ -129,6 +130,9 @@ addCategoryToList.addEventListener("click", function() {
 
       for (let i = 0; i < budgetCategoryList.length; i++) {
         categoryOptions.push(budgetCategoryList[i].category)
+        transactionCategory.insertAdjacentHTML( "afterbegin",
+          `<option value="${categoryOptions[i]}">${categoryOptions[i]}</option>`
+        )
       };
     }
 });
