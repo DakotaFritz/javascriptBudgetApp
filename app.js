@@ -112,6 +112,10 @@ function showTransEntry(list, category, merchant, date, amount, id){
   list.insertAdjacentHTML(position, entry);
 }
 
+function clearElement(element){
+      element.innerHTML = "";
+}
+
 // Function to calculate total for a budget category
 function calculateTotal(family, list){
   let sum = 0;
@@ -146,6 +150,7 @@ addCategoryToList.addEventListener("click", function() {
       // Clear the input in each field
       clearInput([budgetCatFamily, budgetCategory, budgetCatAmt]);
       // For each object, show the input on the page through the showEntry function
+      clearElement(categoriesListOfItems);
       budgetCategoryList.forEach( (entry, index) => {
         showCatEntry(categoriesListOfItems, entry.family, entry.category, entry.amount, index);
       });
@@ -185,12 +190,5 @@ addTransactionToList.addEventListener("click", function() {
       transactionList.forEach( (entry, index) => {
         showTransEntry(transTable, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
       });
-
-      // for (let i = 0; i < budgetCategoryList.length; i++) {
-      //   categoryOptions.push(budgetCategoryList[i].category)
-      //   transactionCategory.insertAdjacentHTML( "afterbegin",
-      //     `<option value="${categoryOptions[i]}">${categoryOptions[i]}</option>`
-      //   )
-      // };
     }
 });
