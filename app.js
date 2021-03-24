@@ -21,6 +21,7 @@ let transAmt = document.querySelector("#transAmt");
 let addTransactionToList = document.querySelector("#addTransactionToList");
 let csvFileUpload = document.querySelector("#csvFileUpload");
 let transTable = document.querySelector("#transTable");
+let transTableFromCSV = document.querySelector("#transTableFromCSV");
 
 // Regex to ensure that the number amount only contains "$", digits, and "."
 let regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;
@@ -29,6 +30,7 @@ let regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;
 let budgetCategoryList = [];
 let categoryOptions = [];
 let transactionList = [];
+let transArrFromCSV = [];
 
 
 // The arrays for each family of categories to live in
@@ -199,6 +201,38 @@ addTransactionToList.addEventListener("click", function() {
     }
 });
 
-csvFileUpload.addEventListener("click", function() {
-  
-});
+// Biggest thing is to add the CSV reading abilities
+csvFileUpload.addEventListener("change", function(e) {
+  const reader = new FileReader();
+  reader.onload = function () {
+    const lines = reader.result.split("\n").map(function (line) {
+      return line.split(",")
+    })
+    let headersFromCSV = lines[0];
+    let rowContentFromCSV = lines.slice(1);
+    console.log(lines)
+    console.log(headersFromCSV)
+    console.log(rowContentFromCSV)
+    // let transListFromCSV = new Object();
+    for (i =0; i < rowContentFromCSV.length; i++) {
+      let transListFromCSV = {}; 
+      transListFromCSV.transCategory = rowContentFromCSV[i][0];
+      transListFromCSV.merchantName = rowContentFromCSV[i][1];
+      transListFromCSV.transDate = rowContentFromCSV[i][2];
+      transListFromCSV.transAmount = Math.round(parseFloat(rowContentFromCSV[i][3]));
+      transArrFromCSV.push(transListFromCSV)
+    }
+    console.log(transArrFromCSV)
+    transArrFromCSV.forEach( (entry, index) => {
+      showTransEntry(transTableFromCSV, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
+    });
+  }
+  reader.readAsText(csvFileUpload.files[0])
+}, false);
+
+
+function clearObject (object) {
+  for (let key in object) {
+    key = ""
+  }
+}
