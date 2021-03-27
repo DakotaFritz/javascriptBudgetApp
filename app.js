@@ -23,6 +23,7 @@ let addTransactionToList = document.querySelector("#addTransactionToList");
 let csvFileUpload = document.querySelector("#csvFileUpload");
 let transTable = document.querySelector("#transTable");
 let transTableFromCSV = document.querySelector("#transTableFromCSV");
+let transCatCell = document.querySelector("#transCatCell");
 
 // Regex to ensure that the number amount only contains "$", digits, and "."
 let regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;
@@ -108,7 +109,7 @@ function showTransEntry(list, category, merchant, date, amount, id){
 
   const entry = 
     `<tr id="${id}">
-      <td>${category}</td>
+      <td id="transCatCell">${category}</td>
       <td>${merchant}</td>
       <td>${date}</td>
       <td>${amount}</td>
@@ -275,7 +276,7 @@ csvFileUpload.addEventListener("change", function(e) {
     let rowContentFromCSV = lines.slice(1);
     for (i =0; i < rowContentFromCSV.length; i++) {
       let transListFromCSV = {}; 
-      transListFromCSV.transCategory = rowContentFromCSV[i][0];
+      transListFromCSV.transCategory = "";
       transListFromCSV.merchantName = rowContentFromCSV[i][1];
       transListFromCSV.transDate = rowContentFromCSV[i][2];
       transListFromCSV.transAmount = Math.round(parseFloat(rowContentFromCSV[i][3]));
@@ -284,7 +285,9 @@ csvFileUpload.addEventListener("change", function(e) {
     transArrFromCSV.forEach( (entry, index) => {
       showTransEntry(transTableFromCSV, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
     });
+
   }
   reader.readAsText(csvFileUpload.files[0])
 }, false);
+
 
