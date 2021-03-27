@@ -32,10 +32,9 @@ let budgetCategoriesAll = {}
 
 // The Array that will contain the budget category objects later on
 // let budgetCategoryList = givingCatList + housingCatList + transportationCatList + foodCatList + personalCatList + lifestyleCatList + healthCatList + debtCatList + billsCatList;
-let categoryOptions = "";
+let currentCategoryOption = "";
 let transactionList = [];
 let transArrFromCSV = [];
-
 
 // The arrays for each family of categories to live in
 let givingCatList = [];
@@ -118,6 +117,8 @@ function showTransEntry(list, category, merchant, date, amount, id){
   const position = "afterend";
   // The entry variable content will be placed "afterbegin" (at the top of the list) of the HTML location passed into the function
   list.insertAdjacentHTML(position, entry);
+
+  
 }
 
 function clearElement(element){
@@ -223,16 +224,14 @@ addCategoryToList.addEventListener("click", function() {
         showCatEntry(categoriesListOfItems, entry.family, entry.category, entry.amount, index);
       });
 
-      categoryOptions = budgetCategoriesAll.category
+      currentCategoryOption = budgetCategoriesAll.category
       transactionCategory.insertAdjacentHTML( "afterbegin",
-        `<option value="${categoryOptions}">${categoryOptions}</option>`
-      )
-      clearObject(budgetCategoriesAll);
+        `<option value="${currentCategoryOption}">${currentCategoryOption}</option>`
+      );
 
       clearElement(totalBudgetedNum);
       totalBudgetedNum.insertAdjacentHTML("beforeend", `${totalBudgetAmt}`);
-    }
-});
+
 
 // Transactions
 
@@ -285,9 +284,8 @@ csvFileUpload.addEventListener("change", function(e) {
     transArrFromCSV.forEach( (entry, index) => {
       showTransEntry(transTableFromCSV, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
     });
-
   }
-  reader.readAsText(csvFileUpload.files[0])
+  reader.readAsText(csvFileUpload.files[0]);
 }, false);
-
+    }})
 
