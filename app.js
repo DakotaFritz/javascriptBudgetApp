@@ -9,6 +9,7 @@
 // I want a floating "Edit" button to follow the cursor down the page and then transforms those fields to input or drop-down menu (for category)
 
 // Grab the HTML fields by id for manipulating later
+let totalBudgetedNum = document.querySelector("#totalBudgetedNumber");
 let budgetCatFamily = document.querySelector("#family");
 let budgetCategory = document.querySelector("#category");
 let budgetCatAmt = document.querySelector("#budgetedAmt");
@@ -48,16 +49,16 @@ let billsCatList = [];
 let budgetCategoryList = [];
 
 // Need to find a way to calculate the total
-let totalBudgetAmt = calculateTotal("*", budgetCategoryList);
-let givingBudgetAmt = calculateTotal("Giving", budgetCategoryList);
-let housingBudgetAmt = calculateTotal("Housing", budgetCategoryList);
-let transportationBudgetAmt = calculateTotal("Transportation", budgetCategoryList);
-let foodBudgetAmt = calculateTotal("Food", budgetCategoryList);
-let personalBudgetAmt = calculateTotal("Personal", budgetCategoryList);
-let lifestyleBudgetAmt = calculateTotal("Lifestyle", budgetCategoryList);
-let healthBudgetAmt = calculateTotal("Health", budgetCategoryList);
-let debtBudgetAmt = calculateTotal("Debt", budgetCategoryList);
-let billsBudgetAmt = calculateTotal("Bills", budgetCategoryList);
+let givingBudgetAmt = 0;
+let housingBudgetAmt = 0;
+let transportationBudgetAmt = 0;
+let foodBudgetAmt = 0;
+let personalBudgetAmt = 0;
+let lifestyleBudgetAmt = 0;
+let healthBudgetAmt = 0;
+let debtBudgetAmt = 0;
+let billsBudgetAmt = 0;
+let totalBudgetAmt = 0;
 
 // Function to clear the input fields upon submitting the input
 function clearInput(inputsArray) {
@@ -129,10 +130,10 @@ function clearObject (object) {
 }
 
 // Function to calculate total for a budget category
-function calculateTotal(family, array){
+function calculateTotal(family, list){
   let sum = 0;
 
-  array.forEach( entry => {
+  list.forEach( entry => {
       if( entry.family == family ){
           sum += entry.amount;
       }
@@ -167,41 +168,51 @@ addCategoryToList.addEventListener("click", function() {
         case "Giving":
           givingCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
+          givingBudgetAmt = calculateTotal("Giving", budgetCategoryList); 
           break;
         case "Housing":
           housingCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
+          housingBudgetAmt = calculateTotal("Housing", budgetCategoryList);          
           break;  
         case "Transportation":
           transportationCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
+          transportationBudgetAmt = calculateTotal("Transportation", budgetCategoryList);          
           break;
         case "Food":
           foodCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
+          foodBudgetAmt = calculateTotal("Food", budgetCategoryList);          
           break;   
         case "Personal":
           personalCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
+          personalBudgetAmt = calculateTotal("Personal", budgetCategoryList);          
           break; 
         case "lifestyle":
           lifestyleCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
+          lifestyleBudgetAmt = calculateTotal("Lifestyle", budgetCategoryList);          
           break;  
         case "Health":
           healthCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
+          healthBudgetAmt = calculateTotal("Health", budgetCategoryList);          
           break;
         case "Debt":
           debtCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
+          debtBudgetAmt = calculateTotal("Debt", budgetCategoryList);          
           break;
         case "Bills":
           billsCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
+          billsBudgetAmt = calculateTotal("Bills", budgetCategoryList);          
           break;  
       }
 
+      totalBudgetAmt = givingBudgetAmt + housingBudgetAmt + transportationBudgetAmt + foodBudgetAmt + personalBudgetAmt + lifestyleBudgetAmt + healthBudgetAmt + debtBudgetAmt + billsBudgetAmt;
 
       // Clear the input in each field
       clearInput([budgetCatFamily, budgetCategory, budgetCatAmt]);
@@ -217,6 +228,8 @@ addCategoryToList.addEventListener("click", function() {
       )
       clearObject(budgetCategoriesAll);
 
+      clearElement(totalBudgetedNum);
+      totalBudgetedNum.insertAdjacentHTML("beforeend", `${totalBudgetAmt}`);
     }
 });
 

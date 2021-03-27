@@ -17,6 +17,7 @@
 
         <h2>Create Your Budget Categories</h2>
         <p>Please create your budget categories and add the amounts here.</p>
+        <p id="totalBudgetedNumber">Your current total budget is up to: </p>
         <div id="categoriesListOfItems"></div>
         <label for="family">Family of Category</label>
         <select id="family">
@@ -64,7 +65,8 @@
         </table> 
 
         <h2>Transaction from CSV Upload List</h2>
-        <table>
+        <table id="transTableFromCSV">
+            <tr>
                 <th>Category</th>
                 <th>Merchant</th>
                 <th>Transaction Date</th>
