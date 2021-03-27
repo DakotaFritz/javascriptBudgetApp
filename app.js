@@ -310,11 +310,23 @@ csvFileUpload.addEventListener("change", function(e) {
     select.appendChild(fragment);
     console.log(select)
 
+    let approveCell = document.createElement("td");
+    let approveBtn = document.createElement("button");
+    approveBtn.textContent = "Approve";
+    approveCell.appendChild(approveBtn);
+
+    let deleteCell = document.createElement("td");
+    let deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteCell.appendChild(deleteBtn);
+
     buttonToAddCategory.addEventListener("click", function () {
       transCatCell.forEach((category) => {
           category.appendChild(select.cloneNode(true));
+          category.parentNode.appendChild(approveCell.cloneNode(true));
+          category.parentNode.appendChild(deleteCell.cloneNode(true));
         });
-
+      
     });
   }
   reader.readAsText(csvFileUpload.files[0]);
