@@ -229,8 +229,12 @@ addCategoryToList.addEventListener("click", function() {
         `<option value="${currentCategoryOption}">${currentCategoryOption}</option>`
       );
 
+      clearObject(budgetCategoriesAll);
+
       clearElement(totalBudgetedNum);
       totalBudgetedNum.insertAdjacentHTML("beforeend", `${totalBudgetAmt}`);
+    }
+  });
 
 
 // Transactions
@@ -287,5 +291,4 @@ csvFileUpload.addEventListener("change", function(e) {
   }
   reader.readAsText(csvFileUpload.files[0]);
 }, false);
-    }})
 
