@@ -26,8 +26,10 @@ let transTableFromCSV = document.querySelector("#transTableFromCSV");
 // Regex to ensure that the number amount only contains "$", digits, and "."
 let regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;
 
+let budgetCategoriesAll = {}
+
 // The Array that will contain the budget category objects later on
-let budgetCategoryList = [];
+// let budgetCategoryList = givingCatList + housingCatList + transportationCatList + foodCatList + personalCatList + lifestyleCatList + healthCatList + debtCatList + billsCatList;
 let categoryOptions = "";
 let transactionList = [];
 let transArrFromCSV = [];
@@ -43,6 +45,7 @@ let lifestyleCatList = [];
 let healthCatList = [];
 let debtCatList = [];
 let billsCatList = [];
+let budgetCategoryList = [];
 
 // Need to find a way to calculate the total
 let totalBudgetAmt = calculateTotal("*", budgetCategoryList);
@@ -126,10 +129,10 @@ function clearObject (object) {
 }
 
 // Function to calculate total for a budget category
-function calculateTotal(family, list){
+function calculateTotal(family, array){
   let sum = 0;
 
-  list.forEach( entry => {
+  array.forEach( entry => {
       if( entry.family == family ){
           sum += entry.amount;
       }
@@ -154,13 +157,52 @@ addCategoryToList.addEventListener("click", function() {
     return; } 
     // Otherwise, append Family, Category, and Amount to variable as an Object
     else {
-      let budgetCategoriesAll = {
+      budgetCategoriesAll = {
         family: budgetCatFamily.value,
         category: inputToTitleCase(budgetCategory.value),
         amount: Math.round(parseFloat(budgetCatAmt.value))
       };
-      // Push the object containing the input category into the Array that was created above
-      budgetCategoryList.push(budgetCategoriesAll);
+      // Determine the family array to append the input category to
+      switch (budgetCategoriesAll.family) {
+        case "Giving":
+          givingCatList.push(budgetCategoriesAll);
+          budgetCategoryList.push(budgetCategoriesAll);
+          break;
+        case "Housing":
+          housingCatList.push(budgetCategoriesAll);
+          budgetCategoryList.push(budgetCategoriesAll);
+          break;  
+        case "Transportation":
+          transportationCatList.push(budgetCategoriesAll);
+          budgetCategoryList.push(budgetCategoriesAll);
+          break;
+        case "Food":
+          foodCatList.push(budgetCategoriesAll);
+          budgetCategoryList.push(budgetCategoriesAll);
+          break;   
+        case "Personal":
+          personalCatList.push(budgetCategoriesAll);
+          budgetCategoryList.push(budgetCategoriesAll);
+          break; 
+        case "lifestyle":
+          lifestyleCatList.push(budgetCategoriesAll);
+          budgetCategoryList.push(budgetCategoriesAll);
+          break;  
+        case "Health":
+          healthCatList.push(budgetCategoriesAll);
+          budgetCategoryList.push(budgetCategoriesAll);
+          break;
+        case "Debt":
+          debtCatList.push(budgetCategoriesAll);
+          budgetCategoryList.push(budgetCategoriesAll);
+          break;
+        case "Bills":
+          billsCatList.push(budgetCategoriesAll);
+          budgetCategoryList.push(budgetCategoriesAll);
+          break;  
+      }
+
+
       // Clear the input in each field
       clearInput([budgetCatFamily, budgetCategory, budgetCatAmt]);
       // For each object, show the input on the page through the showEntry function
@@ -198,6 +240,8 @@ addTransactionToList.addEventListener("click", function() {
       };
       // Push the object containing the input category into the Array that was created above
       transactionList.push(inputTransactionsAll);
+      eval(`${inputTransactionsAll.transCategory.value}CatList`.push(inputTransactionsAll));
+      console.log(`${inputTransactionsAll.transCategory.value}Transactions`);
       // Clear the input in each field
       clearInput([transactionCategory, merchantName, transDate, transAmt]);
       // For each object, show the input on the page through the showEntry function
