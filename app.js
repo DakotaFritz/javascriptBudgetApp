@@ -22,8 +22,10 @@ let transAmt = document.querySelector("#transAmt");
 let addTransactionToList = document.querySelector("#addTransactionToList");
 let csvFileUpload = document.querySelector("#csvFileUpload");
 let transTable = document.querySelector("#transTable");
-let transTableFromCSV = document.querySelector("#transTableFromCSV");
-let transCatCell = document.querySelector("#transCatCell");
+let tableFromCSV;
+let transTableRowsFromCSV = document.querySelector("#transTableRowsFromCSV");
+let transCatCell;
+let buttonToAddCategory;
 
 // Regex to ensure that the number amount only contains "$", digits, and "."
 let regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;
@@ -104,11 +106,11 @@ function showCatEntry(list, type, title, amount, id){
 }
 
 // Function to take information from the input category object and display it as a list item in the HTML
-function showTransEntry(list, category, merchant, date, amount, id){
+function showTransEntry(list, merchant, date, amount, id){
 
   const entry = 
     `<tr id="${id}">
-      <td id="transCatCell">${category}</td>
+      <td class="transCatCell"></td>
       <td>${merchant}</td>
       <td>${date}</td>
       <td>${amount}</td>
@@ -286,7 +288,34 @@ csvFileUpload.addEventListener("change", function(e) {
       transArrFromCSV.push(transListFromCSV)
     }
     transArrFromCSV.forEach( (entry, index) => {
-      showTransEntry(transTableFromCSV, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
+      showTransEntry(transTableRowsFromCSV, entry.merchantName, entry.transDate, entry.transAmount, index);
+    });
+    
+    tableFromCSV = document.querySelector("#tableFromCSV");
+    tableFromCSV.insertAdjacentHTML("beforebegin",
+      `<button type="button" id="buttonToAddCategory">Click to Add Category</button>`
+    );
+
+    buttonToAddCategory = document.querySelector("#buttonToAddCategory");
+    transCatCell = document.querySelectorAll(".transCatCell");
+
+    let select = document.createElement("select");
+    let fragment = document.createDocumentFragment();
+
+    budgetCategoryList.forEach((category) => {
+      let option = document.createElement("option");
+      option.textContent = category.category;
+      fragment.appendChild(option);
+    });
+
+    select.appendChild(fragment);
+    console.log(select)
+
+    buttonToAddCategory.addEventListener("click", function () {
+      transCatCell.forEach((category) => {
+          category.appendChild(select.cloneNode(true));
+        });
+
     });
   }
   reader.readAsText(csvFileUpload.files[0]);
