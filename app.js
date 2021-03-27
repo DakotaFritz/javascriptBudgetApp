@@ -106,11 +106,11 @@ function showCatEntry(list, type, title, amount, id){
 }
 
 // Function to take information from the input category object and display it as a list item in the HTML
-function showTransEntry(list, merchant, date, amount, id){
+function showTransEntry(list, category, merchant, date, amount, id){
 
   const entry = 
     `<tr id="${id}">
-      <td class="transCatCell"></td>
+      <td class="transCatCell">${category}</td>
       <td>${merchant}</td>
       <td>${date}</td>
       <td>${amount}</td>
@@ -259,8 +259,7 @@ addTransactionToList.addEventListener("click", function() {
       };
       // Push the object containing the input category into the Array that was created above
       transactionList.push(inputTransactionsAll);
-      eval(`${inputTransactionsAll.transCategory.value}CatList`.push(inputTransactionsAll));
-      console.log(`${inputTransactionsAll.transCategory.value}Transactions`);
+
       // Clear the input in each field
       clearInput([transactionCategory, merchantName, transDate, transAmt]);
       // For each object, show the input on the page through the showEntry function
@@ -288,7 +287,7 @@ csvFileUpload.addEventListener("change", function(e) {
       transArrFromCSV.push(transListFromCSV)
     }
     transArrFromCSV.forEach( (entry, index) => {
-      showTransEntry(transTableRowsFromCSV, entry.merchantName, entry.transDate, entry.transAmount, index);
+      showTransEntry(transTableRowsFromCSV, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
     });
     
     tableFromCSV = document.querySelector("#tableFromCSV");
