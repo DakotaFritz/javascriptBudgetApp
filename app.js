@@ -308,7 +308,7 @@ csvFileUpload.addEventListener("change", function(e) {
     });
 
     select.appendChild(fragment);
-    console.log(select)
+    select.className = "transListSelectedOption";
 
     let approveCell = document.createElement("td");
     let approveBtn = document.createElement("button");
@@ -320,14 +320,21 @@ csvFileUpload.addEventListener("change", function(e) {
     deleteBtn.textContent = "Delete";
     deleteCell.appendChild(deleteBtn);
 
-    buttonToAddCategory.addEventListener("click", function () {
+    buttonToAddCategory.addEventListener("click", () => {
       transCatCell.forEach((category) => {
           category.appendChild(select.cloneNode(true));
           category.parentNode.appendChild(approveCell.cloneNode(true));
           category.parentNode.appendChild(deleteCell.cloneNode(true));
         });
-      
     });
+
+    let transListSelectedOption = document.querySelectorAll("#transListSelectedOption");
+
+    approveBtn.addEventListener("click", () => {
+      // transArrFromCSV.forEach((entry) => {
+      //   entry.transCategory = transListSelectedOption;
+      // })
+    })
   }
   reader.readAsText(csvFileUpload.files[0]);
 }, false);

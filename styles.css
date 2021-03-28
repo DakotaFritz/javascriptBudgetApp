@@ -1,0 +1,63 @@
+/* Set Font Family and entire document to Border-Box */
+* {
+    box-sizing: border-box;
+}
+
+/* Make header 100% of width of viewport. Background picture with a gradient color behind it. */
+header {
+    width: 100%;
+    padding: 1px;
+    height: 202px;
+    background-size: cover;
+    text-align: center;
+    border-radius: 2px;
+}
+
+/* Header Title */
+header h1 {
+    font-size: 2em;
+    text-shadow: 1px 1px 3px black;
+    color: rgb(48, 97, 46);
+    margin-top: 0;
+    padding-top: 40px;
+}
+
+/* Header Subtitle */
+header, h2 {
+    font-size: 1em;
+    text-align: center;
+    text-shadow: 0.5px 0.5px 1px black;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border-bottom: 1px solid black;
+    padding: 10px;
+    text-align: left;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+th {
+    background-color: slategray;
+}
+
+button {
+    transition-duration: 0.4s;
+    border-radius: 4px;
+    background-color: rgb(255, 255, 255);
+  }
+  
+button:hover {
+    background-color: rgb(228, 228, 228);
+  }

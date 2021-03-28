@@ -30,24 +30,24 @@
             <option value="Health">Health</option>
             <option value="Debt">Debt</option>
             <option value="Bills">Bills</option>
-        </select>
+        </select><br>
         <label for="category">Category</label>
-        <input type="text" id="category">
+        <input type="text" id="category"><br>
         <label for="budgetedAmt">Budgeted Amount</label>
-        <input type="text" id="budgetedAmt">
+        <input type="text" id="budgetedAmt"><br>
         <button type="button" id="addCategoryToList">Add Category</button>
 
 
         <h2>Enter Your Transactions Here</h2>
         <p>Please go ahead and enter your transactions below using your categories from above.</p>
-        <select id="transactionCategory">
-        </select>
+        <label for="transactionCategory">Category</label>
+        <select id="transactionCategory"></select><br>
         <label for="merchantName">Merchant</label>
-        <input type="text" id="merchantName">
+        <input type="text" id="merchantName"><br>
         <label for="transDate">Transaction Date</label>
-        <input type="date" id="transDate">
+        <input type="date" id="transDate"><br>
         <label for="transAmt">Transaction Amount</label>
-        <input type="text" id="transAmt">
+        <input type="text" id="transAmt"><br>
         <button type="button" id="addTransactionToList">Add Transaction</button>
 
         <p>Upload your CSV file here:</p>
@@ -64,7 +64,7 @@
             </tr>
         </table> 
 
-        <h2>Transaction from CSV Upload List</h2>
+        <h2>Pending Transactions from CSV Upload</h2>
         <table id="tableFromCSV">
             <tr id="transTableRowsFromCSV">
                 <th>Category</th>
@@ -79,4 +79,10 @@
         
     </footer>
     <script rel="js-file" src="app.js"></script>
+    <script src='tablesort.min.js'></script>
+ 
+<!-- Include sort types you need -->
+    <script src='tablesort.number.js'></script>
+    <script src='tablesort.date.js'></script>
+
 </html>
