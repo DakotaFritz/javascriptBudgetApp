@@ -151,6 +151,20 @@ function readCSVUpload(file) {
   reader.readAsText(file);
 }
 
+totalBudgetedNum.insertAdjacentHTML("beforeend", `
+<p>Total Budget: ${totalBudgetAmt}</p>
+<p>Giving Budget: ${givingBudgetAmt}</p>
+<p>Housing Budget: ${housingBudgetAmt}</p>
+<p>Transportation Budget: ${transportationBudgetAmt}</p>
+<p>Food Budget: ${foodBudgetAmt}</p>
+<p>Personal Budget: ${personalBudgetAmt}</p>
+<p>Lifestyle Budget: ${lifestyleBudgetAmt}</p>
+<p>Health Budget: ${healthBudgetAmt}</p>
+<p>Debt Budget: ${debtBudgetAmt}</p>
+<p>Bills Budget: ${billsBudgetAmt}</p>
+`);
+
+
 // On the click event, trigger actions with the input
 addCategoryToList.addEventListener("click", function() {
 
@@ -234,7 +248,18 @@ addCategoryToList.addEventListener("click", function() {
       clearObject(budgetCategoriesAll);
 
       clearElement(totalBudgetedNum);
-      totalBudgetedNum.insertAdjacentHTML("beforeend", `${totalBudgetAmt}`);
+      totalBudgetedNum.insertAdjacentHTML("beforeend", `
+<p>Total Budget: ${totalBudgetAmt}</p>
+<p>Giving Budget: ${givingBudgetAmt}</p>
+<p>Housing Budget: ${housingBudgetAmt}</p>
+<p>Transportation Budget: ${transportationBudgetAmt}</p>
+<p>Food Budget: ${foodBudgetAmt}</p>
+<p>Personal Budget: ${personalBudgetAmt}</p>
+<p>Lifestyle Budget: ${lifestyleBudgetAmt}</p>
+<p>Health Budget: ${healthBudgetAmt}</p>
+<p>Debt Budget: ${debtBudgetAmt}</p>
+<p>Bills Budget: ${billsBudgetAmt}</p>
+`);
     }
   });
 
@@ -278,6 +303,7 @@ csvFileUpload.addEventListener("change", function(e) {
     })
     let headersFromCSV = lines[0];
     let rowContentFromCSV = lines.slice(1);
+    rowContentFromCSV.reverse();
     for (i =0; i < rowContentFromCSV.length; i++) {
       let transListFromCSV = {}; 
       transListFromCSV.transCategory = "";
@@ -304,6 +330,7 @@ csvFileUpload.addEventListener("change", function(e) {
     budgetCategoryList.forEach((category) => {
       let option = document.createElement("option");
       option.textContent = category.category;
+      option.value = category.category;
       fragment.appendChild(option);
     });
 
@@ -313,28 +340,63 @@ csvFileUpload.addEventListener("change", function(e) {
     let approveCell = document.createElement("td");
     let approveBtn = document.createElement("button");
     approveBtn.textContent = "Approve";
+    approveBtn.className = "approveBtns";
     approveCell.appendChild(approveBtn);
 
     let deleteCell = document.createElement("td");
     let deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
+    deleteBtn.className = "deleteBtns";
     deleteCell.appendChild(deleteBtn);
 
-    buttonToAddCategory.addEventListener("click", () => {
-      transCatCell.forEach((category) => {
-          category.appendChild(select.cloneNode(true));
-          category.parentNode.appendChild(approveCell.cloneNode(true));
-          category.parentNode.appendChild(deleteCell.cloneNode(true));
-        });
+    transCatCell.forEach((category) => {
+      category.appendChild(select.cloneNode(true));
+      category.parentNode.appendChild(approveCell.cloneNode(true));
+      category.parentNode.appendChild(deleteCell.cloneNode(true));
     });
+    let transListSelectedOption = document.querySelectorAll(".transListSelectedOption");
+    let approveBtnsInDOM = document.querySelectorAll(".approveBtns");
+    let deleteBtnsInDOM = document.querySelectorAll(".deleteBtns");
+    console.log(transListSelectedOption[0].value);
+    console.log(approveBtnsInDOM);
+    console.log(transArrFromCSV[0]);
+    
+    for (let i = 0; i < transArrFromCSV.length; i++) {
+      approveBtnsInDOM[i].addEventListener("click", function(e) {
+        transArrFromCSV[i].transCategory = transListSelectedOption[i].value;
+        console.log(transArrFromCSV[i]);
+      })
+      deleteBtnsInDOM[i].addEventListener("click", function(e) {
+        transArrFromCSV.splice(i);
+        transListSelectedOption[i].innerHTML = ""
+        select.innerHTML = ""
+      })
+    }
 
-    let transListSelectedOption = document.querySelectorAll("#transListSelectedOption");
+    // buttonToAddCategory.addEventListener("click", () => {
+    //   transCatCell.forEach((category) => {
+    //       category.appendChild(select.cloneNode(true));
+    //       category.parentNode.appendChild(approveCell.cloneNode(true));
+    //       category.parentNode.appendChild(deleteCell.cloneNode(true));
+    //     });
+    //     let transListSelectedOption = document.querySelectorAll(".transListSelectedOption");
+    //     console.log(transListSelectedOption[0].value);
+    //     console.log(approveBtnsInDOM);
+    //     console.log(transArrFromCSV[0]);
+        
+    //     for (const button of approveBtnsInDOM) {
+    //       button.addEventListener("click", function(e) {
+    //         transArrFromCSV[0].transCategory = transListSelectedOption[0].value;
+    //         console.log(transArrFromCSV[0])
+    //       })
+    //     }
+        
+    //     // approveBtnsInDOM.forEach.call(nodeList,function(e){e.addEventListener('click',callback,false)})
+    //     //   transArrFromCSV[0].transCategory = transListSelectedOption[0].value;
+    //     //   console.log(transArrFromCSV[0])
+    //     // });
+    // });
 
-    approveBtn.addEventListener("click", () => {
-      // transArrFromCSV.forEach((entry) => {
-      //   entry.transCategory = transListSelectedOption;
-      // })
-    })
   }
   reader.readAsText(csvFileUpload.files[0]);
 }, false);
