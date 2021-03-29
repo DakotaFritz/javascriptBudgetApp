@@ -8,7 +8,7 @@
 // I want to show each category of transaction and the transactions within the category listed down in whatever specific order
 // I want a floating "Edit" button to follow the cursor down the page and then transforms those fields to input or drop-down menu (for category)
 
-// Grab the HTML fields by id for manipulating later
+// Each of these variables grabs a DOM Element or nodeList. Some are declared here and changed later inside of a function
 let totalBudgetedNum = document.querySelector("#totalBudgetedNumber");
 let budgetCatFamily = document.querySelector("#family");
 let budgetCategory = document.querySelector("#category");
@@ -31,29 +31,29 @@ let transactionRow;
 // Regex to ensure that the number amount only contains "$", digits, and "."
 let regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;
 
-let budgetCategoriesAll = {}
-let inputTransactionsAll
-let transListFromCSV
+// Declare the objects that categories, transactions, and transactions from the CSV upload go into
+let budgetCategoriesAll;
+let inputTransactionsAll;
+let transListFromCSV;
 
-// The Array that will contain the budget category objects later on
-// let budgetCategoryList = givingCatList + housingCatList + transportationCatList + foodCatList + personalCatList + lifestyleCatList + healthCatList + debtCatList + billsCatList;
-let currentCategoryOption = "";
-let transactionList = [];
-let transArrFromCSV = [];
+// Declare the variables that will contain the arrays of transactions for later on, as well as the currentCategoryoption
+let currentCategoryOption;
+let transactionList;
+let transArrFromCSV;
 
-// The arrays for each family of categories to live in
-let givingCatList = [];
-let housingCatList = [];
-let transportationCatList = [];
-let foodCatList = [];
-let personalCatList = [];
-let lifestyleCatList = [];
-let healthCatList = [];
-let debtCatList = [];
-let billsCatList = [];
-let budgetCategoryList = [];
+// Declare the variables that will hold hold categories that belong to each family, as well as the overall category list
+let givingCatList;
+let housingCatList;
+let transportationCatList;
+let foodCatList;
+let personalCatList;
+let lifestyleCatList;
+let healthCatList;
+let debtCatList;
+let billsCatList;
+let budgetCategoryList;
 
-// Need to find a way to calculate the total
+// Declare variables for amount budgeted to each category within each family, as well as the total budget number
 let givingBudgetAmt = 0;
 let housingBudgetAmt = 0;
 let transportationBudgetAmt = 0;
@@ -65,6 +65,7 @@ let debtBudgetAmt = 0;
 let billsBudgetAmt = 0;
 let totalBudgetAmt = 0;
 
+// Declare variables for transaction amounts for each category within each family, as well as the total transaction amount
 let givingTransAmt = 0;
 let housingTransAmt = 0;
 let transportationTransAmt = 0;
@@ -76,6 +77,7 @@ let debtTransAmt = 0;
 let billsTransAmt = 0;
 let totalTransAmt = 0;
 
+// Declare variables for the difference between budgeted amount and transaction amount within each family, as well as the total difference
 let givingDifference = 0;
 let housingDifference = 0;
 let transportationDifference = 0;
@@ -87,6 +89,7 @@ let debtDifference = 0;
 let billsDifference = 0;
 let totalDifference = 0;
 
+// Declare variables to be used in the CSV reader event listener
 let rowContentFromCSV;
 let select;
 let fragment;
