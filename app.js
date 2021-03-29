@@ -132,10 +132,11 @@ function showCatEntry(list, type, title, amount, id){
 }
 
 // Function to take information from the input category object and display it as a list item in the HTML
-function showTransEntry(list, category, merchant, date, amount, id){
+function showTransEntry(list, family, category, merchant, date, amount, id){
 
   const entry = 
     `<tr class="transactionRow" id="${id}">
+      <td>${family}
       <td class="transCatCell">${category}</td>
       <td>${merchant}</td>
       <td>${date}</td>
@@ -294,9 +295,10 @@ addCategoryToList.addEventListener("click", function() {
         showCatEntry(categoriesListOfItems, entry.family, entry.category, entry.amount, index);
       });
 
-      currentCategoryOption = budgetCategoriesAll.category
+      currentCategoryOption = budgetCategoriesAll.category;
+      currentCatFamily = budgetCategoriesAll.family;
       transactionCategory.insertAdjacentHTML( "afterbegin",
-        `<option value="${currentCategoryOption}">${currentCategoryOption}</option>`
+        `<option class="${currentCatFamily}"value="${currentCategoryOption}">${currentCategoryOption}</option>`
       );
 
       clearObject(budgetCategoriesAll);
@@ -330,7 +332,11 @@ addTransactionToList.addEventListener("click", function() {
     return; } 
     // Otherwise, append Family, Category, and Amount to variable as an Object
     else {
+      let transactionFamCatIndex = transactionCategory.selectedIndex;
+      let transactionFamCat = transactionCategory.children[transactionFamCatIndex].className
+
       inputTransactionsAll = {
+        catFamily: transactionFamCat,
         transCategory: transactionCategory.value,
         merchantName: merchantName.value,
         transDate: transDate.value,
@@ -343,7 +349,7 @@ addTransactionToList.addEventListener("click", function() {
       clearInput([transactionCategory, merchantName, transDate, transAmt]);
       // For each object, show the input on the page through the showEntry function
       transactionList.forEach( (entry, index) => {
-        showTransEntry(transTable, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
+        showTransEntry(transTable, entry.catFamily, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
       });
       
       // const solution = budgetCategoryList.filter((category) => category.category === transactionList.transCategory);
@@ -418,6 +424,7 @@ csvFileUpload.addEventListener("change", function(e) {
       option = document.createElement("option");
       option.textContent = category.category;
       option.value = category.category;
+      option.className = category.family;
       fragment.appendChild(option);
     });
 
@@ -459,7 +466,7 @@ csvFileUpload.addEventListener("change", function(e) {
           transTable.innerHTML = ""
         }
         transactionList.forEach( (entry, index) => {
-        showTransEntry(transTable, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
+        showTransEntry(transTable, entry.catFamily, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
         });
       })
       deleteBtnsInDOM[i].addEventListener("click", function(e) {
