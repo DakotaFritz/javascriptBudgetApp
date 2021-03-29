@@ -76,6 +76,17 @@ let debtTransAmt = 0;
 let billsTransAmt = 0;
 let totalTransAmt = 0;
 
+let givingDifference = 0;
+let housingDifference = 0;
+let transportationDifference = 0;
+let foodDifference = 0;
+let personalDifference = 0;
+let lifestyleDifference = 0;
+let healthDifference = 0;
+let debtDifference = 0;
+let billsDifference = 0;
+let totalDifference = 0;
+
 let rowContentFromCSV;
 let select;
 let fragment;
@@ -188,37 +199,37 @@ function calculateTotalBudget(family, list){
   return sum;
 }
 
-// function calculateTotalTrans(category, list){
-//   if (transactionList.transCategory === )
-//   let sum = 0;
+function calculateTotalTrans(family, list){
+  let sum = 0;
 
-//   list.forEach( entry => {
-//       if( entry.transCategory == category ){
-//           sum += entry.transAmount;
-//       }
-//   })
-
-//   return sum;
-// }
+  list.forEach( entry => {
+      if( entry.catFamily == family ){
+          sum += entry.transAmount;
+      }
+  })
+  return sum;
+}
 
 function readCSVUpload(file) {
   let reader = new FileReader();
   reader.readAsText(file);
 }
 
-totalBudgetedNum.insertAdjacentHTML("beforeend", `
-<p>Total Budget: ${totalBudgetAmt}</p>
-<p>Giving Budget: ${givingBudgetAmt}</p>
-<p>Housing Budget: ${housingBudgetAmt}</p>
-<p>Transportation Budget: ${transportationBudgetAmt}</p>
-<p>Food Budget: ${foodBudgetAmt}</p>
-<p>Personal Budget: ${personalBudgetAmt}</p>
-<p>Lifestyle Budget: ${lifestyleBudgetAmt}</p>
-<p>Health Budget: ${healthBudgetAmt}</p>
-<p>Debt Budget: ${debtBudgetAmt}</p>
-<p>Bills Budget: ${billsBudgetAmt}</p>
-`);
-
+function updateBudgetNumbersPrintOut() {
+  totalBudgetedNum.insertAdjacentHTML("beforeend", `
+  <p>Total Budget: ${totalBudgetAmt} vs. Total Spent: ${totalTransAmt} = Difference ${totalDifference}</p>
+  <p>Giving Budget: ${givingBudgetAmt} vs. Giving Spent: ${givingTransAmt} = Difference ${givingDifference}</p>
+  <p>Housing Budget: ${housingBudgetAmt} vs. Housing Spent: ${housingTransAmt} = Difference ${housingDifference}</p>
+  <p>Transportation Budget: ${transportationBudgetAmt} vs. Transportation Spent ${transportationTransAmt} = Difference ${transportationDifference}</p>
+  <p>Food Budget: ${foodBudgetAmt} vs. Food Spent: ${foodTransAmt} = Difference ${foodDifference}</p>
+  <p>Personal Budget: ${personalBudgetAmt} vs. Personal Spent ${personalTransAmt} = Difference ${personalDifference}</p>
+  <p>Lifestyle Budget: ${lifestyleBudgetAmt} vs. Lifestyle Spent ${lifestyleTransAmt} = Difference ${lifestyleDifference}</p>
+  <p>Health Budget: ${healthBudgetAmt} vs. Health Spent ${healthTransAmt} = Difference ${healthDifference}</p>
+  <p>Debt Budget: ${debtBudgetAmt} vs. Debt Spent ${debtTransAmt} = Difference ${debtDifference}</p>
+  <p>Bills Budget: ${billsBudgetAmt} vs. Bills Spent ${billsTransAmt} = Difference ${billsDifference}</p>
+  `);
+};
+updateBudgetNumbersPrintOut();
 
 // On the click event, trigger actions with the input
 addCategoryToList.addEventListener("click", function() {
@@ -304,18 +315,7 @@ addCategoryToList.addEventListener("click", function() {
       clearObject(budgetCategoriesAll);
 
       clearElement(totalBudgetedNum);
-      totalBudgetedNum.insertAdjacentHTML("beforeend", `
-<p>Total Budget: ${totalBudgetAmt}</p>
-<p>Giving Budget: ${givingBudgetAmt}</p>
-<p>Housing Budget: ${housingBudgetAmt}</p>
-<p>Transportation Budget: ${transportationBudgetAmt}</p>
-<p>Food Budget: ${foodBudgetAmt}</p>
-<p>Personal Budget: ${personalBudgetAmt}</p>
-<p>Lifestyle Budget: ${lifestyleBudgetAmt}</p>
-<p>Health Budget: ${healthBudgetAmt}</p>
-<p>Debt Budget: ${debtBudgetAmt}</p>
-<p>Bills Budget: ${billsBudgetAmt}</p>
-`);
+      updateBudgetNumbersPrintOut()
     }
   });
 
@@ -354,37 +354,46 @@ addTransactionToList.addEventListener("click", function() {
       
       // const solution = budgetCategoryList.filter((category) => category.category === transactionList.transCategory);
 
-      switch (transactionList.family) {
+      switch (inputTransactionsAll.catFamily) {
         case "Giving":
-          // givingtTransAmt.push(inputTransactionsAll);
-          // totalTransAmt.push(inputTransactionsAll);
           givingTransAmt = calculateTotalTrans("Giving", transactionList); 
+          givingDifference = givingBudgetAmt - givingTransAmt;
           break;
         case "Housing":
-          housingTransAmt = calculateTotalTrans("Housing", transactionList);          
+          housingTransAmt = calculateTotalTrans("Housing", transactionList);
+          housingDifference = housingBudgetAmt - givingTransAmt;          
           break;  
         case "Transportation":
-          transportationTransAmt = calculateTotalTrans("Transportation", transactionList);          
+          transportationTransAmt = calculateTotalTrans("Transportation", transactionList);  
+          transportationDifference = transportationBudgetAmt - transportationTransAmt;        
           break;
         case "Food":
-          foodTransAmt = calculateTotalTrans("Food", transactionList);          
+          foodTransAmt = calculateTotalTrans("Food", transactionList);   
+          foodDifference = foodBudgetAmt - foodTransAmt;       
           break;   
         case "Personal":
-          personalTransAmt = calculateTotalTrans("Personal", transactionList);          
+          personalTransAmt = calculateTotalTrans("Personal", transactionList);
+          personalDifference = personalBudgetAmt - personalTransAmt;   
           break; 
         case "lifestyle":
-          personalTransAmt = calculateTotalTrans("Lifestyle", transactionList);          
+          lifestylelTransAmt = calculateTotalTrans("Lifestyle", transactionList);
+          lifestyleDifference = lifestyleBudgetAmt - lifestyleTransAmt;
           break;  
         case "Health":
-          healthTransAmt = calculateTotalTrans("Health", transactionList);          
+          healthTransAmt = calculateTotalTrans("Health", transactionList);
+          healthDifference = healthBudgetAmt - healthTransAmt          
           break;
         case "Debt":
-          debtTransAmt = calculateTotalTrans("Debt", transactionList);          
+          debtTransAmt = calculateTotalTrans("Debt", transactionList);  
+          debtDifference = debtBudgetAmt - debtTransAmt        
           break;
         case "Bills":
-          billsTransAmt = calculateTotalTrans("Bills", transactionList);          
+          billsTransAmt = calculateTotalTrans("Bills", transactionList);
+          billsDifference = billsBudgetAmt - billsTransAmt;          
           break;  
       }
+      clearElement(totalBudgetedNum);
+      updateBudgetNumbersPrintOut()
     }
 });
 
@@ -459,6 +468,9 @@ csvFileUpload.addEventListener("change", function(e) {
     for (let i = 0; i < transArrFromCSV.length; i++) {
       approveBtnsInDOM[i].addEventListener("click", function(e) {
         transArrFromCSV[i].transCategory = transListSelectedOption[i].value;
+        let transactionFamCatIndex = transListSelectedOption[i].selectedIndex;
+        let transactionFamCat = transListSelectedOption[i].children[transactionFamCatIndex].className;
+        transArrFromCSV[i].catFamily = transactionFamCat;
         transactionList.push(transArrFromCSV[i]);
         clearElement(transCatCell[i].parentNode);
         for (let j = 0; j < transactionRow.length; j++) {
@@ -473,8 +485,49 @@ csvFileUpload.addEventListener("change", function(e) {
         transArrFromCSV.splice(i);
         clearElement(transCatCell[i].parentNode);
       })
-    }
+      switch (transArrFromCSV[i].catFamily) {
+        case "Giving":
+          givingTransAmt = calculateTotalTrans("Giving", transactionList); 
+          givingDifference = givingBudgetAmt - givingTransAmt;
+          break;
+        case "Housing":
+          housingTransAmt = calculateTotalTrans("Housing", transactionList);
+          housingDifference = housingBudgetAmt - givingTransAmt;          
+          break;  
+        case "Transportation":
+          transportationTransAmt = calculateTotalTrans("Transportation", transactionList);  
+          transportationDifference = transportationBudgetAmt - transportationTransAmt;        
+          break;
+        case "Food":
+          foodTransAmt = calculateTotalTrans("Food", transactionList);   
+          foodDifference = foodBudgetAmt - foodTransAmt;       
+          break;   
+        case "Personal":
+          personalTransAmt = calculateTotalTrans("Personal", transactionList);
+          personalDifference = personalBudgetAmt - personalTransAmt;   
+          break; 
+        case "lifestyle":
+          lifestylelTransAmt = calculateTotalTrans("Lifestyle", transactionList);
+          lifestyleDifference = lifestyleBudgetAmt - lifestyleTransAmt;
+          break;  
+        case "Health":
+          healthTransAmt = calculateTotalTrans("Health", transactionList);
+          healthDifference = healthBudgetAmt - healthTransAmt          
+          break;
+        case "Debt":
+          debtTransAmt = calculateTotalTrans("Debt", transactionList);  
+          debtDifference = debtBudgetAmt - debtTransAmt        
+          break;
+        case "Bills":
+          billsTransAmt = calculateTotalTrans("Bills", transactionList);
+          billsDifference = billsBudgetAmt - billsTransAmt;          
+          break;  
+      };
+      clearElement(totalBudgetedNum);
+      updateBudgetNumbersPrintOut();
+    };
+    };
 
-  }
+    
   reader.readAsText(csvFileUpload.files[0]);
 }, false);
