@@ -26,11 +26,14 @@ let tableFromCSV;
 let transTableRowsFromCSV = document.querySelector("#transTableRowsFromCSV");
 let transCatCell;
 let buttonToAddCategory;
+let transactionRow;
 
 // Regex to ensure that the number amount only contains "$", digits, and "."
 let regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;
 
 let budgetCategoriesAll = {}
+let inputTransactionsAll
+let transListFromCSV
 
 // The Array that will contain the budget category objects later on
 // let budgetCategoryList = givingCatList + housingCatList + transportationCatList + foodCatList + personalCatList + lifestyleCatList + healthCatList + debtCatList + billsCatList;
@@ -61,6 +64,29 @@ let healthBudgetAmt = 0;
 let debtBudgetAmt = 0;
 let billsBudgetAmt = 0;
 let totalBudgetAmt = 0;
+
+let givingTransAmt = 0;
+let housingTransAmt = 0;
+let transportationTransAmt = 0;
+let foodTransAmt = 0;
+let personalTransAmt = 0;
+let lifestyleTransAmt = 0;
+let healthTransAmt = 0;
+let debtTransAmt = 0;
+let billsTransAmt = 0;
+let totalTransAmt = 0;
+
+let rowContentFromCSV;
+let select;
+let fragment;
+let option;
+let approveCell;
+let approveBtn;
+let deleteCell;
+let deleteBtn;
+let transListSelectedOption;
+let approveBtnsInDOM;
+let deleteBtnsInDOM;
 
 // Function to clear the input fields upon submitting the input
 function clearInput(inputsArray) {
@@ -109,7 +135,7 @@ function showCatEntry(list, type, title, amount, id){
 function showTransEntry(list, category, merchant, date, amount, id){
 
   const entry = 
-    `<tr id="${id}">
+    `<tr class="transactionRow" id="${id}">
       <td class="transCatCell">${category}</td>
       <td>${merchant}</td>
       <td>${date}</td>
@@ -120,7 +146,22 @@ function showTransEntry(list, category, merchant, date, amount, id){
   // The entry variable content will be placed "afterbegin" (at the top of the list) of the HTML location passed into the function
   list.insertAdjacentHTML(position, entry);
 
-  
+}
+
+function showTransEntryCSV(list, category, merchant, date, amount, id){
+
+  const entry = 
+    `<tr class="transactionRowCSV" id="${id}">
+      <td class="transCatCell">${category}</td>
+      <td>${merchant}</td>
+      <td>${date}</td>
+      <td>${amount}</td>
+    </tr>`;
+
+  const position = "afterend";
+  // The entry variable content will be placed "afterbegin" (at the top of the list) of the HTML location passed into the function
+  list.insertAdjacentHTML(position, entry);
+
 }
 
 function clearElement(element){
@@ -134,7 +175,7 @@ function clearObject (object) {
 }
 
 // Function to calculate total for a budget category
-function calculateTotal(family, list){
+function calculateTotalBudget(family, list){
   let sum = 0;
 
   list.forEach( entry => {
@@ -145,6 +186,19 @@ function calculateTotal(family, list){
 
   return sum;
 }
+
+// function calculateTotalTrans(category, list){
+//   if (transactionList.transCategory === )
+//   let sum = 0;
+
+//   list.forEach( entry => {
+//       if( entry.transCategory == category ){
+//           sum += entry.transAmount;
+//       }
+//   })
+
+//   return sum;
+// }
 
 function readCSVUpload(file) {
   let reader = new FileReader();
@@ -186,47 +240,47 @@ addCategoryToList.addEventListener("click", function() {
         case "Giving":
           givingCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
-          givingBudgetAmt = calculateTotal("Giving", budgetCategoryList); 
+          givingBudgetAmt = calculateTotalBudget("Giving", budgetCategoryList); 
           break;
         case "Housing":
           housingCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
-          housingBudgetAmt = calculateTotal("Housing", budgetCategoryList);          
+          housingBudgetAmt = calculateTotalBudget("Housing", budgetCategoryList);          
           break;  
         case "Transportation":
           transportationCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
-          transportationBudgetAmt = calculateTotal("Transportation", budgetCategoryList);          
+          transportationBudgetAmt = calculateTotalBudget("Transportation", budgetCategoryList);          
           break;
         case "Food":
           foodCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
-          foodBudgetAmt = calculateTotal("Food", budgetCategoryList);          
+          foodBudgetAmt = calculateTotalBudget("Food", budgetCategoryList);          
           break;   
         case "Personal":
           personalCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
-          personalBudgetAmt = calculateTotal("Personal", budgetCategoryList);          
+          personalBudgetAmt = calculateTotalBudget("Personal", budgetCategoryList);          
           break; 
         case "lifestyle":
           lifestyleCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
-          lifestyleBudgetAmt = calculateTotal("Lifestyle", budgetCategoryList);          
+          lifestyleBudgetAmt = calculateTotalBudget("Lifestyle", budgetCategoryList);          
           break;  
         case "Health":
           healthCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
-          healthBudgetAmt = calculateTotal("Health", budgetCategoryList);          
+          healthBudgetAmt = calculateTotalBudget("Health", budgetCategoryList);          
           break;
         case "Debt":
           debtCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
-          debtBudgetAmt = calculateTotal("Debt", budgetCategoryList);          
+          debtBudgetAmt = calculateTotalBudget("Debt", budgetCategoryList);          
           break;
         case "Bills":
           billsCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
-          billsBudgetAmt = calculateTotal("Bills", budgetCategoryList);          
+          billsBudgetAmt = calculateTotalBudget("Bills", budgetCategoryList);          
           break;  
       }
 
@@ -276,7 +330,7 @@ addTransactionToList.addEventListener("click", function() {
     return; } 
     // Otherwise, append Family, Category, and Amount to variable as an Object
     else {
-      let inputTransactionsAll = {
+      inputTransactionsAll = {
         transCategory: transactionCategory.value,
         merchantName: merchantName.value,
         transDate: transDate.value,
@@ -291,6 +345,40 @@ addTransactionToList.addEventListener("click", function() {
       transactionList.forEach( (entry, index) => {
         showTransEntry(transTable, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
       });
+      
+      // const solution = budgetCategoryList.filter((category) => category.category === transactionList.transCategory);
+
+      switch (transactionList.family) {
+        case "Giving":
+          // givingtTransAmt.push(inputTransactionsAll);
+          // totalTransAmt.push(inputTransactionsAll);
+          givingTransAmt = calculateTotalTrans("Giving", transactionList); 
+          break;
+        case "Housing":
+          housingTransAmt = calculateTotalTrans("Housing", transactionList);          
+          break;  
+        case "Transportation":
+          transportationTransAmt = calculateTotalTrans("Transportation", transactionList);          
+          break;
+        case "Food":
+          foodTransAmt = calculateTotalTrans("Food", transactionList);          
+          break;   
+        case "Personal":
+          personalTransAmt = calculateTotalTrans("Personal", transactionList);          
+          break; 
+        case "lifestyle":
+          personalTransAmt = calculateTotalTrans("Lifestyle", transactionList);          
+          break;  
+        case "Health":
+          healthTransAmt = calculateTotalTrans("Health", transactionList);          
+          break;
+        case "Debt":
+          debtTransAmt = calculateTotalTrans("Debt", transactionList);          
+          break;
+        case "Bills":
+          billsTransAmt = calculateTotalTrans("Bills", transactionList);          
+          break;  
+      }
     }
 });
 
@@ -301,11 +389,10 @@ csvFileUpload.addEventListener("change", function(e) {
     const lines = reader.result.split("\n").map(function (line) {
       return line.split(",")
     })
-    let headersFromCSV = lines[0];
-    let rowContentFromCSV = lines.slice(1);
+    rowContentFromCSV = lines.slice(1);
     rowContentFromCSV.reverse();
     for (i =0; i < rowContentFromCSV.length; i++) {
-      let transListFromCSV = {}; 
+      transListFromCSV = {}; 
       transListFromCSV.transCategory = "";
       transListFromCSV.merchantName = rowContentFromCSV[i][1];
       transListFromCSV.transDate = rowContentFromCSV[i][2];
@@ -313,7 +400,7 @@ csvFileUpload.addEventListener("change", function(e) {
       transArrFromCSV.push(transListFromCSV)
     }
     transArrFromCSV.forEach( (entry, index) => {
-      showTransEntry(transTableRowsFromCSV, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
+      showTransEntryCSV(transTableRowsFromCSV, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
     });
     
     tableFromCSV = document.querySelector("#tableFromCSV");
@@ -324,11 +411,11 @@ csvFileUpload.addEventListener("change", function(e) {
     buttonToAddCategory = document.querySelector("#buttonToAddCategory");
     transCatCell = document.querySelectorAll(".transCatCell");
 
-    let select = document.createElement("select");
-    let fragment = document.createDocumentFragment();
+    select = document.createElement("select");
+    fragment = document.createDocumentFragment();
 
     budgetCategoryList.forEach((category) => {
-      let option = document.createElement("option");
+      option = document.createElement("option");
       option.textContent = category.category;
       option.value = category.category;
       fragment.appendChild(option);
@@ -337,14 +424,14 @@ csvFileUpload.addEventListener("change", function(e) {
     select.appendChild(fragment);
     select.className = "transListSelectedOption";
 
-    let approveCell = document.createElement("td");
-    let approveBtn = document.createElement("button");
+    approveCell = document.createElement("td");
+    approveBtn = document.createElement("button");
     approveBtn.textContent = "Approve";
     approveBtn.className = "approveBtns";
     approveCell.appendChild(approveBtn);
 
-    let deleteCell = document.createElement("td");
-    let deleteBtn = document.createElement("button");
+    deleteCell = document.createElement("td");
+    deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
     deleteBtn.className = "deleteBtns";
     deleteCell.appendChild(deleteBtn);
@@ -354,50 +441,33 @@ csvFileUpload.addEventListener("change", function(e) {
       category.parentNode.appendChild(approveCell.cloneNode(true));
       category.parentNode.appendChild(deleteCell.cloneNode(true));
     });
-    let transListSelectedOption = document.querySelectorAll(".transListSelectedOption");
-    let approveBtnsInDOM = document.querySelectorAll(".approveBtns");
-    let deleteBtnsInDOM = document.querySelectorAll(".deleteBtns");
+    transListSelectedOption = document.querySelectorAll(".transListSelectedOption");
+    approveBtnsInDOM = document.querySelectorAll(".approveBtns");
+    deleteBtnsInDOM = document.querySelectorAll(".deleteBtns");
     console.log(transListSelectedOption[0].value);
     console.log(approveBtnsInDOM);
     console.log(transArrFromCSV[0]);
     
+    transactionRow = document.querySelectorAll(".transactionRow");
     for (let i = 0; i < transArrFromCSV.length; i++) {
       approveBtnsInDOM[i].addEventListener("click", function(e) {
         transArrFromCSV[i].transCategory = transListSelectedOption[i].value;
-        console.log(transArrFromCSV[i]);
+        transactionList.push(transArrFromCSV[i]);
+        clearElement(transCatCell[i].parentNode);
+        for (let j = 0; j < transactionRow.length; j++) {
+          transactionRow[j].innerHTML = ""
+          transTable.innerHTML = ""
+        }
+        transactionList.forEach( (entry, index) => {
+        showTransEntry(transTable, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
+        });
       })
       deleteBtnsInDOM[i].addEventListener("click", function(e) {
         transArrFromCSV.splice(i);
-        transListSelectedOption[i].innerHTML = ""
-        select.innerHTML = ""
+        clearElement(transCatCell[i].parentNode);
       })
     }
-
-    // buttonToAddCategory.addEventListener("click", () => {
-    //   transCatCell.forEach((category) => {
-    //       category.appendChild(select.cloneNode(true));
-    //       category.parentNode.appendChild(approveCell.cloneNode(true));
-    //       category.parentNode.appendChild(deleteCell.cloneNode(true));
-    //     });
-    //     let transListSelectedOption = document.querySelectorAll(".transListSelectedOption");
-    //     console.log(transListSelectedOption[0].value);
-    //     console.log(approveBtnsInDOM);
-    //     console.log(transArrFromCSV[0]);
-        
-    //     for (const button of approveBtnsInDOM) {
-    //       button.addEventListener("click", function(e) {
-    //         transArrFromCSV[0].transCategory = transListSelectedOption[0].value;
-    //         console.log(transArrFromCSV[0])
-    //       })
-    //     }
-        
-    //     // approveBtnsInDOM.forEach.call(nodeList,function(e){e.addEventListener('click',callback,false)})
-    //     //   transArrFromCSV[0].transCategory = transListSelectedOption[0].value;
-    //     //   console.log(transArrFromCSV[0])
-    //     // });
-    // });
 
   }
   reader.readAsText(csvFileUpload.files[0]);
 }, false);
-
