@@ -666,6 +666,7 @@ csvFileUpload.addEventListener("change", function() {
         clearElement(totalBudgetedNum);
         updateBudgetNumbersPrintOut()
       })
+      
       deleteBtnsInDOM[i].addEventListener("click", function() {
         transArrFromCSV.splice(i);
         clearElement(transCatCell[i].parentNode);
