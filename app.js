@@ -223,50 +223,146 @@ function updateBudgetNumbersPrintOut() {
   totalBudgetedNum.insertAdjacentHTML("beforeend", `
   <div id="calculatedContainer">
     <div id="calculatedBudgetAmt">
-      <img src="images/moneybags.png" alt="Moneybag" class="summaryImages">
-      <p>Total Budget: ${totalBudgetAmt}</p>
-      <p>Giving Budget: ${givingBudgetAmt}</p>
-      <p>Housing Budget: ${housingBudgetAmt}</p>
-      <p>Transportation Budget: ${transportationBudgetAmt}</p>
-      <p>Food Budget: ${foodBudgetAmt}</p>
-      <p>Personal Budget: ${personalBudgetAmt}</p>
-      <p>Lifestyle Budget: ${lifestyleBudgetAmt}</p>
-      <p>Health Budget: ${healthBudgetAmt}</p>
-      <p>Debt Budget: ${debtBudgetAmt}</p>
-      <p>Bills Budget: ${billsBudgetAmt}</p>
+      <div id="totalBudgetDiv">
+        <img src="images/moneybags.png" alt="Moneybag" class="summaryImages">
+        <p>Total Budget: ${totalBudgetAmt}</p>
+      </div>
+      <div id="categoryBudgetTotals">
+        <p>Giving Budget: ${givingBudgetAmt}</p>
+        <p>Housing Budget: ${housingBudgetAmt}</p>
+        <p>Transportation Budget: ${transportationBudgetAmt}</p>
+        <p>Food Budget: ${foodBudgetAmt}</p>
+        <p>Personal Budget: ${personalBudgetAmt}</p>
+        <p>Lifestyle Budget: ${lifestyleBudgetAmt}</p>
+        <p>Health Budget: ${healthBudgetAmt}</p>
+        <p>Debt Budget: ${debtBudgetAmt}</p>
+        <p>Bills Budget: ${billsBudgetAmt}</p>
+      </div>
     </div>
 
     <div id="calculatedTransAmt">
-      <img src="images/receipt.png" alt="Moneybag" class="summaryImages">
-      <p>Total Spent: ${totalTransAmt}</p>
-      <p>Giving Spent: ${givingTransAmt}</p>
-      <p>Housing Spent: ${housingTransAmt}</p>
-      <p>Transportation Spent ${transportationTransAmt}</p>
-      <p>Food Spent: ${foodTransAmt}</p>
-      <p>Personal Spent ${personalTransAmt}</p>
-      <p>Lifestyle Spent ${lifestyleTransAmt}</p>
-      <p>Health Spent ${healthTransAmt}</p>
-      <p>Debt Spent ${debtTransAmt}</p>
-      <p>Bills Spent ${billsTransAmt}</p>
+      <div id="totalTransDiv">
+        <img src="images/receipt.png" alt="Moneybag" class="summaryImages">
+        <p>Total Spent: ${totalTransAmt}</p>
+      </div>
+      <div id="categoryTransTotals">
+        <p>Giving Spent: ${givingTransAmt}</p>
+        <p>Housing Spent: ${housingTransAmt}</p>
+        <p>Transportation Spent ${transportationTransAmt}</p>
+        <p>Food Spent: ${foodTransAmt}</p>
+        <p>Personal Spent ${personalTransAmt}</p>
+        <p>Lifestyle Spent ${lifestyleTransAmt}</p>
+        <p>Health Spent ${healthTransAmt}</p>
+        <p>Debt Spent ${debtTransAmt}</p>
+        <p>Bills Spent ${billsTransAmt}</p>
+      </div>
     </div>
 
     <div id="calculatedDifference">
-      <img src="images/dividend.png" alt="Moneybag" class="summaryImages">
-      <p>Total Difference ${totalDifference}</p>
-      <p>Giving Difference ${givingDifference}</p>
-      <p>Housing Difference ${housingDifference}</p>
-      <p>Transportation Difference ${transportationDifference}</p>
-      <p>Food Difference ${foodDifference}</p>
-      <p>Personal Difference ${personalDifference}</p>
-      <p>Lifestyle Difference ${lifestyleDifference}</p>
-      <p>Health Difference ${healthDifference}</p>
-      <p>Debt Difference ${debtDifference}</p>
-      <p>Bills Difference ${billsDifference}</p>
+      <div id="totalDiffDiv">
+        <img src="images/dividend.png" alt="Moneybag" class="summaryImages">
+        <p>Total Difference ${totalDifference}</p>
+      </div>
+      <div id="categoryDiffTotals">
+        <p>Giving Difference ${givingDifference}</p>
+        <p>Housing Difference ${housingDifference}</p>
+        <p>Transportation Difference ${transportationDifference}</p>
+        <p>Food Difference ${foodDifference}</p>
+        <p>Personal Difference ${personalDifference}</p>
+        <p>Lifestyle Difference ${lifestyleDifference}</p>
+        <p>Health Difference ${healthDifference}</p>
+        <p>Debt Difference ${debtDifference}</p>
+        <p>Bills Difference ${billsDifference}</p>
+      </div>
     </div>
   </div>
   `);
 };
 updateBudgetNumbersPrintOut();
+
+let totalBudgetDiv = document.querySelector("#totalBudgetDiv");
+let totalTransDiv = document.querySelector("#totalTransDiv");
+let totalDiffDiv = document.querySelector("#totalDiffDiv")
+
+// Function to perform a slideToggle for total budget numbers
+let slideUp = (target, duration) => {
+  target.style.transitionProperty = 'height, margin, padding'; /* [1.1] */
+  target.style.transitionDuration = duration + 'ms'; /* [1.2] */
+  target.style.boxSizing = 'border-box'; /* [2] */
+  target.style.height = target.offsetHeight + 'px'; /* [3] */
+
+  target.style.height = 0; /* [4] */
+  target.style.paddingTop = 0; /* [5.1] */
+  target.style.paddingBottom = 0; /* [5.2] */
+  target.style.marginTop = 0; /* [6.1] */
+  target.style.marginBottom = 0; /* [7.2] */
+  target.style.overflow = 'hidden'; /* [7] */
+
+  window.setTimeout( () => {
+    target.style.display = 'none'; /* [8] */
+    target.style.removeProperty('height'); /* [9] */
+    target.style.removeProperty('padding-top');  /* [10.1] */ 
+    target.style.removeProperty('padding-bottom');  /* [10.2] */ 
+    target.style.removeProperty('margin-top');  /* [11.1] */ 
+    target.style.removeProperty('margin-bottom');  /* [11.2] */ 
+    target.style.removeProperty('overflow');  /* [12] */ 
+    target.style.removeProperty('transition-duration');  /* [13.1] */ 
+    target.style.removeProperty('transition-property');  /* [13.2] */ 
+  }, duration);
+}
+
+let slideDown = (target, duration) => {
+  target.style.removeProperty('display'); /* [1] */
+  let display = window.getComputedStyle(target).display;
+  if (display === 'none') { /* [2] */
+    display = 'block';
+  }
+  target.style.display = display;
+
+  let height = target.offsetHeight; /* [3] */
+  target.style.height = 0; /* [4] */
+  target.style.paddingTop = 0; /* [5.1] */
+  target.style.paddingBottom = 0; /* [5.2] */ 
+  target.style.marginTop = 0; /* [6.1] */ 
+  target.style.marginBottom = 0; /* [6.2] */ 
+  target.style.overflow = 'hidden'; /* [7] */ 
+
+  target.style.boxSizing = 'border-box'; /* [8] */
+  target.style.transitionProperty = "height, margin, padding";  /* [9.1] */ 
+  target.style.transitionDuration = duration + 'ms'; /* [9.2] */
+  target.style.height = height + 'px'; /* [10] */
+  target.style.removeProperty('padding-top'); /* [11.1] */ 
+  target.style.removeProperty('padding-bottom'); /* [11.2] */ 
+  target.style.removeProperty('margin-top'); /* [12.1] */ 
+  target.style.removeProperty('margin-bottom'); /* [12.2] */
+
+  window.setTimeout( () => {
+    target.style.removeProperty('height'); /* [13] */
+    target.style.removeProperty('overflow'); /* [14] */
+    target.style.removeProperty('transition-duration'); /* [15.1] */
+    target.style.removeProperty('transition-property'); /* [15.2] */
+  }, duration);
+};
+
+let slideToggle = (target, duration = 500) => {
+  if (window.getComputedStyle(target).display === 'none') {
+    return slideDown(target, duration);
+  } else {
+    return slideUp(target, duration);
+  }
+};
+
+totalBudgetDiv.addEventListener('click', function() {
+  slideToggle(document.getElementById("categoryBudgetTotals"), 200);
+});
+
+totalTransDiv.addEventListener('click', function() {
+  slideToggle(document.getElementById("categoryTransTotals"), 200);
+});
+
+totalDiffDiv.addEventListener('click', function() {
+  slideToggle(document.getElementById("categoryDiffTotals"), 200);
+});
 
 // On the click event, trigger actions with the input
 addCategoryToList.addEventListener("click", function() {
@@ -585,3 +681,6 @@ csvFileUpload.addEventListener("change", function(e) {
     
   reader.readAsText(csvFileUpload.files[0]);
 }, false);
+
+
+

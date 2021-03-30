@@ -77,3 +77,12 @@ button:hover {
     text-align: center;
 }
 
+#categoryBudgetTotals {
+    display: none;
+}
+#categoryTransTotals {
+    display: none;
+}
+#categoryDiffTotals {
+    display: none;
+}
