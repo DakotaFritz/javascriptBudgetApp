@@ -487,6 +487,10 @@ csvFileUpload.addEventListener("change", function(e) {
           transactionRow[j].innerHTML = ""
           transTable.innerHTML = ""
         }
+              // Loop through transaction table to clear when the button is clicked before reprinting the updated array, while skipping the header row
+        for (let j = 1; j < transTableBody.childElementCount; j++) {
+          clearElement(transTableBody.children[j])        
+        }
         transactionList.forEach( (entry, index) => {
         showTransEntry(transTable, entry.catFamily, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
         });
