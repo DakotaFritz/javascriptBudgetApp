@@ -22,6 +22,7 @@ let transAmt = document.querySelector("#transAmt");
 let addTransactionToList = document.querySelector("#addTransactionToList");
 let csvFileUpload = document.querySelector("#csvFileUpload");
 let transTable = document.querySelector("#transTable");
+let transTableBody = transTable.parentElement;
 let tableFromCSV;
 let transTableRowsFromCSV = document.querySelector("#transTableRowsFromCSV");
 let transCatCell;
@@ -32,26 +33,26 @@ let transactionRow;
 let regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;
 
 // Declare the objects that categories, transactions, and transactions from the CSV upload go into
-let budgetCategoriesAll;
-let inputTransactionsAll;
-let transListFromCSV;
+let budgetCategoriesAll = {};
+let inputTransactionsAll = {};
+let transListFromCSV = {};
 
 // Declare the variables that will contain the arrays of transactions for later on, as well as the currentCategoryoption
-let currentCategoryOption;
-let transactionList;
-let transArrFromCSV;
+let currentCategoryOption = "";
+let transactionList = [];
+let transArrFromCSV = [];
 
 // Declare the variables that will hold hold categories that belong to each family, as well as the overall category list
-let givingCatList;
-let housingCatList;
-let transportationCatList;
-let foodCatList;
-let personalCatList;
-let lifestyleCatList;
-let healthCatList;
-let debtCatList;
-let billsCatList;
-let budgetCategoryList;
+let givingCatList = [];
+let housingCatList = [];
+let transportationCatList = [];
+let foodCatList = [];
+let personalCatList = [];
+let lifestyleCatList = [];
+let healthCatList = [];
+let debtCatList = [];
+let billsCatList = [];
+let budgetCategoryList = [];
 
 // Declare variables for amount budgeted to each category within each family, as well as the total budget number
 let givingBudgetAmt = 0;
@@ -173,7 +174,7 @@ function showTransEntryCSV(list, category, merchant, date, amount, id){
       <td>${amount}</td>
     </tr>`;
 
-  const position = "afterend";
+  const position = "beforeend";
   // The entry variable content will be placed "afterbegin" (at the top of the list) of the HTML location passed into the function
   list.insertAdjacentHTML(position, entry);
 
@@ -350,6 +351,11 @@ addTransactionToList.addEventListener("click", function() {
 
       // Clear the input in each field
       clearInput([transactionCategory, merchantName, transDate, transAmt]);
+      
+      // Loop through transaction table to clear when the button is clicked before reprinting the updated array, while skipping the header row
+      for (let i = 1; i < transTableBody.childElementCount; i++) {
+        clearElement(transTableBody.children[i])        
+      }
       // For each object, show the input on the page through the showEntry function
       transactionList.forEach( (entry, index) => {
         showTransEntry(transTable, entry.catFamily, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
@@ -409,19 +415,20 @@ csvFileUpload.addEventListener("change", function(e) {
     })
     rowContentFromCSV = lines.slice(1);
     rowContentFromCSV.reverse();
-    for (i =0; i < rowContentFromCSV.length; i++) {
+    tableFromCSV = document.querySelector("#tableFromCSV");
+    tableBodyFromCSV = tableFromCSV.firstElementChild;
+
+    for (i = 0; i < rowContentFromCSV.length; i++) {
       transListFromCSV = {}; 
       transListFromCSV.transCategory = "";
       transListFromCSV.merchantName = rowContentFromCSV[i][1];
       transListFromCSV.transDate = rowContentFromCSV[i][2];
       transListFromCSV.transAmount = Math.round(parseFloat(rowContentFromCSV[i][3]));
       transArrFromCSV.push(transListFromCSV)
+      showTransEntryCSV(tableBodyFromCSV, transListFromCSV.transCategory, transListFromCSV.merchantName, transListFromCSV.transDate, transListFromCSV.transAmount, i);
     }
-    transArrFromCSV.forEach( (entry, index) => {
-      showTransEntryCSV(transTableRowsFromCSV, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
-    });
     
-    tableFromCSV = document.querySelector("#tableFromCSV");
+    // tableFromCSV = document.querySelector("#tableFromCSV");
     tableFromCSV.insertAdjacentHTML("beforebegin",
       `<button type="button" id="buttonToAddCategory">Click to Add Category</button>`
     );
@@ -483,49 +490,56 @@ csvFileUpload.addEventListener("change", function(e) {
         transactionList.forEach( (entry, index) => {
         showTransEntry(transTable, entry.catFamily, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
         });
+        switch (transactionList[i].catFamily) {
+          case "Giving":
+            givingTransAmt = calculateTotalTrans("Giving", transactionList); 
+            givingDifference = givingBudgetAmt - givingTransAmt;
+            break;
+          case "Housing":
+            housingTransAmt = calculateTotalTrans("Housing", transactionList);
+            housingDifference = housingBudgetAmt - givingTransAmt;          
+            break;  
+          case "Transportation":
+            transportationTransAmt = calculateTotalTrans("Transportation", transactionList);  
+            transportationDifference = transportationBudgetAmt - transportationTransAmt;        
+            break;
+          case "Food":
+            foodTransAmt = calculateTotalTrans("Food", transactionList);   
+            foodDifference = foodBudgetAmt - foodTransAmt;       
+            break;   
+          case "Personal":
+            personalTransAmt = calculateTotalTrans("Personal", transactionList);
+            personalDifference = personalBudgetAmt - personalTransAmt;   
+            break; 
+          case "lifestyle":
+            lifestylelTransAmt = calculateTotalTrans("Lifestyle", transactionList);
+            lifestyleDifference = lifestyleBudgetAmt - lifestyleTransAmt;
+            break;  
+          case "Health":
+            healthTransAmt = calculateTotalTrans("Health", transactionList);
+            healthDifference = healthBudgetAmt - healthTransAmt          
+            break;
+          case "Debt":
+            debtTransAmt = calculateTotalTrans("Debt", transactionList);  
+            debtDifference = debtBudgetAmt - debtTransAmt        
+            break;
+          case "Bills":
+            billsTransAmt = calculateTotalTrans("Bills", transactionList);
+            billsDifference = billsBudgetAmt - billsTransAmt;          
+            break;  
+        };
+        totalTransAmt = givingTransAmt + housingTransAmt + transportationTransAmt + foodTransAmt + personalTransAmt + lifestyleTransAmt + healthTransAmt + debtTransAmt + billsTransAmt;
+
+        totalDifference = givingDifference + housingDifference + transportationDifference + foodDifference + personalDifference + lifestyleDifference + healthDifference + debtDifference + billsDifference;
+
+        clearElement(totalBudgetedNum);
+        updateBudgetNumbersPrintOut()
       })
       deleteBtnsInDOM[i].addEventListener("click", function(e) {
         transArrFromCSV.splice(i);
         clearElement(transCatCell[i].parentNode);
       })
-      switch (transArrFromCSV[i].catFamily) {
-        case "Giving":
-          givingTransAmt = calculateTotalTrans("Giving", transactionList); 
-          givingDifference = givingBudgetAmt - givingTransAmt;
-          break;
-        case "Housing":
-          housingTransAmt = calculateTotalTrans("Housing", transactionList);
-          housingDifference = housingBudgetAmt - givingTransAmt;          
-          break;  
-        case "Transportation":
-          transportationTransAmt = calculateTotalTrans("Transportation", transactionList);  
-          transportationDifference = transportationBudgetAmt - transportationTransAmt;        
-          break;
-        case "Food":
-          foodTransAmt = calculateTotalTrans("Food", transactionList);   
-          foodDifference = foodBudgetAmt - foodTransAmt;       
-          break;   
-        case "Personal":
-          personalTransAmt = calculateTotalTrans("Personal", transactionList);
-          personalDifference = personalBudgetAmt - personalTransAmt;   
-          break; 
-        case "lifestyle":
-          lifestylelTransAmt = calculateTotalTrans("Lifestyle", transactionList);
-          lifestyleDifference = lifestyleBudgetAmt - lifestyleTransAmt;
-          break;  
-        case "Health":
-          healthTransAmt = calculateTotalTrans("Health", transactionList);
-          healthDifference = healthBudgetAmt - healthTransAmt          
-          break;
-        case "Debt":
-          debtTransAmt = calculateTotalTrans("Debt", transactionList);  
-          debtDifference = debtBudgetAmt - debtTransAmt        
-          break;
-        case "Bills":
-          billsTransAmt = calculateTotalTrans("Bills", transactionList);
-          billsDifference = billsBudgetAmt - billsTransAmt;          
-          break;  
-      };
+
       clearElement(totalBudgetedNum);
       updateBudgetNumbersPrintOut();
     };
