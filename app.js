@@ -221,16 +221,49 @@ function readCSVUpload(file) {
 
 function updateBudgetNumbersPrintOut() {
   totalBudgetedNum.insertAdjacentHTML("beforeend", `
-  <p>Total Budget: ${totalBudgetAmt} vs. Total Spent: ${totalTransAmt} = Difference ${totalDifference}</p>
-  <p>Giving Budget: ${givingBudgetAmt} vs. Giving Spent: ${givingTransAmt} = Difference ${givingDifference}</p>
-  <p>Housing Budget: ${housingBudgetAmt} vs. Housing Spent: ${housingTransAmt} = Difference ${housingDifference}</p>
-  <p>Transportation Budget: ${transportationBudgetAmt} vs. Transportation Spent ${transportationTransAmt} = Difference ${transportationDifference}</p>
-  <p>Food Budget: ${foodBudgetAmt} vs. Food Spent: ${foodTransAmt} = Difference ${foodDifference}</p>
-  <p>Personal Budget: ${personalBudgetAmt} vs. Personal Spent ${personalTransAmt} = Difference ${personalDifference}</p>
-  <p>Lifestyle Budget: ${lifestyleBudgetAmt} vs. Lifestyle Spent ${lifestyleTransAmt} = Difference ${lifestyleDifference}</p>
-  <p>Health Budget: ${healthBudgetAmt} vs. Health Spent ${healthTransAmt} = Difference ${healthDifference}</p>
-  <p>Debt Budget: ${debtBudgetAmt} vs. Debt Spent ${debtTransAmt} = Difference ${debtDifference}</p>
-  <p>Bills Budget: ${billsBudgetAmt} vs. Bills Spent ${billsTransAmt} = Difference ${billsDifference}</p>
+  <div id="calculatedContainer">
+    <div id="calculatedBudgetAmt">
+      <img src="images/moneybags.png" alt="Moneybag" class="summaryImages">
+      <p>Total Budget: ${totalBudgetAmt}</p>
+      <p>Giving Budget: ${givingBudgetAmt}</p>
+      <p>Housing Budget: ${housingBudgetAmt}</p>
+      <p>Transportation Budget: ${transportationBudgetAmt}</p>
+      <p>Food Budget: ${foodBudgetAmt}</p>
+      <p>Personal Budget: ${personalBudgetAmt}</p>
+      <p>Lifestyle Budget: ${lifestyleBudgetAmt}</p>
+      <p>Health Budget: ${healthBudgetAmt}</p>
+      <p>Debt Budget: ${debtBudgetAmt}</p>
+      <p>Bills Budget: ${billsBudgetAmt}</p>
+    </div>
+
+    <div id="calculatedTransAmt">
+      <img src="images/receipt.png" alt="Moneybag" class="summaryImages">
+      <p>Total Spent: ${totalTransAmt}</p>
+      <p>Giving Spent: ${givingTransAmt}</p>
+      <p>Housing Spent: ${housingTransAmt}</p>
+      <p>Transportation Spent ${transportationTransAmt}</p>
+      <p>Food Spent: ${foodTransAmt}</p>
+      <p>Personal Spent ${personalTransAmt}</p>
+      <p>Lifestyle Spent ${lifestyleTransAmt}</p>
+      <p>Health Spent ${healthTransAmt}</p>
+      <p>Debt Spent ${debtTransAmt}</p>
+      <p>Bills Spent ${billsTransAmt}</p>
+    </div>
+
+    <div id="calculatedDifference">
+      <img src="images/dividend.png" alt="Moneybag" class="summaryImages">
+      <p>Total Difference ${totalDifference}</p>
+      <p>Giving Difference ${givingDifference}</p>
+      <p>Housing Difference ${housingDifference}</p>
+      <p>Transportation Difference ${transportationDifference}</p>
+      <p>Food Difference ${foodDifference}</p>
+      <p>Personal Difference ${personalDifference}</p>
+      <p>Lifestyle Difference ${lifestyleDifference}</p>
+      <p>Health Difference ${healthDifference}</p>
+      <p>Debt Difference ${debtDifference}</p>
+      <p>Bills Difference ${billsDifference}</p>
+    </div>
+  </div>
   `);
 };
 updateBudgetNumbersPrintOut();
@@ -306,9 +339,9 @@ addCategoryToList.addEventListener("click", function() {
       clearInput([budgetCatFamily, budgetCategory, budgetCatAmt]);
       // For each object, show the input on the page through the showEntry function
       clearElement(categoriesListOfItems);
-      budgetCategoryList.forEach( (entry, index) => {
-        showCatEntry(categoriesListOfItems, entry.family, entry.category, entry.amount, index);
-      });
+      // budgetCategoryList.forEach( (entry, index) => {
+      //   showCatEntry(categoriesListOfItems, entry.family, entry.category, entry.amount, index);
+      // });
 
       currentCategoryOption = budgetCategoriesAll.category;
       currentCatFamily = budgetCategoriesAll.family;

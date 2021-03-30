@@ -61,3 +61,19 @@ button {
 button:hover {
     background-color: rgb(228, 228, 228);
   }
+
+#calculatedContainer {
+    width: 100%;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#calculatedBudgetAmt,
+#calculatedTransAmt,
+#calculatedDifference,
+.summaryImages {
+    width: 33%;
+    text-align: center;
+}
+
