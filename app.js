@@ -1,13 +1,3 @@
-// I want a title on the page and then two columns of content.
-// Ideally, I want the right side to be the summary and maybe have visualization to it.
-// I want the right side to be static and the left side to scroll.
-// I want the right side to contain the total numbers for each category.
-// I want a file upload button in the top right.
-// I want a way to indicate that I only can handle CSV files.
-// I want an input transaction button to be next to the file upload button.
-// I want to show each category of transaction and the transactions within the category listed down in whatever specific order
-// I want a floating "Edit" button to follow the cursor down the page and then transforms those fields to input or drop-down menu (for category)
-
 // Each of these variables grabs a DOM Element or nodeList. Some are declared here and changed later inside of a function
 let totalBudgetedNum = document.querySelector("#totalBudgetedNumber");
 let budgetCatFamily = document.querySelector("#family");
@@ -26,7 +16,6 @@ let transTableBody = transTable.parentElement;
 let tableFromCSV;
 let transTableRowsFromCSV = document.querySelector("#transTableRowsFromCSV");
 let transCatCell;
-let buttonToAddCategory;
 let transactionRow;
 
 // Regex to ensure that the number amount only contains "$", digits, and "."
@@ -117,34 +106,19 @@ function inputToTitleCase(str) {
   })
 };
 
-// Needs more work to be able to not add duplicate inputs on the page
-function updatePage(){
-  givingBudgetAmt;
-  housingBudgetAmt;
-  transportationBudgetAmt;
-  foodBudgetAmt;
-  personalBudgetAmt;
-  lifestyleBudgetAmt;
-  healthBudgetAmt;
-  debtBudgetAmt;
-  billsBudgetAmt;
+// Function to take information from the input category object and display it as a list item in the HTML. May be cut because not sure its still needed
+// function showCatEntry(list, type, title, amount, id){
 
-  // localStorage.setItem("entry_list", JSON.stringify(ENTRY_LIST));
-}
+//   const entry = `<li id = "${id}" class="${type}">
+//                       <div class="entry">${title}: $${amount}</div>
+//                       <div id="edit"></div>
+//                       <div id="delete"></div>
+//                   </li>`;
 
-// Function to take information from the input category object and display it as a list item in the HTML
-function showCatEntry(list, type, title, amount, id){
-
-  const entry = `<li id = "${id}" class="${type}">
-                      <div class="entry">${title}: $${amount}</div>
-                      <div id="edit"></div>
-                      <div id="delete"></div>
-                  </li>`;
-
-  const position = "afterbegin";
-  // The entry variable content will be placed "afterbegin" (at the top of the list) of the HTML location passed into the function
-  list.insertAdjacentHTML(position, entry);
-}
+//   const position = "afterbegin";
+//   // The entry variable content will be placed "afterbegin" (at the top of the list) of the HTML location passed into the function
+//   list.insertAdjacentHTML(position, entry);
+// }
 
 // Function to take information from the input category object and display it as a list item in the HTML
 function showTransEntry(list, family, category, merchant, date, amount, id){
@@ -177,7 +151,6 @@ function showTransEntryCSV(list, category, merchant, date, amount, id){
   const position = "beforeend";
   // The entry variable content will be placed "afterbegin" (at the top of the list) of the HTML location passed into the function
   list.insertAdjacentHTML(position, entry);
-
 }
 
 function clearElement(element){
@@ -199,10 +172,10 @@ function calculateTotalBudget(family, list){
           sum += entry.amount;
       }
   })
-
   return sum;
 }
 
+// Might end up changing the keys so this could just be combined with the function above because of the similarities
 function calculateTotalTrans(family, list){
   let sum = 0;
 
@@ -214,11 +187,13 @@ function calculateTotalTrans(family, list){
   return sum;
 }
 
-function readCSVUpload(file) {
-  let reader = new FileReader();
-  reader.readAsText(file);
-}
+// This is not currently in use, so may be cut
+// function readCSVUpload(file) {
+//   let reader = new FileReader();
+//   reader.readAsText(file);
+// }
 
+// Should this be in the HTML instead? Not sure how to update on each event listener if so.
 function updateBudgetNumbersPrintOut() {
   totalBudgetedNum.insertAdjacentHTML("beforeend", `
   <div id="calculatedContainer">
@@ -278,8 +253,10 @@ function updateBudgetNumbersPrintOut() {
   </div>
   `);
 };
+// First call to put it on the page
 updateBudgetNumbersPrintOut();
 
+// Variables for the toggle - could be moved up in the script
 let totalBudgetDiv = document.querySelector("#totalBudgetDiv");
 let totalTransDiv = document.querySelector("#totalTransDiv");
 let totalDiffDiv = document.querySelector("#totalDiffDiv")
@@ -368,7 +345,10 @@ totalDiffDiv.addEventListener('click', function() {
 addCategoryToList.addEventListener("click", function() {
 
   // If any of the three input fields are empty
-  if( !budgetCatFamily || !budgetCategory || !budgetCatAmt ) return;
+  if( budgetCatFamily.value === "none" || !budgetCategory || !budgetCatAmt ) {
+    alert("Please ensure that you have selected a family, category and budgeted amount."); 
+    return};
+
   // If Amount input does not pass Regex test, show alert and stop running code below
   if(regex.test(budgetCatAmt.value) === false) {
     alert("Please enter a numeric value such as the following, in the Amount box: $100.50, $100, 100, etc.");
@@ -450,6 +430,7 @@ addCategoryToList.addEventListener("click", function() {
       //   showCatEntry(categoriesListOfItems, entry.family, entry.category, entry.amount, index);
       // });
 
+      // Create option element for each category in the transaction input
       currentCategoryOption = budgetCategoriesAll.category;
       currentCatFamily = budgetCategoriesAll.family;
       transactionCategory.insertAdjacentHTML( "afterbegin",
@@ -457,9 +438,9 @@ addCategoryToList.addEventListener("click", function() {
       );
 
       clearObject(budgetCategoriesAll);
-
+      // I may change this up to be more accurate and eliminate the totalBudgetNum Id
       clearElement(totalBudgetedNum);
-      updateBudgetNumbersPrintOut()
+      updateBudgetNumbersPrintOut();
     }
   
   });
@@ -470,7 +451,12 @@ addCategoryToList.addEventListener("click", function() {
 addTransactionToList.addEventListener("click", function() {
 
   // If any of the three input fields are empty
-  if( !transactionCategory || !merchantName || !transDate || !transAmt ) return;
+  if( !transactionCategory || !merchantName || !transDate || !transAmt ) {
+    alert("Please ensure that you have selected a family, category and budgeted amount.");
+  return};
+  if(transactionCategory.value === "none" || !merchantName || !transDate || !transAmt ) {
+    alert("Please ensure that you have selected a family, category and budgeted amount.");
+    return};
   // If Amount input does not pass Regex test, show alert and stop running code below
   if(regex.test(transAmt.value) === false) {
     alert("Please enter a numeric value such as the following, in the Amount box: $100.50, $100, 100, etc.");
@@ -493,7 +479,7 @@ addTransactionToList.addEventListener("click", function() {
       // Clear the input in each field
       clearInput([transactionCategory, merchantName, transDate, transAmt]);
       
-      // Loop through transaction table to clear when the button is clicked before reprinting the updated array, while skipping the header row
+      // Loop through transaction table to clear when the button is clicked before reprinting the updated array, while skipping the header row (that's why i starts at 1)
       for (let i = 1; i < transTableBody.childElementCount; i++) {
         clearElement(transTableBody.children[i])        
       }
@@ -553,33 +539,31 @@ addTransactionToList.addEventListener("click", function() {
 });
 
 // Biggest thing is to add the CSV reading abilities
-csvFileUpload.addEventListener("change", function(e) {
+csvFileUpload.addEventListener("change", function() {
   const reader = new FileReader();
+  // Create arrays from each row
   reader.onload = function () {
     const lines = reader.result.split("\n").map(function (line) {
       return line.split(",")
-    })
+    });
+    // Skip the header row from the CSV
     rowContentFromCSV = lines.slice(1);
+    // Reverse array so the index that prints on the page matches the array index
     rowContentFromCSV.reverse();
     tableFromCSV = document.querySelector("#tableFromCSV");
     tableBodyFromCSV = tableFromCSV.firstElementChild;
 
+    // Append each row array to an object, then push each object into an array and print each of the objects in the array onto the page
     for (i = 0; i < rowContentFromCSV.length; i++) {
       transListFromCSV = {}; 
-      transListFromCSV.transCategory = "";
-      transListFromCSV.merchantName = rowContentFromCSV[i][1];
-      transListFromCSV.transDate = rowContentFromCSV[i][2];
-      transListFromCSV.transAmount = Math.round(parseFloat(rowContentFromCSV[i][3]));
-      transArrFromCSV.push(transListFromCSV)
+        transListFromCSV.transCategory = "";
+        transListFromCSV.merchantName = rowContentFromCSV[i][1];
+        transListFromCSV.transDate = rowContentFromCSV[i][2];
+        transListFromCSV.transAmount = Math.round(parseFloat(rowContentFromCSV[i][3]));
+        transArrFromCSV.push(transListFromCSV)
       showTransEntryCSV(tableBodyFromCSV, transListFromCSV.transCategory, transListFromCSV.merchantName, transListFromCSV.transDate, transListFromCSV.transAmount, i);
     }
-    
-    // tableFromCSV = document.querySelector("#tableFromCSV");
-    tableFromCSV.insertAdjacentHTML("beforebegin",
-      `<button type="button" id="buttonToAddCategory">Click to Add Category</button>`
-    );
 
-    buttonToAddCategory = document.querySelector("#buttonToAddCategory");
     transCatCell = document.querySelectorAll(".transCatCell");
 
     select = document.createElement("select");
@@ -616,13 +600,10 @@ csvFileUpload.addEventListener("change", function(e) {
     transListSelectedOption = document.querySelectorAll(".transListSelectedOption");
     approveBtnsInDOM = document.querySelectorAll(".approveBtns");
     deleteBtnsInDOM = document.querySelectorAll(".deleteBtns");
-    console.log(transListSelectedOption[0].value);
-    console.log(approveBtnsInDOM);
-    console.log(transArrFromCSV[0]);
-    
     transactionRow = document.querySelectorAll(".transactionRow");
+
     for (let i = 0; i < transArrFromCSV.length; i++) {
-      approveBtnsInDOM[i].addEventListener("click", function(e) {
+      approveBtnsInDOM[i].addEventListener("click", function() {
         transArrFromCSV[i].transCategory = transListSelectedOption[i].value;
         let transactionFamCatIndex = transListSelectedOption[i].selectedIndex;
         let transactionFamCat = transListSelectedOption[i].children[transactionFamCatIndex].className;
@@ -631,7 +612,7 @@ csvFileUpload.addEventListener("change", function(e) {
         clearElement(transCatCell[i].parentNode);
         for (let j = 0; j < transactionRow.length; j++) {
           transactionRow[j].innerHTML = ""
-          transTable.innerHTML = ""
+          // transTable.innerHTML = ""
         }
               // Loop through transaction table to clear when the button is clicked before reprinting the updated array, while skipping the header row
         for (let j = 1; j < transTableBody.childElementCount; j++) {
@@ -685,7 +666,7 @@ csvFileUpload.addEventListener("change", function(e) {
         clearElement(totalBudgetedNum);
         updateBudgetNumbersPrintOut()
       })
-      deleteBtnsInDOM[i].addEventListener("click", function(e) {
+      deleteBtnsInDOM[i].addEventListener("click", function() {
         transArrFromCSV.splice(i);
         clearElement(transCatCell[i].parentNode);
       })
