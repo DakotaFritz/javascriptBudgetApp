@@ -21,6 +21,7 @@
         <div id="categoriesListOfItems"></div>
         <label for="family">Family of Category</label>
         <select id="family">
+            <option value="none" selected disabled hidden>Select a Family your Cateogry Belongs To</option> 
             <option value="Giving">Giving</option>
             <option value="Housing">Housing</option>
             <option value="Transportation">Transportation</option>
@@ -41,7 +42,9 @@
         <h2>Enter Your Transactions Here</h2>
         <p>Please go ahead and enter your transactions below using your categories from above.</p>
         <label for="transactionCategory">Category</label>
-        <select id="transactionCategory"></select><br>
+        <select id="transactionCategory">
+            <option value="none" selected disabled hidden>Select a Category</option>
+        </select><br>
         <label for="merchantName">Merchant</label>
         <input type="text" id="merchantName"><br>
         <label for="transDate">Transaction Date</label>

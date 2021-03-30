@@ -152,7 +152,7 @@ function showTransEntry(list, family, category, merchant, date, amount, id){
   const entry = 
     `<tr class="transactionRow" id="${id}">
       <td>${family}
-      <td class="transCatCell">${category}</td>
+      <td>${category}</td>
       <td>${merchant}</td>
       <td>${date}</td>
       <td>${amount}</td>
