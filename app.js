@@ -431,10 +431,21 @@ addCategoryToList.addEventListener("click", function() {
 
       totalBudgetAmt = givingBudgetAmt + housingBudgetAmt + transportationBudgetAmt + foodBudgetAmt + personalBudgetAmt + lifestyleBudgetAmt + healthBudgetAmt + debtBudgetAmt + billsBudgetAmt;
 
+      totalDifference = totalBudgetAmt;
+      givingDifference = givingBudgetAmt;
+      housingDifference = housingBudgetAmt;
+      transportationDifference = transportationBudgetAmt;
+      foodDifference = foodBudgetAmt;
+      personalDifference = personalBudgetAmt;
+      lifestyleDifference = lifestyleBudgetAmt;
+      healthDifference = healthBudgetAmt;
+      debtDifference = debtBudgetAmt;
+      billsDifference = billsBudgetAmt;
+
       // Clear the input in each field
       clearInput([budgetCatFamily, budgetCategory, budgetCatAmt]);
       // For each object, show the input on the page through the showEntry function
-      clearElement(categoriesListOfItems);
+      // clearElement(categoriesListOfItems);
       // budgetCategoryList.forEach( (entry, index) => {
       //   showCatEntry(categoriesListOfItems, entry.family, entry.category, entry.amount, index);
       // });
@@ -450,6 +461,7 @@ addCategoryToList.addEventListener("click", function() {
       clearElement(totalBudgetedNum);
       updateBudgetNumbersPrintOut()
     }
+  
   });
 
 
@@ -530,6 +542,11 @@ addTransactionToList.addEventListener("click", function() {
           billsDifference = billsBudgetAmt - billsTransAmt;          
           break;  
       }
+
+      totalTransAmt = givingTransAmt + housingTransAmt + transportationTransAmt + foodTransAmt + personalTransAmt + lifestyleTransAmt + healthTransAmt + debtTransAmt + billsTransAmt;
+
+      totalDifference = givingDifference + housingDifference + transportationDifference + foodDifference + personalDifference + lifestyleDifference + healthDifference + debtDifference + billsDifference;
+      
       clearElement(totalBudgetedNum);
       updateBudgetNumbersPrintOut()
     }

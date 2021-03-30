@@ -77,12 +77,18 @@ button:hover {
     text-align: center;
 }
 
-#categoryBudgetTotals {
-    display: none;
-}
-#categoryTransTotals {
-    display: none;
-}
+#categoryBudgetTotals,
+#categoryTransTotals,
 #categoryDiffTotals {
     display: none;
+}
+
+#createCategory {
+    display: flex;
+    flex-direction: column;
+}
+
+#addCategoryToList {
+    margin-left: 30%;
+    margin-right: 30%;
 }
