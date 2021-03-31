@@ -1,5 +1,3 @@
-
-
 // Each of these variables grabs a DOM Element or nodeList. Some are declared here and changed later inside of a function
 let totalBudgetedNum = document.querySelector("#totalBudgetedNumber");
 let budgetCatFamily = document.querySelector("#family");
@@ -19,8 +17,12 @@ let tableFromCSV;
 let transTableRowsFromCSV = document.querySelector("#transTableRowsFromCSV");
 let transCatCell;
 let transactionRow;
+let budgetedChart;
 
-flatpickr(transDate);
+flatpickr(transDate, {
+    dateFormat: "n/j/Y",
+    minDate: "10/31/2020"
+});
 
 // Regex to ensure that the number amount only contains "$", digits, and "."
 let regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;
@@ -204,6 +206,7 @@ function updateBudgetNumbersPrintOut() {
     <div id="calculatedBudgetAmt">
       <div id="totalBudgetDiv">
         <img src="images/moneybags.png" alt="Moneybag" class="summaryImages">
+        <canvas id="budgetedChart" width="400" height="400"></canvas>
         <p>Total Budget: ${totalBudgetAmt}</p>
       </div>
       <div id="categoryBudgetTotals">
@@ -259,6 +262,7 @@ function updateBudgetNumbersPrintOut() {
 };
 // First call to put it on the page
 updateBudgetNumbersPrintOut();
+
 
 // Variables for the toggle - could be moved up in the script
 let totalBudgetDiv = document.querySelector("#totalBudgetDiv");
@@ -446,9 +450,47 @@ addCategoryToList.addEventListener("click", function() {
       clearElement(totalBudgetedNum);
       updateBudgetNumbersPrintOut();
     }
-  
-  });
 
+    let budgetedChart = document.querySelector("#budgetedChart")
+let myChart = new Chart(budgetedChart, {    
+  type: "doughnut",
+data: {
+    labels: ["Giving Budget", "Housing Budget", "Transportation Budget", "Food Budget", "Personal Budget", "Lifestyle Budget", "Health Budget", "Debt Budget", "Bills Budget"],
+    datasets: [{
+        label: 'Total Budgeted Amount',
+        data: [givingBudgetAmt, housingBudgetAmt, , transportationBudgetAmt, foodBudgetAmt, personalBudgetAmt, lifestyleBudgetAmt, healthBudgetAmt, debtBudgetAmt, billsBudgetAmt],
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(295, 100, 64, 0.2)',
+            'rgba(30, 192, 192, 0.2)',
+            'rgba(34, 200, 255, 0.2)',
+            'rgba(65, 159, 64, 0.2)'
+        ],
+        borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(30, 192, 192, 0.2)',
+            'rgba(34, 200, 255, 0.2)',
+            'rgba(65, 159, 64, 0.2)'
+        ],
+        borderWidth: 1
+    }]
+},
+options: {
+  legend: {
+    display: false
+  }
+}
+});
+  });
 
 // Transactions
 
@@ -539,6 +581,7 @@ addTransactionToList.addEventListener("click", function() {
       
       clearElement(totalBudgetedNum);
       updateBudgetNumbersPrintOut()
+      myChart.update()
     }
 });
 
