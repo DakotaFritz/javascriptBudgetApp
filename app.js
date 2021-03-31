@@ -627,22 +627,22 @@ csvFileUpload.addEventListener("change", function() {
     select.appendChild(fragment);
     select.className = "transListSelectedOption";
 
-    approveCell = document.createElement("td");
+    // approveCell = document.createElement("td");
     approveBtn = document.createElement("button");
     approveBtn.textContent = "Approve";
     approveBtn.className = "approveBtns";
-    approveCell.appendChild(approveBtn);
+    // approveCell.appendChild(approveBtn);
 
-    deleteCell = document.createElement("td");
+    // deleteCell = document.createElement("td");
     deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
     deleteBtn.className = "deleteBtns";
-    deleteCell.appendChild(deleteBtn);
+    // deleteCell.appendChild(deleteBtn);
 
     transCatCell.forEach((category) => {
       category.appendChild(select.cloneNode(true));
-      category.parentNode.appendChild(approveCell.cloneNode(true));
-      category.parentNode.appendChild(deleteCell.cloneNode(true));
+      category.parentNode.appendChild(approveBtn.cloneNode(true));
+      category.parentNode.appendChild(deleteBtn.cloneNode(true));
     });
     transListSelectedOption = document.querySelectorAll(".transListSelectedOption");
     approveBtnsInDOM = document.querySelectorAll(".approveBtns");

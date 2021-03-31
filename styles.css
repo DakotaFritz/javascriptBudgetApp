@@ -2,6 +2,7 @@
 * {
     font-family: Georgia, 'Times New Roman', Times, serif;
     box-sizing: border-box;
+    background: rgb(253, 253, 253);
 }
 
 /* Make header 100% of width of viewport. Background picture with a gradient color behind it. */
@@ -106,6 +107,7 @@ input,
     margin: 8px 0;
     padding: 8px 12px;
     box-sizing: border-box;
+    border-radius: 6px;
 }
 
 #csvFileUpload::-webkit-file-upload-button {
@@ -134,8 +136,20 @@ input,
     background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
   }
 
+.approveBtns,
+.deleteBtns {
+    position: absolute;
+    margin-top: 4px;
+    z-index: 2;
+}
 
+.approveBtns {
+    right: -20%;
+}
 
+.deleteBtns {
+    right: -28%;
+}
 
 /* First media query at 768px */
 @media (min-width: 768px) {
