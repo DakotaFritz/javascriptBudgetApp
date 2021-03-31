@@ -7,6 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <div id="fb-root"></div>
         <link rel= "stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     </head>
 
     <body>
@@ -18,7 +20,6 @@
         <h2>Create Your Budget Categories</h2>
         <p>Please create your budget categories and add the amounts here.</p>
         <p id="totalBudgetedNumber">Your current total budget is up to: </p>
-        <div id="categoriesListOfItems"></div>
         <div id="createCategory">
             <div>
                 <label for="family">Family of Category</label>
@@ -46,20 +47,35 @@
             <button type="button" id="addCategoryToList">Add Category</button>
         </div>
 
+        <div id="transactionDiv">
 
-        <h2>Enter Your Transactions Here</h2>
-        <p>Please go ahead and enter your transactions below using your categories from above.</p>
-        <label for="transactionCategory">Category</label>
-        <select id="transactionCategory">
-            <option value="none" selected disabled hidden>Select a Category</option>
-        </select><br>
-        <label for="merchantName">Merchant</label>
-        <input type="text" id="merchantName"><br>
-        <label for="transDate">Transaction Date</label>
-        <input type="date" id="transDate"><br>
-        <label for="transAmt">Transaction Amount</label>
-        <input type="text" id="transAmt"><br>
-        <button type="button" id="addTransactionToList">Add Transaction</button>
+            <h2>Enter Your Transactions Here</h2>
+            <p>Please go ahead and enter your transactions below using your categories from above.</p>
+
+            <div id="transCatSelect">
+                <label for="transactionCategory">Category</label>
+                <select id="transactionCategory">
+                    <option value="none" selected disabled hidden>Select a Category</option>
+                </select><br>
+            </div>
+
+            <div id="transMerchNameInput">
+                <label for="merchantName">Merchant</label>
+                <input type="text" id="merchantName"><br>
+            </div>
+
+            <div id="transDateInput">
+                <label for="transDate">Transaction Date</label>
+                <input type="text" id="transDate"><br>
+            </div>
+
+            <div id="transtAmtInput">
+                <label for="transAmt">Transaction Amount</label>
+                <input type="text" id="transAmt"><br>
+            </div>
+
+            <button type="button" id="addTransactionToList">Add Transaction</button>
+        </div> 
 
         <p>Upload your CSV file here:</p>
         <input type="file" id="csvFileUpload" accept=".csv">
@@ -90,11 +106,10 @@
     <footer>
         
     </footer>
-    <script rel="js-file" src="app.js"></script>
-    <script src='tablesort.min.js'></script>
+    <script rel="js-file" src="app.js"></script>    
  
 <!-- Include sort types you need -->
-    <script src='tablesort.number.js'></script>
-    <script src='tablesort.date.js'></script>
+    <!-- <script src='node_modules/tablesort/src/sorts/tablesort.date.js'></script>
+    <script src='node_modules/tablesort/src/tablesort.js'></script> -->
 
 </html>

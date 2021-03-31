@@ -1,3 +1,5 @@
+
+
 // Each of these variables grabs a DOM Element or nodeList. Some are declared here and changed later inside of a function
 let totalBudgetedNum = document.querySelector("#totalBudgetedNumber");
 let budgetCatFamily = document.querySelector("#family");
@@ -17,6 +19,8 @@ let tableFromCSV;
 let transTableRowsFromCSV = document.querySelector("#transTableRowsFromCSV");
 let transCatCell;
 let transactionRow;
+
+flatpickr(transDate);
 
 // Regex to ensure that the number amount only contains "$", digits, and "."
 let regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;

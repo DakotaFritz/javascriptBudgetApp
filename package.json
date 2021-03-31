@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/DakotaFritz/javascriptBudgetApp#readme",
   "dependencies": {
+    "flatpickr": "^4.6.9",
     "tablesort": "^5.2.1"
   }
 }
