@@ -1,26 +1,28 @@
 // Each of these variables grabs a DOM Element or nodeList. Some are declared here and changed later inside of a function
-let totalBudgetedNum = document.querySelector("#totalBudgetedNumber");
-let budgetCatFamily = document.querySelector("#family");
-let budgetCategory = document.querySelector("#category");
-let budgetCatAmt = document.querySelector("#budgetedAmt");
-let categoriesListOfItems = document.querySelector("#categoriesListOfItems");
-let addCategoryToList = document.querySelector("#addCategoryToList");
-let transactionCategory = document.querySelector("#transactionCategory");
-let merchantName = document.querySelector("#merchantName");
-let transDate = document.querySelector("#transDate");
-let transAmt = document.querySelector("#transAmt");
-let addTransactionToList = document.querySelector("#addTransactionToList");
-let csvFileUpload = document.querySelector("#csvFileUpload");
-let transTable = document.querySelector("#transTable");
-let transTableBody = transTable.parentElement;
+const totalBudgetedNum = document.querySelector("#totalBudgetedNumber");
+const budgetedChart = document.querySelector("#budgetedChart");
+const transactionChart = document.querySelector("#transactionChart");
+const differenceChart = document.querySelector("#differenceChart");
+const budgetCatFamily = document.querySelector("#family");
+const budgetCategory = document.querySelector("#category");
+const budgetCatAmt = document.querySelector("#budgetedAmt");
+const categoriesListOfItems = document.querySelector("#categoriesListOfItems");
+const addCategoryToList = document.querySelector("#addCategoryToList");
+const transactionCategory = document.querySelector("#transactionCategory");
+const merchantName = document.querySelector("#merchantName");
+const transDate = document.querySelector("#transDate");
+const transAmt = document.querySelector("#transAmt");
+const addTransactionToList = document.querySelector("#addTransactionToList");
+const csvFileUpload = document.querySelector("#csvFileUpload");
+const transTable = document.querySelector("#transTable");
+const transTableBody = transTable.parentElement;
 let tableFromCSV;
-let transTableRowsFromCSV = document.querySelector("#transTableRowsFromCSV");
+const transTableRowsFromCSV = document.querySelector("#transTableRowsFromCSV");
 let transCatCell;
 let transactionRow;
-let budgetedChart;
 
 // Regex to ensure that the number amount only contains "$", digits, and "."
-let regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;
+const regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;
 
 // Declare the objects that categories, transactions, and transactions from the CSV upload go into
 let budgetCategoriesAll = {};
@@ -209,7 +211,6 @@ function updateBudgetNumbersPrintOut() {
     <div id="calculatedBudgetAmt">
       <div id="totalBudgetDiv">
         <img src="images/moneybags.png" alt="Moneybag" class="summaryImages">
-        <canvas id="budgetedChart" width="400" height="400"></canvas>
         <p>Total Budget: ${convertToDollar(totalBudgetAmt)}</p>
       </div>
       <div id="categoryBudgetTotals">
@@ -362,6 +363,140 @@ flatpickr(transDate, {
     maxDate: maxDateString
 });
 
+Chart.plugins.register({
+  afterDraw: function(chart) {
+      if (chart.data.datasets[0].data.every(item => item === 0)) {
+          let ctx = chart.chart.ctx;
+          let width = chart.chart.width;
+          let height = chart.chart.height;
+
+          chart.clear();
+          ctx.save();
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('Budgeted Amounts Will Display Here', width / 2, height / 2);
+          ctx.restore();
+      }
+  }
+});
+
+const budChart = new Chart(budgetedChart, {    
+  type: "doughnut",
+data: {
+    labels: ["Giving Budget", "Housing Budget", "Transportation Budget", "Food Budget", "Personal Budget", "Lifestyle Budget", "Health Budget", "Debt Budget", "Bills Budget"],
+    datasets: [{
+        label: 'Total Budgeted Amount',
+        data: [givingBudgetAmt, housingBudgetAmt, transportationBudgetAmt, foodBudgetAmt, personalBudgetAmt, lifestyleBudgetAmt, healthBudgetAmt, debtBudgetAmt, billsBudgetAmt],
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(295, 100, 64, 0.2)',
+            'rgba(30, 192, 192, 0.2)',
+            'rgba(34, 200, 255, 0.2)',
+            'rgba(65, 159, 64, 0.2)'
+        ],
+        borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(30, 192, 192, 0.2)',
+            'rgba(34, 200, 255, 0.2)',
+            'rgba(65, 159, 64, 0.2)'
+        ],
+        borderWidth: 1
+    }]
+},
+options: {
+  legend: {
+    display: false
+  }
+}
+});
+
+const transChart = new Chart(transactionChart, {    
+  type: "doughnut",
+data: {
+    labels: ["Giving Budget", "Housing Budget", "Transportation Budget", "Food Budget", "Personal Budget", "Lifestyle Budget", "Health Budget", "Debt Budget", "Bills Budget"],
+    datasets: [{
+        label: 'Total Budgeted Amount',
+        data: [givingBudgetAmt, housingBudgetAmt, transportationBudgetAmt, foodBudgetAmt, personalBudgetAmt, lifestyleBudgetAmt, healthBudgetAmt, debtBudgetAmt, billsBudgetAmt],
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(295, 100, 64, 0.2)',
+            'rgba(30, 192, 192, 0.2)',
+            'rgba(34, 200, 255, 0.2)',
+            'rgba(65, 159, 64, 0.2)'
+        ],
+        borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(30, 192, 192, 0.2)',
+            'rgba(34, 200, 255, 0.2)',
+            'rgba(65, 159, 64, 0.2)'
+        ],
+        borderWidth: 1
+    }]
+},
+options: {
+  legend: {
+    display: false
+  }
+}
+});
+
+const diffChart = new Chart(differenceChart, {    
+  type: "doughnut",
+data: {
+    labels: ["Giving Budget", "Housing Budget", "Transportation Budget", "Food Budget", "Personal Budget", "Lifestyle Budget", "Health Budget", "Debt Budget", "Bills Budget"],
+    datasets: [{
+        label: 'Total Budgeted Amount',
+        data: [givingBudgetAmt, housingBudgetAmt, transportationBudgetAmt, foodBudgetAmt, personalBudgetAmt, lifestyleBudgetAmt, healthBudgetAmt, debtBudgetAmt, billsBudgetAmt],
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(295, 100, 64, 0.2)',
+            'rgba(30, 192, 192, 0.2)',
+            'rgba(34, 200, 255, 0.2)',
+            'rgba(65, 159, 64, 0.2)'
+        ],
+        borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(30, 192, 192, 0.2)',
+            'rgba(34, 200, 255, 0.2)',
+            'rgba(65, 159, 64, 0.2)'
+        ],
+        borderWidth: 1
+    }]
+},
+options: {
+  legend: {
+    display: false
+  }
+}
+});
+
 // On the click event, trigger actions with the input
 addCategoryToList.addEventListener("click", function() {
 
@@ -463,17 +598,30 @@ addCategoryToList.addEventListener("click", function() {
       // I may change this up to be more accurate and eliminate the totalBudgetNum Id
       clearElement(totalBudgetedNum);
       updateBudgetNumbersPrintOut();
-      
-    }
+      // Chart.plugins.register({
+//   afterDraw: function(chart) {
+//       if (chart.data.datasets[0].data.every(item => item === 0)) {
+//           let ctx = chart.chart.ctx;
+//           let width = chart.chart.width;
+//           let height = chart.chart.height;
 
-    let budgetedChart = document.querySelector("#budgetedChart")
-let myChart = new Chart(budgetedChart, {    
+//           chart.clear();
+//           ctx.save();
+//           ctx.textAlign = 'center';
+//           ctx.textBaseline = 'middle';
+//           ctx.fillText('Budgeted Amounts Will Display Here', width / 2, height / 2);
+//           ctx.restore();
+//       }
+//   }
+// });
+
+new Chart(budgetedChart, {    
   type: "doughnut",
 data: {
     labels: ["Giving Budget", "Housing Budget", "Transportation Budget", "Food Budget", "Personal Budget", "Lifestyle Budget", "Health Budget", "Debt Budget", "Bills Budget"],
     datasets: [{
         label: 'Total Budgeted Amount',
-        data: [givingBudgetAmt, housingBudgetAmt, , transportationBudgetAmt, foodBudgetAmt, personalBudgetAmt, lifestyleBudgetAmt, healthBudgetAmt, debtBudgetAmt, billsBudgetAmt],
+        data: [givingBudgetAmt, housingBudgetAmt, transportationBudgetAmt, foodBudgetAmt, personalBudgetAmt, lifestyleBudgetAmt, healthBudgetAmt, debtBudgetAmt, billsBudgetAmt],
         backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -505,6 +653,7 @@ options: {
   }
 }
 });
+    }
   });
 
 // Transactions
@@ -618,6 +767,7 @@ csvFileUpload.addEventListener("change", function() {
     // Append each row array to an object, then push each object into an array and print each of the objects in the array onto the page
     for (i = 0; i < rowContentFromCSV.length; i++) {
       transListFromCSV = {}; 
+        transListFromCSV.catFamily = "";
         transListFromCSV.transCategory = "";
         transListFromCSV.merchantName = inputToTitleCase(rowContentFromCSV[i][1]);
         transListFromCSV.transDate = rowContentFromCSV[i][2];
