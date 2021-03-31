@@ -19,16 +19,6 @@ let transCatCell;
 let transactionRow;
 let budgetedChart;
 
-let currentDate = new Date();
-let maxDateString = currentDate.toLocaleDateString();
-let minDateString = currentDate.setDate(currentDate.getDate()-90);
-
-flatpickr(transDate, {
-    dateFormat: "n/j/Y",
-    minDate: minDateString,
-    maxDate: maxDateString
-});
-
 // Regex to ensure that the number amount only contains "$", digits, and "."
 let regex = /^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/;
 
@@ -110,6 +100,10 @@ function clearInput(inputsArray) {
   });
 };
 
+function clearSelectOption(element) {
+  element.value = "none";
+}
+
 // Function to convert string input into Title Case
 function inputToTitleCase(str) {
   return str.toLowerCase().replace(/(?:^|\s|-|_)\w/g, function(match) {
@@ -140,7 +134,7 @@ function showTransEntry(list, family, category, merchant, date, amount, id){
       <td>${category}</td>
       <td>${merchant}</td>
       <td>${date}</td>
-      <td>${amount}</td>
+      <td>${convertToDollar(amount)}</td>
     </tr>`;
 
   const position = "afterend";
@@ -156,7 +150,7 @@ function showTransEntryCSV(list, category, merchant, date, amount, id){
       <td class="transCatCell">${category}</td>
       <td>${merchant}</td>
       <td>${date}</td>
-      <td>${amount}</td>
+      <td>${convertToDollar(amount)}</td>
     </tr>`;
 
   const position = "beforeend";
@@ -172,6 +166,10 @@ function clearObject (object) {
   for (let key in object) {
     key = ""
   }
+}
+
+function convertToDollar (number) {
+  return number.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 });
 }
 
 // Function to calculate total for a budget category
@@ -212,54 +210,54 @@ function updateBudgetNumbersPrintOut() {
       <div id="totalBudgetDiv">
         <img src="images/moneybags.png" alt="Moneybag" class="summaryImages">
         <canvas id="budgetedChart" width="400" height="400"></canvas>
-        <p>Total Budget: ${totalBudgetAmt}</p>
+        <p>Total Budget: ${convertToDollar(totalBudgetAmt)}</p>
       </div>
       <div id="categoryBudgetTotals">
-        <p>Giving Budget: ${givingBudgetAmt}</p>
-        <p>Housing Budget: ${housingBudgetAmt}</p>
-        <p>Transportation Budget: ${transportationBudgetAmt}</p>
-        <p>Food Budget: ${foodBudgetAmt}</p>
-        <p>Personal Budget: ${personalBudgetAmt}</p>
-        <p>Lifestyle Budget: ${lifestyleBudgetAmt}</p>
-        <p>Health Budget: ${healthBudgetAmt}</p>
-        <p>Debt Budget: ${debtBudgetAmt}</p>
-        <p>Bills Budget: ${billsBudgetAmt}</p>
+        <p>Giving Budget: ${convertToDollar(givingBudgetAmt)}</p>
+        <p>Housing Budget: ${convertToDollar(housingBudgetAmt)}</p>
+        <p>Transportation Budget: ${convertToDollar(transportationBudgetAmt)}</p>
+        <p>Food Budget: ${convertToDollar(foodBudgetAmt)}</p>
+        <p>Personal Budget: ${convertToDollar(personalBudgetAmt)}</p>
+        <p>Lifestyle Budget: ${convertToDollar(lifestyleBudgetAmt)}</p>
+        <p>Health Budget: ${convertToDollar(healthBudgetAmt)}</p>
+        <p>Debt Budget: ${convertToDollar(debtBudgetAmt)}</p>
+        <p>Bills Budget: ${convertToDollar(billsBudgetAmt)}</p>
       </div>
     </div>
 
     <div id="calculatedTransAmt">
       <div id="totalTransDiv">
         <img src="images/receipt.png" alt="Moneybag" class="summaryImages">
-        <p>Total Spent: ${totalTransAmt}</p>
+        <p>Total Spent: ${convertToDollar(totalTransAmt)}</p>
       </div>
       <div id="categoryTransTotals">
-        <p>Giving Spent: ${givingTransAmt}</p>
-        <p>Housing Spent: ${housingTransAmt}</p>
-        <p>Transportation Spent ${transportationTransAmt}</p>
-        <p>Food Spent: ${foodTransAmt}</p>
-        <p>Personal Spent ${personalTransAmt}</p>
-        <p>Lifestyle Spent ${lifestyleTransAmt}</p>
-        <p>Health Spent ${healthTransAmt}</p>
-        <p>Debt Spent ${debtTransAmt}</p>
-        <p>Bills Spent ${billsTransAmt}</p>
+        <p>Giving Spent: ${convertToDollar(givingTransAmt)}</p>
+        <p>Housing Spent: ${convertToDollar(housingTransAmt)}</p>
+        <p>Transportation Spent ${convertToDollar(transportationTransAmt)}</p>
+        <p>Food Spent: ${convertToDollar(foodTransAmt)}</p>
+        <p>Personal Spent ${convertToDollar(personalTransAmt)}</p>
+        <p>Lifestyle Spent ${convertToDollar(lifestyleTransAmt)}</p>
+        <p>Health Spent ${convertToDollar(healthTransAmt)}</p>
+        <p>Debt Spent ${convertToDollar(debtTransAmt)}</p>
+        <p>Bills Spent ${convertToDollar(billsTransAmt)}</p>
       </div>
     </div>
 
     <div id="calculatedDifference">
       <div id="totalDiffDiv">
         <img src="images/dividend.png" alt="Moneybag" class="summaryImages">
-        <p>Total Difference ${totalDifference}</p>
+        <p>Total Difference ${convertToDollar(totalDifference)}</p>
       </div>
       <div id="categoryDiffTotals">
-        <p>Giving Difference ${givingDifference}</p>
-        <p>Housing Difference ${housingDifference}</p>
-        <p>Transportation Difference ${transportationDifference}</p>
-        <p>Food Difference ${foodDifference}</p>
-        <p>Personal Difference ${personalDifference}</p>
-        <p>Lifestyle Difference ${lifestyleDifference}</p>
-        <p>Health Difference ${healthDifference}</p>
-        <p>Debt Difference ${debtDifference}</p>
-        <p>Bills Difference ${billsDifference}</p>
+        <p>Giving Difference ${convertToDollar(givingDifference)}</p>
+        <p>Housing Difference ${convertToDollar(housingDifference)}</p>
+        <p>Transportation Difference ${convertToDollar(transportationDifference)}</p>
+        <p>Food Difference ${convertToDollar(foodDifference)}</p>
+        <p>Personal Difference ${convertToDollar(personalDifference)}</p>
+        <p>Lifestyle Difference ${convertToDollar(lifestyleDifference)}</p>
+        <p>Health Difference ${convertToDollar(healthDifference)}</p>
+        <p>Debt Difference ${convertToDollar(debtDifference)}</p>
+        <p>Bills Difference ${convertToDollar(billsDifference)}</p>
       </div>
     </div>
   </div>
@@ -354,6 +352,16 @@ totalDiffDiv.addEventListener('click', function() {
   slideToggle(document.getElementById("categoryDiffTotals"), 200);
 });
 
+let currentDate = new Date();
+let maxDateString = currentDate.toLocaleDateString();
+let minDateString = currentDate.setDate(currentDate.getDate()-90);
+
+flatpickr(transDate, {
+    dateFormat: "n/j/Y",
+    minDate: minDateString,
+    maxDate: maxDateString
+});
+
 // On the click event, trigger actions with the input
 addCategoryToList.addEventListener("click", function() {
 
@@ -436,7 +444,8 @@ addCategoryToList.addEventListener("click", function() {
       billsDifference = billsBudgetAmt;
 
       // Clear the input in each field
-      clearInput([budgetCatFamily, budgetCategory, budgetCatAmt]);
+      clearInput([budgetCategory, budgetCatAmt]);
+      clearSelectOption(budgetCatFamily);
       // For each object, show the input on the page through the showEntry function
       // clearElement(categoriesListOfItems);
       // budgetCategoryList.forEach( (entry, index) => {
@@ -454,6 +463,7 @@ addCategoryToList.addEventListener("click", function() {
       // I may change this up to be more accurate and eliminate the totalBudgetNum Id
       clearElement(totalBudgetedNum);
       updateBudgetNumbersPrintOut();
+      
     }
 
     let budgetedChart = document.querySelector("#budgetedChart")
@@ -520,7 +530,7 @@ addTransactionToList.addEventListener("click", function() {
       inputTransactionsAll = {
         catFamily: transactionFamCat,
         transCategory: transactionCategory.value,
-        merchantName: merchantName.value,
+        merchantName: inputToTitleCase(merchantName.value),
         transDate: transDate.value,
         transAmount: Math.round(parseFloat(transAmt.value))
       };
@@ -528,7 +538,8 @@ addTransactionToList.addEventListener("click", function() {
       transactionList.push(inputTransactionsAll);
 
       // Clear the input in each field
-      clearInput([transactionCategory, merchantName, transDate, transAmt]);
+      clearInput([merchantName, transDate, transAmt]);
+      clearSelectOption(transactionCategory);
       
       // Loop through transaction table to clear when the button is clicked before reprinting the updated array, while skipping the header row (that's why i starts at 1)
       for (let i = 1; i < transTableBody.childElementCount; i++) {
@@ -586,7 +597,6 @@ addTransactionToList.addEventListener("click", function() {
       
       clearElement(totalBudgetedNum);
       updateBudgetNumbersPrintOut()
-      myChart.update()
     }
 });
 
@@ -609,7 +619,7 @@ csvFileUpload.addEventListener("change", function() {
     for (i = 0; i < rowContentFromCSV.length; i++) {
       transListFromCSV = {}; 
         transListFromCSV.transCategory = "";
-        transListFromCSV.merchantName = rowContentFromCSV[i][1];
+        transListFromCSV.merchantName = inputToTitleCase(rowContentFromCSV[i][1]);
         transListFromCSV.transDate = rowContentFromCSV[i][2];
         transListFromCSV.transAmount = Math.round(parseFloat(rowContentFromCSV[i][3]));
         transArrFromCSV.push(transListFromCSV)

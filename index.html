@@ -18,13 +18,19 @@
     <body>
         <header>
             <h1>FlexBudget</h1>
-            <h2>A Smart Solution for Managing Your Money</h2>
+            <h2>A Solution for Managing Your Money</h2>
         </header>
 
-        <h2>Create Your Budget Categories</h2>
-        <p>Please create your budget categories and add the amounts here.</p>
-        <p id="totalBudgetedNumber">Your current total budget is up to: </p>
+        <div id="summaryHeader">
+            <h2>Budget Summary</h2>
+            <p id="totalBudgetedNumber">Your current total budget is up to: </p>
+        </div>
+        
         <div id="createCategory">
+            <div id="createCategoryHeader">
+                <h2>Create Your Own Budget Categories</h2>
+                <p>Please create your budget categories and add the amounts here.</p>
+            </div>
             <div>
                 <label for="family">Family of Category</label>
                 <select id="family">
