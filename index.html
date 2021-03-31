@@ -27,71 +27,79 @@
         </div>
 
         <div id="chartContainer">
-            <canvas id="budgetedChart"></canvas>
-            <canvas id="transactionChart"></canvas>
-            <canvas id="differenceChart"></canvas>
+            <div id="budgetedChartContainer">
+                <canvas id="budgetedChart" width="500px"></canvas>
+            </div>
+            <div id="transactionChartContainer">
+                <canvas id="transactionChart" width="500px"></canvas>
+            </div>
+            <div id="differenceChartContainer">
+                <canvas id="differenceChart" width="500px"></canvas>
+            </div>
         </div>
 
-        <div id="createCategory">
-            <div id="createCategoryHeader">
-                <h2>Create Your Own Budget Categories</h2>
-                <p>Please create your budget categories and add the amounts here.</p>
+        <div id="inputDivs">
+            <div id="createCategory">
+                <div id="createCategoryHeader">
+                    <h2>Create Your Own Budget Categories</h2>
+                    <p>Please create your budget categories and add the amounts here.</p>
+                </div>
+                <div>
+                    <label for="family">Family of Category</label>
+                    <select id="family">
+                        <option value="none" selected disabled hidden>Select a Family of Category</option> 
+                        <option value="Giving">Giving</option>
+                        <option value="Housing">Housing</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Food">Food</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Lifestyle">Lifestyle</option>
+                        <option value="Health">Health</option>
+                        <option value="Debt">Debt</option>
+                        <option value="Bills">Bills</option>
+                    </select>
+                </div>
+                <div id="inputCatName">
+                    <label for="category">Category</label>
+                    <input type="text" id="category">
+                </div>
+                <div id="catAmt">
+                    <label for="budgetedAmt">Budgeted Amount</label>
+                    <input type="text" id="budgetedAmt">
+                </div>
+                <button type="button" id="addCategoryToList">Add Category</button>
             </div>
-            <div>
-                <label for="family">Family of Category</label>
-                <select id="family">
-                    <option value="none" selected disabled hidden>Select a Family of Category</option> 
-                    <option value="Giving">Giving</option>
-                    <option value="Housing">Housing</option>
-                    <option value="Transportation">Transportation</option>
-                    <option value="Food">Food</option>
-                    <option value="Personal">Personal</option>
-                    <option value="Lifestyle">Lifestyle</option>
-                    <option value="Health">Health</option>
-                    <option value="Debt">Debt</option>
-                    <option value="Bills">Bills</option>
-                </select>
-            </div>
-            <div id="inputCatName">
-                <label for="category">Category</label>
-                <input type="text" id="category">
-            </div>
-            <div id="catAmt">
-                <label for="budgetedAmt">Budgeted Amount</label>
-                <input type="text" id="budgetedAmt">
-            </div>
-            <button type="button" id="addCategoryToList">Add Category</button>
+
+            <div id="transactionDiv">
+
+                <h2>Enter Your Transactions Here</h2>
+                <p>Please go ahead and enter your transactions below using your categories from above.</p>
+
+                <div id="transCatSelect">
+                    <label for="transactionCategory">Category</label>
+                    <select id="transactionCategory">
+                        <option value="none" selected disabled hidden>Select a Category</option>
+                    </select><br>
+                </div>
+
+                <div id="transMerchNameInput">
+                    <label for="merchantName">Merchant</label>
+                    <input type="text" id="merchantName"><br>
+                </div>
+
+                <div id="transDateInput">
+                    <label for="transDate">Transaction Date</label>
+                    <input type="text" id="transDate"><br>
+                </div>
+
+                <div id="transtAmtInput">
+                    <label for="transAmt">Transaction Amount</label>
+                    <input type="text" id="transAmt"><br>
+                </div>
+
+                <button type="button" id="addTransactionToList">Add Transaction</button>
+            </div> 
         </div>
-
-        <div id="transactionDiv">
-
-            <h2>Enter Your Transactions Here</h2>
-            <p>Please go ahead and enter your transactions below using your categories from above.</p>
-
-            <div id="transCatSelect">
-                <label for="transactionCategory">Category</label>
-                <select id="transactionCategory">
-                    <option value="none" selected disabled hidden>Select a Category</option>
-                </select><br>
-            </div>
-
-            <div id="transMerchNameInput">
-                <label for="merchantName">Merchant</label>
-                <input type="text" id="merchantName"><br>
-            </div>
-
-            <div id="transDateInput">
-                <label for="transDate">Transaction Date</label>
-                <input type="text" id="transDate"><br>
-            </div>
-
-            <div id="transtAmtInput">
-                <label for="transAmt">Transaction Amount</label>
-                <input type="text" id="transAmt"><br>
-            </div>
-
-            <button type="button" id="addTransactionToList">Add Transaction</button>
-        </div> 
 
         <p>Upload your CSV file here:</p>
         <input type="file" id="csvFileUpload" accept=".csv">
@@ -99,23 +107,27 @@
 
         <h2>Transaction List</h2>
         <table>
-            <tr id="transTable">
-                <th>Family</th>
-                <th>Category</th>
-                <th>Merchant</th>
-                <th>Transaction Date</th>
-                <th>Transaction Amount</th>
-            </tr>
+            <tbody>
+                <tr id="transTable">
+                    <th>Family</th>
+                    <th>Category</th>
+                    <th>Merchant</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                </tr>
+            </table>
         </table> 
 
         <h2>Pending Transactions from CSV Upload</h2>
         <table id="tableFromCSV">
-            <tr id="transTableRowsFromCSV">
-                <th>Category</th>
-                <th>Merchant</th>
-                <th>Transaction Date</th>
-                <th>Transaction Amount</th>
-            </tr>
+            <tbody>
+                <tr id="transTableRowsFromCSV">
+                    <th>Category</th>
+                    <th>Merchant</th>
+                    <th>Transaction Date</th>
+                    <th>Transaction Amount</th>
+                </tr>
+            </tbody>
         </table>    
     </body>
 

@@ -67,7 +67,8 @@ button:hover {
     background-color: rgb(228, 228, 228);
   }
 
-#calculatedContainer {
+#calculatedContainer,
+#chartContainer {
     width: 100%;
     display:flex;
     flex-direction: row;
@@ -78,7 +79,10 @@ button:hover {
 #calculatedBudgetAmt,
 #calculatedTransAmt,
 #calculatedDifference,
-.summaryImages {
+.summaryImages,
+#budgetedChartContainer,
+#transactionChartContainer,
+#differenceChartContainer {
     width: 33%;
     text-align: center;
 }
@@ -110,6 +114,11 @@ input,
     border-radius: 6px;
 }
 
+#inputDivs {
+    display: flex;
+    justify-content: space-around;
+}
+
 #csvFileUpload::-webkit-file-upload-button {
     visibility: hidden;
   }
@@ -136,23 +145,37 @@ input,
     background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
   }
 
-.approveBtns,
-.deleteBtns {
+.approveBtns {
     position: absolute;
     margin-top: 4px;
     z-index: 2;
-}
-
-.approveBtns {
-    right: -20%;
-}
-
-.deleteBtns {
     right: -28%;
 }
 
+
 /* First media query at 768px */
 @media (min-width: 768px) {
+
+    #calculatedBudgetAmt,
+    #calculatedTransAmt,
+    #calculatedDifference,
+    .summaryImages,
+    #budgetedChartContainer,
+    #transactionChartContainer,
+    #differenceChartContainer {
+        width: 33%;
+        text-align: center;
+    }
+
+    .approveBtns {
+        right: -28%;
+    }
+
+    #createCategory,
+    #transactionDiv {
+        width: 48%;
+    }
+    
 
 }
 
