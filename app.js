@@ -19,9 +19,14 @@ let transCatCell;
 let transactionRow;
 let budgetedChart;
 
+let currentDate = new Date();
+let maxDateString = currentDate.toLocaleDateString();
+let minDateString = currentDate.setDate(currentDate.getDate()-90);
+
 flatpickr(transDate, {
     dateFormat: "n/j/Y",
-    minDate: "10/31/2020"
+    minDate: minDateString,
+    maxDate: maxDateString
 });
 
 // Regex to ensure that the number amount only contains "$", digits, and "."
