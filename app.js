@@ -397,7 +397,7 @@ addCategoryToList.addEventListener("click", function() {
           budgetCategoryList.push(budgetCategoriesAll);
           personalBudgetAmt = calculateTotalBudget("Personal", budgetCategoryList);          
           break; 
-        case "lifestyle":
+        case "Lifestyle":
           lifestyleCatList.push(budgetCategoriesAll);
           budgetCategoryList.push(budgetCategoriesAll);
           lifestyleBudgetAmt = calculateTotalBudget("Lifestyle", budgetCategoryList);          
@@ -589,7 +589,7 @@ addTransactionToList.addEventListener("click", function() {
           personalTransAmt = calculateTotalTrans("Personal", transactionList);
           personalDifference = personalBudgetAmt - personalTransAmt;   
           break; 
-        case "lifestyle":
+        case "Lifestyle":
           lifestylelTransAmt = calculateTotalTrans("Lifestyle", transactionList);
           lifestyleDifference = lifestyleBudgetAmt - lifestyleTransAmt;
           break;  
@@ -785,7 +785,7 @@ csvFileUpload.addEventListener("change", function() {
             personalTransAmt = calculateTotalTrans("Personal", transactionList);
             personalDifference = personalBudgetAmt - personalTransAmt;   
             break; 
-          case "lifestyle":
+          case "Lifestyle":
             lifestylelTransAmt = calculateTotalTrans("Lifestyle", transactionList);
             lifestyleDifference = lifestyleBudgetAmt - lifestyleTransAmt;
             break;  

@@ -79,23 +79,6 @@ button:hover {
     display: none;
 }
 
-#calculatedBudgetAmt,
-#calculatedTransAmt,
-#calculatedDifference,
-.summaryImages,
-#budgetedChartContainer,
-#transactionChartContainer,
-#differenceChartContainer {
-    width: 33%;
-    text-align: center;
-}
-
-#categoryBudgetTotals,
-#categoryTransTotals,
-#categoryDiffTotals {
-    display: none;
-}
-
 #createCategory,
 #transactionDiv {
     display: flex;
@@ -164,14 +147,6 @@ canvas {
 /* First media query at 768px */
 @media (min-width: 768px) {
 
-    #calculatedBudgetAmt,
-    #calculatedTransAmt,
-    #calculatedDifference,
-    .summaryImages {
-        width: 33%;
-        text-align: center;
-    }
-
     .approveBtns {
         right: -28%;
     }
@@ -184,7 +159,7 @@ canvas {
     #chartContainer {
         display: block;
         width: 45%;
-        margin: 0 auto;
+        margin: auto;
     }
 
 }
