@@ -109,7 +109,7 @@ function inputToTitleCase(str) {
 };
 
 // Function to take information from the input category object and display it as a list item in the HTML
-function showTransEntry(list, family, category, merchant, date, amount, id){
+function showTransEntry(element, family, category, merchant, date, amount, id){
 
   const entry = 
     `<tr class="transactionRow" id="${id}">
@@ -121,12 +121,12 @@ function showTransEntry(list, family, category, merchant, date, amount, id){
     </tr>`;
 
   const position = "afterend";
-  // The entry variable content will be placed "afterbegin" (at the top of the list) of the HTML location passed into the function
-  list.insertAdjacentHTML(position, entry);
+  // The entry variable content will be placed "afterbegin" (at the top of the element) of the HTML location passed into the function
+  element.insertAdjacentHTML(position, entry);
 
 }
 
-function showTransEntryCSV(list, category, merchant, date, amount, id){
+function showTransEntryCSV(element, category, merchant, date, amount, id){
 
   const entry = 
     `<tr class="transactionRowCSV" id="${id}">
@@ -137,8 +137,8 @@ function showTransEntryCSV(list, category, merchant, date, amount, id){
     </tr>`;
 
   const position = "beforeend";
-  // The entry variable content will be placed "beforeend" (at the top of the list) of the HTML location passed into the function
-  list.insertAdjacentHTML(position, entry);
+  // The entry variable content will be placed "beforeend" (at the top of the element) of the HTML location passed into the function
+  element.insertAdjacentHTML(position, entry);
 }
 
 function clearElement(element){

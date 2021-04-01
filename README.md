@@ -28,4 +28,11 @@ Here are the features included in the project:
 * Create an array, dictionary or list, populate it with multiple values, retrieve at least one value, and use or display it in your application
     * This is done in numerous locations. Each of the tables, the chart, and the `<select>` elements do this.
 * Create and use a function that accepts two or more values (parameters), calculates or determines a new value based on those inputs, and returns a new value
-    * 
+    * I included two functions that accept more than two parameters and returns a new value. I'm not sure if this is what is intended by this requirement, but `showTransEntry` accepts 7 parameters (an element and 6 object values to display on the page in a template literal). `showTransEntryCSV` is a similar function, but takes an element and 5 object values.
+* Implement a regular expression (regex) to ensure a field either a phone number or an email address is always stored and displayed in the same format
+    * I'm not sure if it qualifies because it wasn't for a phone number or email, but I use regex to vaildate number inputs. I declare a variable containing `/^\$?\d+(,\d{3})*\.?[0-9]?[0-9]?$/` and use the `test()` method to ensure that the number input in the "Amount" fields only contain "$", digits, and ".". If the value is not matching, then I throw an alert asking for a specific format in the input.
+    * I also use regex in my `toTitleCase()` function. This function takes text input and converts it to lowercase with `toLowerCase()`, finds the first letter of each word with `/(?:^|\s|-|_)\w/g`, and then converts it to uppercase with `toUpperCase()` using the `replace()` method.
+* Calculate and display data based on an external factor (ex: get the current date, and display how many days remaining until some event)
+    * I'm not sure if this one qualifies either, but I do grab the current date for my date picker. I assign `new Date()` to a variable and then use `.toLocaleDateString()` for the current date and then assign that as the `maxDate` in the date picker, since its impossible to be logging transactions that have not happened yet. I also used the date variable and subtracted 90 days using `.setDate(currentDate.getDate()-90)` for the `minDate` for the picker.
+* Visualize data in a graph, chart, or other visual representation of data
+    * I do this with the graph that I use from Chart.js. I display the budgeted amounts per category and the transactions amount per category in the bar graph on the page (with viewports larger than 768px).
