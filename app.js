@@ -1,8 +1,6 @@
 // Each of these variables grabs a DOM Element or nodeList. Some are declared here and changed later inside of a function
 const totalBudgetedNum = document.querySelector("#totalBudgetedNumber");
 const budgetedChart = document.querySelector("#budgetedChart");
-const transactionChart = document.querySelector("#transactionChart");
-const differenceChart = document.querySelector("#differenceChart");
 const budgetCatFamily = document.querySelector("#family");
 const budgetCategory = document.querySelector("#category");
 const budgetCatAmt = document.querySelector("#budgetedAmt");
@@ -89,11 +87,8 @@ let fragment;
 let option;
 let approveCell;
 let approveBtn;
-// let deleteCell;
-// let deleteBtn;
 let transListSelectedOption;
 let approveBtnsInDOM;
-// let deleteBtnsInDOM;
 
 // Function to clear the input fields upon submitting the input
 function clearInput(inputsArray) {
@@ -112,20 +107,6 @@ function inputToTitleCase(str) {
    return match.toUpperCase();
   })
 };
-
-// Function to take information from the input category object and display it as a list item in the HTML. May be cut because not sure its still needed
-// function showCatEntry(list, type, title, amount, id){
-
-//   const entry = `<li id = "${id}" class="${type}">
-//                       <div class="entry">${title}: $${amount}</div>
-//                       <div id="edit"></div>
-//                       <div id="delete"></div>
-//                   </li>`;
-
-//   const position = "afterbegin";
-//   // The entry variable content will be placed "afterbegin" (at the top of the list) of the HTML location passed into the function
-//   list.insertAdjacentHTML(position, entry);
-// }
 
 // Function to take information from the input category object and display it as a list item in the HTML
 function showTransEntry(list, family, category, merchant, date, amount, id){
@@ -156,7 +137,7 @@ function showTransEntryCSV(list, category, merchant, date, amount, id){
     </tr>`;
 
   const position = "beforeend";
-  // The entry variable content will be placed "afterbegin" (at the top of the list) of the HTML location passed into the function
+  // The entry variable content will be placed "beforeend" (at the top of the list) of the HTML location passed into the function
   list.insertAdjacentHTML(position, entry);
 }
 
@@ -197,12 +178,6 @@ function calculateTotalTrans(family, list){
   })
   return sum;
 }
-
-// This is not currently in use, so may be cut
-// function readCSVUpload(file) {
-//   let reader = new FileReader();
-//   reader.readAsText(file);
-// }
 
 // Should this be in the HTML instead? Not sure how to update on each event listener if so.
 function updateBudgetNumbersPrintOut() {
@@ -275,61 +250,61 @@ let totalDiffDiv = document.querySelector("#totalDiffDiv")
 
 // Function to perform a slideToggle for total budget numbers
 let slideUp = (target, duration) => {
-  target.style.transitionProperty = 'height, margin, padding'; /* [1.1] */
-  target.style.transitionDuration = duration + 'ms'; /* [1.2] */
-  target.style.boxSizing = 'border-box'; /* [2] */
-  target.style.height = target.offsetHeight + 'px'; /* [3] */
+  target.style.transitionProperty = 'height, margin, padding';
+  target.style.transitionDuration = duration + 'ms';
+  target.style.boxSizing = 'border-box';
+  target.style.height = target.offsetHeight + 'px';
 
-  target.style.height = 0; /* [4] */
-  target.style.paddingTop = 0; /* [5.1] */
-  target.style.paddingBottom = 0; /* [5.2] */
-  target.style.marginTop = 0; /* [6.1] */
-  target.style.marginBottom = 0; /* [7.2] */
-  target.style.overflow = 'hidden'; /* [7] */
+  target.style.height = 0;
+  target.style.paddingTop = 0;
+  target.style.paddingBottom = 0;
+  target.style.marginTop = 0;
+  target.style.marginBottom = 0;
+  target.style.overflow = 'hidden';
 
   window.setTimeout( () => {
-    target.style.display = 'none'; /* [8] */
-    target.style.removeProperty('height'); /* [9] */
-    target.style.removeProperty('padding-top');  /* [10.1] */ 
-    target.style.removeProperty('padding-bottom');  /* [10.2] */ 
-    target.style.removeProperty('margin-top');  /* [11.1] */ 
-    target.style.removeProperty('margin-bottom');  /* [11.2] */ 
-    target.style.removeProperty('overflow');  /* [12] */ 
-    target.style.removeProperty('transition-duration');  /* [13.1] */ 
-    target.style.removeProperty('transition-property');  /* [13.2] */ 
+    target.style.display = 'none';
+    target.style.removeProperty('height');
+    target.style.removeProperty('padding-top');
+    target.style.removeProperty('padding-bottom');
+    target.style.removeProperty('margin-top');
+    target.style.removeProperty('margin-bottom');
+    target.style.removeProperty('overflow');
+    target.style.removeProperty('transition-duration');
+    target.style.removeProperty('transition-property');
   }, duration);
 }
 
 let slideDown = (target, duration) => {
-  target.style.removeProperty('display'); /* [1] */
+  target.style.removeProperty('display');
   let display = window.getComputedStyle(target).display;
-  if (display === 'none') { /* [2] */
+  if (display === 'none') {
     display = 'block';
   }
   target.style.display = display;
 
-  let height = target.offsetHeight; /* [3] */
-  target.style.height = 0; /* [4] */
-  target.style.paddingTop = 0; /* [5.1] */
-  target.style.paddingBottom = 0; /* [5.2] */ 
-  target.style.marginTop = 0; /* [6.1] */ 
-  target.style.marginBottom = 0; /* [6.2] */ 
-  target.style.overflow = 'hidden'; /* [7] */ 
+  let height = target.offsetHeight;
+  target.style.height = 0;
+  target.style.paddingTop = 0;
+  target.style.paddingBottom = 0;
+  target.style.marginTop = 0;
+  target.style.marginBottom = 0;
+  target.style.overflow = 'hidden';
 
-  target.style.boxSizing = 'border-box'; /* [8] */
-  target.style.transitionProperty = "height, margin, padding";  /* [9.1] */ 
-  target.style.transitionDuration = duration + 'ms'; /* [9.2] */
-  target.style.height = height + 'px'; /* [10] */
-  target.style.removeProperty('padding-top'); /* [11.1] */ 
-  target.style.removeProperty('padding-bottom'); /* [11.2] */ 
-  target.style.removeProperty('margin-top'); /* [12.1] */ 
-  target.style.removeProperty('margin-bottom'); /* [12.2] */
+  target.style.boxSizing = 'border-box';
+  target.style.transitionProperty = "height, margin, padding";
+  target.style.transitionDuration = duration + 'ms';
+  target.style.height = height + 'px';
+  target.style.removeProperty('padding-top');
+  target.style.removeProperty('padding-bottom');
+  target.style.removeProperty('margin-top');
+  target.style.removeProperty('margin-bottom');
 
   window.setTimeout( () => {
-    target.style.removeProperty('height'); /* [13] */
-    target.style.removeProperty('overflow'); /* [14] */
-    target.style.removeProperty('transition-duration'); /* [15.1] */
-    target.style.removeProperty('transition-property'); /* [15.2] */
+    target.style.removeProperty('height');
+    target.style.removeProperty('overflow');
+    target.style.removeProperty('transition-duration');
+    target.style.removeProperty('transition-property');
   }, duration);
 };
 
@@ -363,27 +338,11 @@ flatpickr(transDate, {
     maxDate: maxDateString
 });
 
-Chart.plugins.register({
-  afterDraw: function(chart) {
-      if (chart.data.datasets[0].data.every(item => item === 0)) {
-          let ctx = chart.chart.ctx;
-          let width = chart.chart.width;
-          let height = chart.chart.height;
-
-          chart.clear();
-          ctx.save();
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText('Budgeted Amounts Will Display Here', width / 2, height / 2);
-          ctx.restore();
-      }
-  }
-});
-
 new Chart(budgetedChart, {    
-  type: "doughnut",
-data: {
-    labels: ["Giving Budget", "Housing Budget", "Transportation Budget", "Food Budget", "Personal Budget", "Lifestyle Budget", "Health Budget", "Debt Budget", "Bills Budget"],
+  type: "bar",
+  // labels: ["Giving", "Housing", "Transportation", "Food", "Personal", "Lifestyle", "Health", "Debt", "Bills"],
+  data: {
+    labels: ["Giving", "Housing", "Transportation", "Food", "Personal", "Lifestyle", "Health", "Debt", "Bills"],
     datasets: [{
         label: 'Total Budgeted Amount',
         data: [givingBudgetAmt, housingBudgetAmt, transportationBudgetAmt, foodBudgetAmt, personalBudgetAmt, lifestyleBudgetAmt, healthBudgetAmt, debtBudgetAmt, billsBudgetAmt],
@@ -410,89 +369,46 @@ data: {
             'rgba(65, 159, 64, 0.2)'
         ],
         borderWidth: 1
+    }, {
+      // labels: ["Giving Transactions", "Housing Transactions", "Transportation Transactions", "Food Transactions", "Personal Transactions", "Lifestyle Transactions", "Health Transactions", "Debt Transactions", "Bills Transactions"],              
+      data: [givingTransAmt, housingTransAmt, transportationTransAmt, foodTransAmt, personalTransAmt, lifestyleTransAmt, healthTransAmt, debtTransAmt, billsTransAmt],
+      backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(295, 100, 64, 0.2)',
+          'rgba(30, 192, 192, 0.2)',
+          'rgba(34, 200, 255, 0.2)',
+          'rgba(65, 159, 64, 0.2)'
+      ],
+      borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(30, 192, 192, 0.2)',
+          'rgba(34, 200, 255, 0.2)',
+          'rgba(65, 159, 64, 0.2)'
+      ],
+      borderWidth: 1
     }]
 },
 options: {
   legend: {
     display: false
-  }
-}
-});
-
-new Chart(transactionChart, {    
-  type: "doughnut",
-data: {
-    labels: ["Giving Transactions", "Housing Transactions", "Transportation Transactions", "Food Transactions", "Personal Transactions", "Lifestyle Transactions", "Health Transactions", "Debt Transactions", "Bills Transactions"],
-    datasets: [{
-        label: 'Total Transactions',
-        data: [givingTransAmt, housingTransAmt, transportationTransAmt, foodTransAmt, personalTransAmt, lifestyleTransAmt, healthTransAmt, debtTransAmt, billsTransAmt],
-        backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(295, 100, 64, 0.2)',
-            'rgba(30, 192, 192, 0.2)',
-            'rgba(34, 200, 255, 0.2)',
-            'rgba(65, 159, 64, 0.2)'
-        ],
-        borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-            'rgba(30, 192, 192, 0.2)',
-            'rgba(34, 200, 255, 0.2)',
-            'rgba(65, 159, 64, 0.2)'
-        ],
-        borderWidth: 1
+  },
+  scales: {
+    yAxes: [{
+      ticks: {
+        suggestedMax: 500,
+        min: 0,
+        stepSize: 50
+      }
     }]
-},
-options: {
-  legend: {
-    display: false
-  }
-}
-});
-
-new Chart(differenceChart, {    
-  type: "doughnut",
-data: {
-    labels: ["Giving Difference", "Housing Difference", "Transportation Difference", "Food Difference", "Personal Difference", "Lifestyle Difference", "Health Difference", "Debt Difference", "Bills Difference"],
-    datasets: [{
-        label: 'Total Difference from Budgeted Amount',
-        data: [givingDifference, housingDifference, transportationDifference, foodDifference, personalDifference, lifestyleDifference, healthDifference, debtDifference, billsDifference],
-        backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(295, 100, 64, 0.2)',
-            'rgba(30, 192, 192, 0.2)',
-            'rgba(34, 200, 255, 0.2)',
-            'rgba(65, 159, 64, 0.2)'
-        ],
-        borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-            'rgba(30, 192, 192, 0.2)',
-            'rgba(34, 200, 255, 0.2)',
-            'rgba(65, 159, 64, 0.2)'
-        ],
-        borderWidth: 1
-    }]
-},
-options: {
-  legend: {
-    display: false
   }
 }
 });
@@ -581,11 +497,6 @@ addCategoryToList.addEventListener("click", function() {
       // Clear the input in each field
       clearInput([budgetCategory, budgetCatAmt]);
       clearSelectOption(budgetCatFamily);
-      // For each object, show the input on the page through the showEntry function
-      // clearElement(categoriesListOfItems);
-      // budgetCategoryList.forEach( (entry, index) => {
-      //   showCatEntry(categoriesListOfItems, entry.family, entry.category, entry.amount, index);
-      // });
 
       // Create option element for each category in the transaction input
       currentCategoryOption = budgetCategoriesAll.category;
@@ -616,9 +527,10 @@ addCategoryToList.addEventListener("click", function() {
 // });
 
 new Chart(budgetedChart, {    
-  type: "doughnut",
-data: {
-    labels: ["Giving Budget", "Housing Budget", "Transportation Budget", "Food Budget", "Personal Budget", "Lifestyle Budget", "Health Budget", "Debt Budget", "Bills Budget"],
+  type: "bar",
+  // labels: ["Giving", "Housing", "Transportation", "Food", "Personal", "Lifestyle", "Health", "Debt", "Bills"],
+  data: {
+    labels: ["Giving", "Housing", "Transportation", "Food", "Personal", "Lifestyle", "Health", "Debt", "Bills"],
     datasets: [{
         label: 'Total Budgeted Amount',
         data: [givingBudgetAmt, housingBudgetAmt, transportationBudgetAmt, foodBudgetAmt, personalBudgetAmt, lifestyleBudgetAmt, healthBudgetAmt, debtBudgetAmt, billsBudgetAmt],
@@ -645,53 +557,50 @@ data: {
             'rgba(65, 159, 64, 0.2)'
         ],
         borderWidth: 1
+    }, {
+      // labels: ["Giving Transactions", "Housing Transactions", "Transportation Transactions", "Food Transactions", "Personal Transactions", "Lifestyle Transactions", "Health Transactions", "Debt Transactions", "Bills Transactions"],              
+      data: [givingTransAmt, housingTransAmt, transportationTransAmt, foodTransAmt, personalTransAmt, lifestyleTransAmt, healthTransAmt, debtTransAmt, billsTransAmt],
+      backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(295, 100, 64, 0.2)',
+          'rgba(30, 192, 192, 0.2)',
+          'rgba(34, 200, 255, 0.2)',
+          'rgba(65, 159, 64, 0.2)'
+      ],
+      borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(30, 192, 192, 0.2)',
+          'rgba(34, 200, 255, 0.2)',
+          'rgba(65, 159, 64, 0.2)'
+      ],
+      borderWidth: 1
     }]
 },
 options: {
   legend: {
     display: false
+  },
+  scales: {
+    yAxes: [{
+      ticks: {
+        suggestedMax: 500,
+        min: 0,
+        stepSize: 50
+      }
+    }]
   }
 }
 });
 
-new Chart(differenceChart, {    
-  type: "doughnut",
-data: {
-    labels: ["Giving Difference", "Housing Difference", "Transportation Difference", "Food Difference", "Personal Difference", "Lifestyle Difference", "Health Difference", "Debt Difference", "Bills Difference"],
-    datasets: [{
-        label: 'Total Difference from Budgeted Amount',
-        data: [givingDifference, housingDifference, transportationDifference, foodDifference, personalDifference, lifestyleDifference, healthDifference, debtDifference, billsDifference],
-        backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(295, 100, 64, 0.2)',
-            'rgba(30, 192, 192, 0.2)',
-            'rgba(34, 200, 255, 0.2)',
-            'rgba(65, 159, 64, 0.2)'
-        ],
-        borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-            'rgba(30, 192, 192, 0.2)',
-            'rgba(34, 200, 255, 0.2)',
-            'rgba(65, 159, 64, 0.2)'
-        ],
-        borderWidth: 1
-    }]
-},
-options: {
-  legend: {
-    display: false
-  }
-}
-});
     }
   });
 
@@ -738,8 +647,6 @@ addTransactionToList.addEventListener("click", function() {
         showTransEntry(transTable, entry.catFamily, entry.transCategory, entry.merchantName, entry.transDate, entry.transAmount, index);
       });
       
-      // const solution = budgetCategoryList.filter((category) => category.category === transactionList.transCategory);
-
       switch (inputTransactionsAll.catFamily) {
         case "Giving":
           givingTransAmt = calculateTotalTrans("Giving", transactionList); 
@@ -786,13 +693,14 @@ addTransactionToList.addEventListener("click", function() {
       clearElement(totalBudgetedNum);
       updateBudgetNumbersPrintOut()
 
-      new Chart(transactionChart, {    
-        type: "doughnut",
-      data: {
-          labels: ["Giving Transactions", "Housing Transactions", "Transportation Transactions", "Food Transactions", "Personal Transactions", "Lifestyle Transactions", "Health Transactions", "Debt Transactions", "Bills Transactions"],
+      new Chart(budgetedChart, {    
+        type: "bar",
+        // labels: ["Giving", "Housing", "Transportation", "Food", "Personal", "Lifestyle", "Health", "Debt", "Bills"],
+        data: {
+          labels: ["Giving", "Housing", "Transportation", "Food", "Personal", "Lifestyle", "Health", "Debt", "Bills"],
           datasets: [{
-              label: 'Total Transactions',
-              data: [givingTransAmt, housingTransAmt, transportationTransAmt, foodTransAmt, personalTransAmt, lifestyleTransAmt, healthTransAmt, debtTransAmt, billsTransAmt],
+              label: 'Total Budgeted Amount',
+              data: [givingBudgetAmt, housingBudgetAmt, transportationBudgetAmt, foodBudgetAmt, personalBudgetAmt, lifestyleBudgetAmt, healthBudgetAmt, debtBudgetAmt, billsBudgetAmt],
               backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
                   'rgba(54, 162, 235, 0.2)',
@@ -816,54 +724,50 @@ addTransactionToList.addEventListener("click", function() {
                   'rgba(65, 159, 64, 0.2)'
               ],
               borderWidth: 1
+          }, {
+            // labels: ["Giving Transactions", "Housing Transactions", "Transportation Transactions", "Food Transactions", "Personal Transactions", "Lifestyle Transactions", "Health Transactions", "Debt Transactions", "Bills Transactions"],              
+            data: [givingTransAmt, housingTransAmt, transportationTransAmt, foodTransAmt, personalTransAmt, lifestyleTransAmt, healthTransAmt, debtTransAmt, billsTransAmt],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(295, 100, 64, 0.2)',
+                'rgba(30, 192, 192, 0.2)',
+                'rgba(34, 200, 255, 0.2)',
+                'rgba(65, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(30, 192, 192, 0.2)',
+                'rgba(34, 200, 255, 0.2)',
+                'rgba(65, 159, 64, 0.2)'
+            ],
+            borderWidth: 1
           }]
       },
       options: {
         legend: {
           display: false
-        }
-      }
-      });
-      
-      new Chart(differenceChart, {    
-        type: "doughnut",
-      data: {
-          labels: ["Giving Difference", "Housing Difference", "Transportation Difference", "Food Difference", "Personal Difference", "Lifestyle Difference", "Health Difference", "Debt Difference", "Bills Difference"],
-          datasets: [{
-              label: 'Total Difference from Budgeted Amount',
-              data: [givingDifference, housingDifference, transportationDifference, foodDifference, personalDifference, lifestyleDifference, healthDifference, debtDifference, billsDifference],
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(295, 100, 64, 0.2)',
-                  'rgba(30, 192, 192, 0.2)',
-                  'rgba(34, 200, 255, 0.2)',
-                  'rgba(65, 159, 64, 0.2)'
-              ],
-              borderColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)',
-                  'rgba(30, 192, 192, 0.2)',
-                  'rgba(34, 200, 255, 0.2)',
-                  'rgba(65, 159, 64, 0.2)'
-              ],
-              borderWidth: 1
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              suggestedMax: 500,
+              min: 0,
+              stepSize: 50
+            }
           }]
-      },
-      options: {
-        legend: {
-          display: false
         }
       }
       });
-      
+
     }
 });
 
@@ -910,26 +814,16 @@ csvFileUpload.addEventListener("change", function() {
     select.appendChild(fragment);
     select.className = "transListSelectedOption";
 
-    // approveCell = document.createElement("td");
     approveBtn = document.createElement("button");
     approveBtn.textContent = "Approve";
     approveBtn.className = "approveBtns";
-    // approveCell.appendChild(approveBtn);
-
-    // deleteCell = document.createElement("td");
-    // deleteBtn = document.createElement("button");
-    // deleteBtn.textContent = "Delete";
-    // deleteBtn.className = "deleteBtns";
-    // deleteCell.appendChild(deleteBtn);
 
     transCatCell.forEach((category) => {
       category.appendChild(select.cloneNode(true));
       category.parentNode.appendChild(approveBtn.cloneNode(true));
-      // category.parentNode.appendChild(deleteBtn.cloneNode(true));
     });
     transListSelectedOption = document.querySelectorAll(".transListSelectedOption");
     approveBtnsInDOM = document.querySelectorAll(".approveBtns");
-    // deleteBtnsInDOM = document.querySelectorAll(".deleteBtns");
     transactionRow = document.querySelectorAll(".transactionRow");
 
     for (let i = 0; i < transArrFromCSV.length; i++) {
@@ -994,13 +888,15 @@ csvFileUpload.addEventListener("change", function() {
         clearElement(totalBudgetedNum);
         updateBudgetNumbersPrintOut()
 
-        new Chart(transactionChart, {    
-          type: "doughnut",
-        data: {
-            labels: ["Giving Transactions", "Housing Transactions", "Transportation Transactions", "Food Transactions", "Personal Transactions", "Lifestyle Transactions", "Health Transactions", "Debt Transactions", "Bills Transactions"],
+
+        new Chart(budgetedChart, {    
+          type: "bar",
+          // labels: ["Giving", "Housing", "Transportation", "Food", "Personal", "Lifestyle", "Health", "Debt", "Bills"],
+          data: {
+            labels: ["Giving", "Housing", "Transportation", "Food", "Personal", "Lifestyle", "Health", "Debt", "Bills"],
             datasets: [{
-                label: 'Total Transactions',
-                data: [givingTransAmt, housingTransAmt, transportationTransAmt, foodTransAmt, personalTransAmt, lifestyleTransAmt, healthTransAmt, debtTransAmt, billsTransAmt],
+                label: 'Total Budgeted Amount',
+                data: [givingBudgetAmt, housingBudgetAmt, transportationBudgetAmt, foodBudgetAmt, personalBudgetAmt, lifestyleBudgetAmt, healthBudgetAmt, debtBudgetAmt, billsBudgetAmt],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -1024,141 +920,51 @@ csvFileUpload.addEventListener("change", function() {
                     'rgba(65, 159, 64, 0.2)'
                 ],
                 borderWidth: 1
+            }, {
+              // labels: ["Giving Transactions", "Housing Transactions", "Transportation Transactions", "Food Transactions", "Personal Transactions", "Lifestyle Transactions", "Health Transactions", "Debt Transactions", "Bills Transactions"],              
+              data: [givingTransAmt, housingTransAmt, transportationTransAmt, foodTransAmt, personalTransAmt, lifestyleTransAmt, healthTransAmt, debtTransAmt, billsTransAmt],
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(295, 100, 64, 0.2)',
+                  'rgba(30, 192, 192, 0.2)',
+                  'rgba(34, 200, 255, 0.2)',
+                  'rgba(65, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255, 99, 132, 1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)',
+                  'rgba(30, 192, 192, 0.2)',
+                  'rgba(34, 200, 255, 0.2)',
+                  'rgba(65, 159, 64, 0.2)'
+              ],
+              borderWidth: 1
             }]
         },
         options: {
           legend: {
             display: false
-          }
-        }
-        });
-        
-        new Chart(differenceChart, {    
-          type: "doughnut",
-        data: {
-            labels: ["Giving Difference", "Housing Difference", "Transportation Difference", "Food Difference", "Personal Difference", "Lifestyle Difference", "Health Difference", "Debt Difference", "Bills Difference"],
-            datasets: [{
-                label: 'Total Difference from Budgeted Amount',
-                data: [givingDifference, housingDifference, transportationDifference, foodDifference, personalDifference, lifestyleDifference, healthDifference, debtDifference, billsDifference],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(295, 100, 64, 0.2)',
-                    'rgba(30, 192, 192, 0.2)',
-                    'rgba(34, 200, 255, 0.2)',
-                    'rgba(65, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(30, 192, 192, 0.2)',
-                    'rgba(34, 200, 255, 0.2)',
-                    'rgba(65, 159, 64, 0.2)'
-                ],
-                borderWidth: 1
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                suggestedMax: 500,
+                min: 0,
+                stepSize: 50
+              }
             }]
-        },
-        options: {
-          legend: {
-            display: false
           }
         }
         });
         
       })
-      
-      // deleteBtnsInDOM[i].addEventListener("click", function() {
-      //   transArrFromCSV.splice(i);
-      //   clearElement(transCatCell[i].parentNode);
-      // })
-
-      // clearElement(totalBudgetedNum);
-      // updateBudgetNumbersPrintOut();
-
-      // new Chart(transactionChart, {    
-      //   type: "doughnut",
-      // data: {
-      //     labels: ["Giving Transactions", "Housing Transactions", "Transportation Transactions", "Food Transactions", "Personal Transactions", "Lifestyle Transactions", "Health Transactions", "Debt Transactions", "Bills Transactions"],
-      //     datasets: [{
-      //         label: 'Total Transactions',
-      //         data: [givingTransAmt, housingTransAmt, transportationTransAmt, foodTransAmt, personalTransAmt, lifestyleTransAmt, healthTransAmt, debtTransAmt, billsTransAmt],
-      //         backgroundColor: [
-      //             'rgba(255, 99, 132, 0.2)',
-      //             'rgba(54, 162, 235, 0.2)',
-      //             'rgba(255, 206, 86, 0.2)',
-      //             'rgba(75, 192, 192, 0.2)',
-      //             'rgba(153, 102, 255, 0.2)',
-      //             'rgba(295, 100, 64, 0.2)',
-      //             'rgba(30, 192, 192, 0.2)',
-      //             'rgba(34, 200, 255, 0.2)',
-      //             'rgba(65, 159, 64, 0.2)'
-      //         ],
-      //         borderColor: [
-      //             'rgba(255, 99, 132, 1)',
-      //             'rgba(54, 162, 235, 1)',
-      //             'rgba(255, 206, 86, 1)',
-      //             'rgba(75, 192, 192, 1)',
-      //             'rgba(153, 102, 255, 1)',
-      //             'rgba(255, 159, 64, 1)',
-      //             'rgba(30, 192, 192, 0.2)',
-      //             'rgba(34, 200, 255, 0.2)',
-      //             'rgba(65, 159, 64, 0.2)'
-      //         ],
-      //         borderWidth: 1
-      //     }]
-      // },
-      // options: {
-      //   legend: {
-      //     display: false
-      //   }
-      // }
-      // });
-      
-      // new Chart(differenceChart, {    
-      //   type: "doughnut",
-      // data: {
-      //     labels: ["Giving Difference", "Housing Difference", "Transportation Difference", "Food Difference", "Personal Difference", "Lifestyle Difference", "Health Difference", "Debt Difference", "Bills Difference"],
-      //     datasets: [{
-      //         label: 'Total Difference from Budgeted Amount',
-      //         data: [givingDifference, housingDifference, transportationDifference, foodDifference, personalDifference, lifestyleDifference, healthDifference, debtDifference, billsDifference],
-      //         backgroundColor: [
-      //             'rgba(255, 99, 132, 0.2)',
-      //             'rgba(54, 162, 235, 0.2)',
-      //             'rgba(255, 206, 86, 0.2)',
-      //             'rgba(75, 192, 192, 0.2)',
-      //             'rgba(153, 102, 255, 0.2)',
-      //             'rgba(295, 100, 64, 0.2)',
-      //             'rgba(30, 192, 192, 0.2)',
-      //             'rgba(34, 200, 255, 0.2)',
-      //             'rgba(65, 159, 64, 0.2)'
-      //         ],
-      //         borderColor: [
-      //             'rgba(255, 99, 132, 1)',
-      //             'rgba(54, 162, 235, 1)',
-      //             'rgba(255, 206, 86, 1)',
-      //             'rgba(75, 192, 192, 1)',
-      //             'rgba(153, 102, 255, 1)',
-      //             'rgba(255, 159, 64, 1)',
-      //             'rgba(30, 192, 192, 0.2)',
-      //             'rgba(34, 200, 255, 0.2)',
-      //             'rgba(65, 159, 64, 0.2)'
-      //         ],
-      //         borderWidth: 1
-      //     }]
-      // },
-      // options: {
-      //   legend: {
-      //     display: false
-      //   }
-      // }
-      // });
       
     };
     };

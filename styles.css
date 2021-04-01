@@ -67,13 +67,16 @@ button:hover {
     background-color: rgb(228, 228, 228);
   }
 
-#calculatedContainer,
-#chartContainer {
+#calculatedContainer {
     width: 100%;
     display:flex;
     flex-direction: row;
     flex-wrap: wrap;
     margin-top: 20px;
+}
+
+#chartContainer {
+    display: none;
 }
 
 #calculatedBudgetAmt,
@@ -99,11 +102,6 @@ button:hover {
     flex-direction: column;
 }
 
-/* #addCategoryToList {
-    margin-left: 30%;
-    margin-right: 30%;
-} */
-
 input,
 #family,
 #transactionCategory {
@@ -112,11 +110,6 @@ input,
     padding: 8px 12px;
     box-sizing: border-box;
     border-radius: 6px;
-}
-
-#inputDivs {
-    display: flex;
-    justify-content: space-around;
 }
 
 #csvFileUpload::-webkit-file-upload-button {
@@ -145,6 +138,11 @@ input,
     background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
   }
 
+#transactionTableDiv,
+#transactionTableCsvDiv {
+    margin-top: 50px;
+}
+
 .approveBtns {
     position: absolute;
     margin-top: 4px;
@@ -159,10 +157,7 @@ input,
     #calculatedBudgetAmt,
     #calculatedTransAmt,
     #calculatedDifference,
-    .summaryImages,
-    #budgetedChartContainer,
-    #transactionChartContainer,
-    #differenceChartContainer {
+    .summaryImages {
         width: 33%;
         text-align: center;
     }
@@ -171,9 +166,10 @@ input,
         right: -28%;
     }
 
-    #createCategory,
-    #transactionDiv {
-        width: 48%;
+    #chartContainer {
+        display: block;
+        width: 50%;
+        margin: 0 auto;
     }
     
 
@@ -181,8 +177,14 @@ input,
 
 @media (min-width: 992px) {
 
-}
+    #inputDivs {
+        display: flex;
+        justify-content: space-around;
+    }
 
-@media (min-width: 992px) {
+    #createCategory,
+    #transactionDiv {
+        width: 48%;
+    }
 
 }

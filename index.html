@@ -11,8 +11,6 @@
         <link rel="stylesheet" type="text/css" href="node_modules/chart.js/dist/Chart.min.css">
         <script src="node_modules/flatpickr/dist/flatpickr.js"></script>
         <script src="node_modules/chart.js/dist/Chart.js"></script>
-        <script src='node_modules/tablesort/src/sorts/tablesort.date.js'></script>
-        <script src='node_modules/tablesort/src/tablesort.js'></script>
     </head>
 
     <body>
@@ -27,15 +25,7 @@
         </div>
 
         <div id="chartContainer">
-            <div id="budgetedChartContainer">
                 <canvas id="budgetedChart" width="500px"></canvas>
-            </div>
-            <div id="transactionChartContainer">
-                <canvas id="transactionChart" width="500px"></canvas>
-            </div>
-            <div id="differenceChartContainer">
-                <canvas id="differenceChart" width="500px"></canvas>
-            </div>
         </div>
 
         <div id="inputDivs">
@@ -104,31 +94,34 @@
         <p>Upload your CSV file here:</p>
         <input type="file" id="csvFileUpload" accept=".csv">
 
+        <div id="transactionTableDiv">
+            <h2>Transaction List</h2>
+            <table>
+                <tbody>
+                    <tr id="transTable">
+                        <th>Family</th>
+                        <th>Category</th>
+                        <th>Merchant</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                    </tr>
+                </tbody>
+            </table> 
+        </div>
 
-        <h2>Transaction List</h2>
-        <table>
-            <tbody>
-                <tr id="transTable">
-                    <th>Family</th>
-                    <th>Category</th>
-                    <th>Merchant</th>
-                    <th>Date</th>
-                    <th>Amount</th>
-                </tr>
-            </table>
-        </table> 
-
+        <div id="transactionTableCsvDiv">
         <h2>Pending Transactions from CSV Upload</h2>
-        <table id="tableFromCSV">
-            <tbody>
-                <tr id="transTableRowsFromCSV">
-                    <th>Category</th>
-                    <th>Merchant</th>
-                    <th>Transaction Date</th>
-                    <th>Transaction Amount</th>
-                </tr>
-            </tbody>
-        </table>    
+            <table id="tableFromCSV">
+                <tbody>
+                    <tr id="transTableRowsFromCSV">
+                        <th>Category</th>
+                        <th>Merchant</th>
+                        <th>Transaction Date</th>
+                        <th>Transaction Amount</th>
+                    </tr>
+                </tbody>
+            </table>  
+        </div>  
     </body>
 
     <footer>
