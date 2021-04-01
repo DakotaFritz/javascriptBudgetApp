@@ -183,150 +183,88 @@ function calculateTotalTrans(family, list){
 function updateBudgetNumbersPrintOut() {
   totalBudgetedNum.insertAdjacentHTML("beforeend", `
   <div id="calculatedContainer">
-    <div id="calculatedBudgetAmt">
-      <div id="totalBudgetDiv">
-        <img src="images/moneybags.png" alt="Moneybag" class="summaryImages">
-        <p>Total Budget: ${convertToDollar(totalBudgetAmt)}</p>
-      </div>
-      <div id="categoryBudgetTotals">
-        <p>Giving Budget: ${convertToDollar(givingBudgetAmt)}</p>
-        <p>Housing Budget: ${convertToDollar(housingBudgetAmt)}</p>
-        <p>Transportation Budget: ${convertToDollar(transportationBudgetAmt)}</p>
-        <p>Food Budget: ${convertToDollar(foodBudgetAmt)}</p>
-        <p>Personal Budget: ${convertToDollar(personalBudgetAmt)}</p>
-        <p>Lifestyle Budget: ${convertToDollar(lifestyleBudgetAmt)}</p>
-        <p>Health Budget: ${convertToDollar(healthBudgetAmt)}</p>
-        <p>Debt Budget: ${convertToDollar(debtBudgetAmt)}</p>
-        <p>Bills Budget: ${convertToDollar(billsBudgetAmt)}</p>
-      </div>
-    </div>
-
-    <div id="calculatedTransAmt">
-      <div id="totalTransDiv">
-        <img src="images/receipt.png" alt="Moneybag" class="summaryImages">
-        <p>Total Spent: ${convertToDollar(totalTransAmt)}</p>
-      </div>
-      <div id="categoryTransTotals">
-        <p>Giving Spent: ${convertToDollar(givingTransAmt)}</p>
-        <p>Housing Spent: ${convertToDollar(housingTransAmt)}</p>
-        <p>Transportation Spent ${convertToDollar(transportationTransAmt)}</p>
-        <p>Food Spent: ${convertToDollar(foodTransAmt)}</p>
-        <p>Personal Spent ${convertToDollar(personalTransAmt)}</p>
-        <p>Lifestyle Spent ${convertToDollar(lifestyleTransAmt)}</p>
-        <p>Health Spent ${convertToDollar(healthTransAmt)}</p>
-        <p>Debt Spent ${convertToDollar(debtTransAmt)}</p>
-        <p>Bills Spent ${convertToDollar(billsTransAmt)}</p>
-      </div>
-    </div>
-
-    <div id="calculatedDifference">
-      <div id="totalDiffDiv">
-        <img src="images/dividend.png" alt="Moneybag" class="summaryImages">
-        <p>Total Difference ${convertToDollar(totalDifference)}</p>
-      </div>
-      <div id="categoryDiffTotals">
-        <p>Giving Difference ${convertToDollar(givingDifference)}</p>
-        <p>Housing Difference ${convertToDollar(housingDifference)}</p>
-        <p>Transportation Difference ${convertToDollar(transportationDifference)}</p>
-        <p>Food Difference ${convertToDollar(foodDifference)}</p>
-        <p>Personal Difference ${convertToDollar(personalDifference)}</p>
-        <p>Lifestyle Difference ${convertToDollar(lifestyleDifference)}</p>
-        <p>Health Difference ${convertToDollar(healthDifference)}</p>
-        <p>Debt Difference ${convertToDollar(debtDifference)}</p>
-        <p>Bills Difference ${convertToDollar(billsDifference)}</p>
-      </div>
+    <div id="tableDiv">
+      <table id="calculatedTable">
+        <thead>
+            <tr>
+                <th>Family of Category</th>
+                <th>Planned</th>
+                <th>Spent</th>
+                <th>Left Over</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Giving</td>
+                <td>${convertToDollar(givingBudgetAmt)}</td>
+                <td>${convertToDollar(givingTransAmt)}</td>
+                <td>${convertToDollar(givingDifference)}</td>
+            </tr>
+            <tr>
+                <td>Housing</td>
+                <td>${convertToDollar(housingBudgetAmt)}</td>
+                <td>${convertToDollar(housingTransAmt)}</td>
+                <td>${convertToDollar(housingDifference)}</td>
+            </tr>
+            <tr>
+                <td>Transportation</td>
+                <td>${convertToDollar(transportationBudgetAmt)}</td>
+                <td>${convertToDollar(transportationTransAmt)}</td>
+                <td>${convertToDollar(transportationDifference)}</td>
+            </tr>
+            <tr>
+                <td>Food</td>
+                <td>${convertToDollar(foodBudgetAmt)}</td>
+                <td>${convertToDollar(foodTransAmt)}</td>
+                <td>${convertToDollar(foodDifference)}</td>
+            </tr>
+            <tr>
+                <td>Personal</td>
+                <td>${convertToDollar(personalBudgetAmt)}</td>
+                <td>${convertToDollar(personalTransAmt)}</td>
+                <td>${convertToDollar(personalDifference)}</td>
+            </tr>
+            <tr>
+                <td>Lifestyle</td>
+                <td>${convertToDollar(lifestyleBudgetAmt)}</td>
+                <td>${convertToDollar(lifestyleTransAmt)}</td>
+                <td>${convertToDollar(lifestyleDifference)}</td>
+            </tr>
+            <tr>
+                <td>Health</td>
+                <td>${convertToDollar(healthBudgetAmt)}</td>
+                <td>${convertToDollar(healthTransAmt)}</td>
+                <td>${convertToDollar(healthDifference)}</td>
+            </tr>
+            <tr>
+                <td>Debt</td>
+                <td>${convertToDollar(debtBudgetAmt)}</td>
+                <td>${convertToDollar(debtTransAmt)}</td>
+                <td>${convertToDollar(debtDifference)}</td>
+            </tr>
+            <tr>
+                <td>Bills</td>
+                <td>${convertToDollar(billsBudgetAmt)}</td>
+                <td>${convertToDollar(billsTransAmt)}</td>
+                <td>${convertToDollar(billsDifference)}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+          <tr id="calculatedFooterRow">
+            <td><strong>Total</strong></td>
+            <td><strong>${convertToDollar(totalBudgetAmt)}</strong></td>
+            <td><strong>${convertToDollar(totalTransAmt)}</strong></td>
+            <td><strong>${convertToDollar(totalDifference)}</strong></td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
   </div>
   `);
 };
 // First call to put it on the page
 updateBudgetNumbersPrintOut();
-
-
-// Variables for the toggle - could be moved up in the script
-let totalBudgetDiv = document.querySelector("#totalBudgetDiv");
-let totalTransDiv = document.querySelector("#totalTransDiv");
-let totalDiffDiv = document.querySelector("#totalDiffDiv")
-
-// Function to perform a slideToggle for total budget numbers
-let slideUp = (target, duration) => {
-  target.style.transitionProperty = 'height, margin, padding';
-  target.style.transitionDuration = duration + 'ms';
-  target.style.boxSizing = 'border-box';
-  target.style.height = target.offsetHeight + 'px';
-
-  target.style.height = 0;
-  target.style.paddingTop = 0;
-  target.style.paddingBottom = 0;
-  target.style.marginTop = 0;
-  target.style.marginBottom = 0;
-  target.style.overflow = 'hidden';
-
-  window.setTimeout( () => {
-    target.style.display = 'none';
-    target.style.removeProperty('height');
-    target.style.removeProperty('padding-top');
-    target.style.removeProperty('padding-bottom');
-    target.style.removeProperty('margin-top');
-    target.style.removeProperty('margin-bottom');
-    target.style.removeProperty('overflow');
-    target.style.removeProperty('transition-duration');
-    target.style.removeProperty('transition-property');
-  }, duration);
-}
-
-let slideDown = (target, duration) => {
-  target.style.removeProperty('display');
-  let display = window.getComputedStyle(target).display;
-  if (display === 'none') {
-    display = 'block';
-  }
-  target.style.display = display;
-
-  let height = target.offsetHeight;
-  target.style.height = 0;
-  target.style.paddingTop = 0;
-  target.style.paddingBottom = 0;
-  target.style.marginTop = 0;
-  target.style.marginBottom = 0;
-  target.style.overflow = 'hidden';
-
-  target.style.boxSizing = 'border-box';
-  target.style.transitionProperty = "height, margin, padding";
-  target.style.transitionDuration = duration + 'ms';
-  target.style.height = height + 'px';
-  target.style.removeProperty('padding-top');
-  target.style.removeProperty('padding-bottom');
-  target.style.removeProperty('margin-top');
-  target.style.removeProperty('margin-bottom');
-
-  window.setTimeout( () => {
-    target.style.removeProperty('height');
-    target.style.removeProperty('overflow');
-    target.style.removeProperty('transition-duration');
-    target.style.removeProperty('transition-property');
-  }, duration);
-};
-
-let slideToggle = (target, duration = 500) => {
-  if (window.getComputedStyle(target).display === 'none') {
-    return slideDown(target, duration);
-  } else {
-    return slideUp(target, duration);
-  }
-};
-
-totalBudgetDiv.addEventListener('click', function() {
-  slideToggle(document.getElementById("categoryBudgetTotals"), 200);
-});
-
-totalTransDiv.addEventListener('click', function() {
-  slideToggle(document.getElementById("categoryTransTotals"), 200);
-});
-
-totalDiffDiv.addEventListener('click', function() {
-  slideToggle(document.getElementById("categoryDiffTotals"), 200);
-});
+let calculatedContainer = document.querySelector("#calculatedContainer");
 
 let currentDate = new Date();
 let maxDateString = currentDate.toLocaleDateString();
@@ -509,22 +447,6 @@ addCategoryToList.addEventListener("click", function() {
       // I may change this up to be more accurate and eliminate the totalBudgetNum Id
       clearElement(totalBudgetedNum);
       updateBudgetNumbersPrintOut();
-      // Chart.plugins.register({
-//   afterDraw: function(chart) {
-//       if (chart.data.datasets[0].data.every(item => item === 0)) {
-//           let ctx = chart.chart.ctx;
-//           let width = chart.chart.width;
-//           let height = chart.chart.height;
-
-//           chart.clear();
-//           ctx.save();
-//           ctx.textAlign = 'center';
-//           ctx.textBaseline = 'middle';
-//           ctx.fillText('Budgeted Amounts Will Display Here', width / 2, height / 2);
-//           ctx.restore();
-//       }
-//   }
-// });
 
 new Chart(budgetedChart, {    
   type: "bar",
@@ -557,8 +479,7 @@ new Chart(budgetedChart, {
             'rgba(65, 159, 64, 0.2)'
         ],
         borderWidth: 1
-    }, {
-      // labels: ["Giving Transactions", "Housing Transactions", "Transportation Transactions", "Food Transactions", "Personal Transactions", "Lifestyle Transactions", "Health Transactions", "Debt Transactions", "Bills Transactions"],              
+    }, {            
       data: [givingTransAmt, housingTransAmt, transportationTransAmt, foodTransAmt, personalTransAmt, lifestyleTransAmt, healthTransAmt, debtTransAmt, billsTransAmt],
       backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
@@ -674,11 +595,11 @@ addTransactionToList.addEventListener("click", function() {
           break;  
         case "Health":
           healthTransAmt = calculateTotalTrans("Health", transactionList);
-          healthDifference = healthBudgetAmt - healthTransAmt          
+          healthDifference = (healthBudgetAmt - healthTransAmt);         
           break;
         case "Debt":
           debtTransAmt = calculateTotalTrans("Debt", transactionList);  
-          debtDifference = debtBudgetAmt - debtTransAmt        
+          debtDifference = debtBudgetAmt - debtTransAmt;       
           break;
         case "Bills":
           billsTransAmt = calculateTotalTrans("Bills", transactionList);

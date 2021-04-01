@@ -17,9 +17,9 @@ header {
 
 /* Header Title */
 header h1 {
-    font-size: 2em;
+    font-size: 4em;
     text-shadow: 1px 1px 3px black;
-    color: rgb(48, 97, 46);
+    color: slategray;
     margin-top: 0;
     padding-top: 40px;
 }
@@ -110,6 +110,16 @@ input,
     padding: 8px 12px;
     box-sizing: border-box;
     border-radius: 6px;
+
+}
+
+#tableDiv {
+    border: 1px solid black;
+    width: 100%;
+}
+
+canvas {
+    border: 1px solid black;
 }
 
 #csvFileUpload::-webkit-file-upload-button {
@@ -166,12 +176,16 @@ input,
         right: -28%;
     }
 
+    #calculatedContainer {
+        width: 94%;
+        margin: auto;
+    }
+
     #chartContainer {
         display: block;
-        width: 50%;
+        width: 45%;
         margin: 0 auto;
     }
-    
 
 }
 
