@@ -14,11 +14,18 @@ Here are the instructions for using the application:
 * Manually create your transactions using the input fields. In the `<select>`, you will be able to choose from the categories that you just created. Once you select a category, enter the Merchant, Date, and Amount for your transaction and click "Add to Category." This should add the input into an object (`inputTransactionsAll`) and push the object into an array (`transactionList`). On the page, clicking the button should update the "Spent" and "Difference" cells in the table row for the family that the category of the transaction belongs to, update the chart, and add the transaction to a transaction table below the transaction input.
 * Upload your CSV to the page. I have provided "testCSVforProject.csv" in the repo for testing purposes. You would also be able to upload other files, but they would need to include a header (to be removed in the code) and four columns in the same order. This design is modified from what I have seen between my bank and credit card company. To upload a CSV click the "Upload CSV Here" button and select the file to upload. Each row (skipping the header) is added to an object (`transListFromCsv`) and then passed into an array (`transArrFromCSV`). This array is then displayed in the "Pending Transactions from CSV Upload" table. Each row has an "Approve" button on the right side. As long as the pending transaction has a `select` category assigned to it, the transaction will be pushed to `transactionList` (and added to the transaction table), removed from `transArrFromCSV` (and removed from the pending transactions table), update the "Spent" and "Left Over" cells in the budget table, and update the chart. 
 
-Here are the features in the application:
-* A responsive design through the use of two media queries (768px, 992px) and FlexBox.
-    * At the first media query, I make the following changes:
-        1. The calculated table gets limited from `width: 100%` to `width: 94%` and is centered with `margin: auto`.
-        2. The `<div>` that the `<canvas>` is in changes from `display: none` to `display: block`, is limited to `width: 45%`, and is centered with `margin: auto`.
-    * At the second media query, I make the following changes:
-        1. `#inputDivs` is given a style of `display: flex` and `justify-content: space-around` to allow the children to display beside each other.
-        2. `#createCategory` and `#transactionDiv` are limited to `width: 48%` to give some extra whitespace around their content.
+JavaScript Budgeter has a responsive design through the use of two media queries (768px, 992px) and FlexBox.
+* At the first media query, I make the following changes:
+    1. The calculated table gets limited from `width: 100%` to `width: 94%` and is centered with `margin: auto`.
+    2. The `<div>` that the `<canvas>` is in changes from `display: none` to `display: block`, is limited to `width: 45%`, and is centered with `margin: auto`.
+* At the second media query, I make the following changes:
+    1. `#inputDivs` is given a style of `display: flex` and `justify-content: space-around` to allow the children to display beside each other.
+    2. `#createCategory` and `#transactionDiv` are limited to `width: 48%` to give some extra whitespace around their content.
+
+Here are the features included in the project:
+* Read and parse an external file (such as JSON or CSV) into your application and display some data from that in your app
+    * This is done with the native FileReader API. The read file is then split on each new line, each row is passed into an array and the items are split by commas. I then skip the first row (header row), reverse the array (to help later with the index of the array items matching with the index of the rows in the pending transactions table). The result is to have a reversed array of arrays (`rowContentFromCSV`), minus the header row. After this, each row array passes through a for loop that assigns values to some of the keys in the `transListFromCSV` object, while leaving some keys values as empty strings to be filled later. The for loop then pushes each `transListFromCSV` object into the `transArrFromCSV` array and displays the value of `transListFromCSV` in the pending transactions table.
+* Create an array, dictionary or list, populate it with multiple values, retrieve at least one value, and use or display it in your application
+    * This is done in numerous locations. Each of the tables, the chart, and the `<select>` elements do this.
+* Create and use a function that accepts two or more values (parameters), calculates or determines a new value based on those inputs, and returns a new value
+    * 
