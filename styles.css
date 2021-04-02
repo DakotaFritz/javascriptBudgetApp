@@ -73,6 +73,7 @@ button:hover {
     flex-direction: row;
     flex-wrap: wrap;
     margin-top: 20px;
+    padding-bottom: 20px;
 }
 
 #chartContainer {
