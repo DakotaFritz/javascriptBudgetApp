@@ -9,7 +9,7 @@ JavaScript Budgeter allows the user to create their own budget categories and am
 **Because the application only contains front-end code, user input does not persist after page refreshing.**
 
 
-## Here are the instructions for using the application:
+## Instructions:
 
 * **In the command line, run `npm install` to install the packages used in this project.** The packages are used by linking to the local file in the node_modules folder, rather than through Node.js.
 
@@ -20,7 +20,7 @@ JavaScript Budgeter allows the user to create their own budget categories and am
 * **Upload your CSV to the page.** I have provided "testCSVforProject.csv" in the repo for testing purposes. You would also be able to upload other files, but they would need to include a header (to be removed in the code) and four columns in the same order. This design is modified from what I have seen between my bank and credit card company. To upload a CSV click the "Upload CSV Here" button and select the file to upload. Each row (skipping the header) is added to an object (`transListFromCsv`) and then passed into an array (`transArrFromCSV`). This array is then displayed in the "Pending Transactions from CSV Upload" table. Each row has an "Approve" button on the right side. As long as the pending transaction has a `select` category assigned to it, the transaction will be pushed to `transactionList` (and added to the transaction table), removed from `transArrFromCSV` (and removed from the pending transactions table), update the "Spent" and "Left Over" cells in the budget table, and update the chart. 
 
 
-## JavaScript Budgeter has a responsive design through the use of two media queries (768px, 992px) and FlexBox.
+### JavaScript Budgeter has a responsive design through the use of two media queries (768px, 992px) and FlexBox.
 
 * At the first media query, I make the following changes:
 
@@ -32,7 +32,7 @@ JavaScript Budgeter allows the user to create their own budget categories and am
     * `#inputDivs` is given a style of `display: flex` and `justify-content: space-around` to allow the children to display beside each other.
     * `#createCategory` and `#transactionDiv` are limited to `width: 48%` to give some extra whitespace around their content.
 
-## Here are the features included in the project:
+## Features:
 
 * **Read and parse an external file (such as JSON or CSV) into your application and display some data from that in your app.**
 
