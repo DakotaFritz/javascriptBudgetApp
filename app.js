@@ -571,27 +571,27 @@ addTransactionToList.addEventListener("click", function() {
       switch (inputTransactionsAll.catFamily) {
         case "Giving":
           givingTransAmt = calculateTotalTrans("Giving", transactionList); 
-          givingDifference = givingBudgetAmt - givingTransAmt;
+          givingDifference = (givingBudgetAmt - givingTransAmt);
           break;
         case "Housing":
           housingTransAmt = calculateTotalTrans("Housing", transactionList);
-          housingDifference = housingBudgetAmt - givingTransAmt;          
+          housingDifference = (housingBudgetAmt - housingTransAmt);          
           break;  
         case "Transportation":
           transportationTransAmt = calculateTotalTrans("Transportation", transactionList);  
-          transportationDifference = transportationBudgetAmt - transportationTransAmt;        
+          transportationDifference = (transportationBudgetAmt - transportationTransAmt);        
           break;
         case "Food":
           foodTransAmt = calculateTotalTrans("Food", transactionList);   
-          foodDifference = foodBudgetAmt - foodTransAmt;       
+          foodDifference = (foodBudgetAmt - foodTransAmt);       
           break;   
         case "Personal":
           personalTransAmt = calculateTotalTrans("Personal", transactionList);
-          personalDifference = personalBudgetAmt - personalTransAmt;   
+          personalDifference = (personalBudgetAmt - personalTransAmt);   
           break; 
         case "Lifestyle":
           lifestylelTransAmt = calculateTotalTrans("Lifestyle", transactionList);
-          lifestyleDifference = lifestyleBudgetAmt - lifestyleTransAmt;
+          lifestyleDifference = (lifestyleBudgetAmt - lifestyleTransAmt);
           break;  
         case "Health":
           healthTransAmt = calculateTotalTrans("Health", transactionList);
@@ -599,11 +599,11 @@ addTransactionToList.addEventListener("click", function() {
           break;
         case "Debt":
           debtTransAmt = calculateTotalTrans("Debt", transactionList);  
-          debtDifference = debtBudgetAmt - debtTransAmt;       
+          debtDifference = (debtBudgetAmt - debtTransAmt);       
           break;
         case "Bills":
           billsTransAmt = calculateTotalTrans("Bills", transactionList);
-          billsDifference = billsBudgetAmt - billsTransAmt;          
+          billsDifference = (billsBudgetAmt - billsTransAmt);          
           break;  
       }
 
@@ -767,39 +767,39 @@ csvFileUpload.addEventListener("change", function() {
         switch (transactionList[i].catFamily) {
           case "Giving":
             givingTransAmt = calculateTotalTrans("Giving", transactionList); 
-            givingDifference = givingBudgetAmt - givingTransAmt;
+            givingDifference = (givingBudgetAmt - givingTransAmt);
             break;
           case "Housing":
             housingTransAmt = calculateTotalTrans("Housing", transactionList);
-            housingDifference = housingBudgetAmt - givingTransAmt;          
+            housingDifference = (housingBudgetAmt - housingTransAmt);          
             break;  
           case "Transportation":
             transportationTransAmt = calculateTotalTrans("Transportation", transactionList);  
-            transportationDifference = transportationBudgetAmt - transportationTransAmt;        
+            transportationDifference = (transportationBudgetAmt - transportationTransAmt);        
             break;
           case "Food":
             foodTransAmt = calculateTotalTrans("Food", transactionList);   
-            foodDifference = foodBudgetAmt - foodTransAmt;       
+            foodDifference = (foodBudgetAmt - foodTransAmt);       
             break;   
           case "Personal":
             personalTransAmt = calculateTotalTrans("Personal", transactionList);
-            personalDifference = personalBudgetAmt - personalTransAmt;   
+            personalDifference = (personalBudgetAmt - personalTransAmt);   
             break; 
           case "Lifestyle":
             lifestylelTransAmt = calculateTotalTrans("Lifestyle", transactionList);
-            lifestyleDifference = lifestyleBudgetAmt - lifestyleTransAmt;
+            lifestyleDifference = (lifestyleBudgetAmt - lifestyleTransAmt);
             break;  
           case "Health":
             healthTransAmt = calculateTotalTrans("Health", transactionList);
-            healthDifference = healthBudgetAmt - healthTransAmt          
+            healthDifference = (healthBudgetAmt - healthTransAmt);          
             break;
           case "Debt":
             debtTransAmt = calculateTotalTrans("Debt", transactionList);  
-            debtDifference = debtBudgetAmt - debtTransAmt        
+            debtDifference = (debtBudgetAmt - debtTransAmt);        
             break;
           case "Bills":
             billsTransAmt = calculateTotalTrans("Bills", transactionList);
-            billsDifference = billsBudgetAmt - billsTransAmt;          
+            billsDifference = (billsBudgetAmt - billsTransAmt);          
             break;  
         };
         totalTransAmt = givingTransAmt + housingTransAmt + transportationTransAmt + foodTransAmt + personalTransAmt + lifestyleTransAmt + healthTransAmt + debtTransAmt + billsTransAmt;
